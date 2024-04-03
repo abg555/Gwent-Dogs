@@ -3,7 +3,18 @@ guid: c8749e7e1cc9d4841aa7e7bc86a237b0
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - Rey: {fileID: 1646651129815133902, guid: 1dee5847fd1ab4b4088d10c2c8ef388b, type: 3}
+  - Aguacero: {instanceID: 0}
+  - Sequia: {instanceID: 0}
+  - Robin: {instanceID: 0}
+  - Poodle: {instanceID: 0}
+  - Poodle2: {instanceID: 0}
+  - Poodle3: {instanceID: 0}
+  - Vito: {instanceID: 0}
+  - Rastafari: {instanceID: 0}
+  - Cocky: {instanceID: 0}
+  - PlayerArea: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

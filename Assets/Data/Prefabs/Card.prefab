@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2703464521428567038}
   - component: {fileID: 8286029828429481730}
   - component: {fileID: 5315933604187182919}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: NameText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -145,7 +145,7 @@ GameObject:
   - component: {fileID: 5312972752133800166}
   - component: {fileID: 6962543229559154446}
   - component: {fileID: 666879134223539764}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -222,7 +222,7 @@ GameObject:
   - component: {fileID: 7967372453128211152}
   - component: {fileID: 8844578799929264005}
   - component: {fileID: 3861097472789771737}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: DogImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -299,7 +299,7 @@ GameObject:
   - component: {fileID: 8347177743843156812}
   - component: {fileID: 5045171654844386319}
   - component: {fileID: 8632294425126950077}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Power
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -375,7 +375,7 @@ GameObject:
   - component: {fileID: 4155502524742336090}
   - component: {fileID: 3141078931651174420}
   - component: {fileID: 1097907945218134374}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: HabilityText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -509,9 +509,13 @@ GameObject:
   - component: {fileID: 5310077848278043178}
   - component: {fileID: 3978793836587637612}
   - component: {fileID: 3485081024793459521}
-  - component: {fileID: 4316522584818809024}
   - component: {fileID: 2188862076094203976}
-  m_Layer: 5
+  - component: {fileID: 2487663877587667411}
+  - component: {fileID: 5514912703995296976}
+  - component: {fileID: 4056178303292903087}
+  - component: {fileID: 906480782400085827}
+  - component: {fileID: 431663181785826875}
+  m_Layer: 7
   m_Name: Card
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -525,7 +529,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4802584632490794908}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -576,21 +580,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4316522584818809024
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4802584632490794908}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c039085f72a23244a2aa3a401e3483b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 64
 --- !u!114 &2188862076094203976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -603,7 +592,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96e9c0f8cd37635458b6c6843fdd3b8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardview: {fileID: 0}
+  cardview: {fileID: 11400000, guid: dc8550c3efaf9d240a8cc6da52265977, type: 2}
   viewCardNumber: 0
   cardNumber: 0
   cardName: 
@@ -622,6 +611,192 @@ MonoBehaviour:
   dogImage: {fileID: 3861097472789771737}
   powerImage: {fileID: 8632294425126950077}
   descriptionImage: {fileID: 1156147301589912947}
+--- !u!50 &2487663877587667411
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4802584632490794908}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
+--- !u!61 &5514912703995296976
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4802584632490794908}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 36, y: 57}
+  m_EdgeRadius: 0
+--- !u!114 &4056178303292903087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4802584632490794908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c039085f72a23244a2aa3a401e3483b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &906480782400085827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4802584632490794908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3863c9cf2972e464cb95c7f8e997249b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Canvas: {fileID: 0}
+--- !u!114 &431663181785826875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4802584632490794908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 13
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4056178303292903087}
+          m_TargetAssemblyTypeName: Drag, Assembly-CSharp
+          m_MethodName: StartDrag
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 906480782400085827}
+          m_TargetAssemblyTypeName: CardZoom, Assembly-CSharp
+          m_MethodName: OnHoverExit
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 14
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4056178303292903087}
+          m_TargetAssemblyTypeName: Drag, Assembly-CSharp
+          m_MethodName: Enddrag
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 906480782400085827}
+          m_TargetAssemblyTypeName: CardZoom, Assembly-CSharp
+          m_MethodName: OneHoverEnter
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 906480782400085827}
+          m_TargetAssemblyTypeName: CardZoom, Assembly-CSharp
+          m_MethodName: OnHoverExit
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &4967593531897399499
 GameObject:
   m_ObjectHideFlags: 0
@@ -633,7 +808,7 @@ GameObject:
   - component: {fileID: 7976571504132177335}
   - component: {fileID: 3604334866568162925}
   - component: {fileID: 1178425855998077739}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Placeboard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -708,7 +883,7 @@ GameObject:
   - component: {fileID: 1044817549526318664}
   - component: {fileID: 4881468429810212679}
   - component: {fileID: 905556824823971462}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: PowerText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -842,7 +1017,7 @@ GameObject:
   - component: {fileID: 5998286300622897523}
   - component: {fileID: 8891102190032847046}
   - component: {fileID: 1156147301589912947}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: DescriptionImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
