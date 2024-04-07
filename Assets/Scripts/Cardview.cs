@@ -9,7 +9,7 @@ using Unity.VisualScripting;
 public class Cardview : MonoBehaviour
 {   
     public Cards cardview;
-
+    public string cardZone;
     public int viewCardNumber;
     public int cardNumber;
     public string cardName;
@@ -33,6 +33,7 @@ public class Cardview : MonoBehaviour
 
     void Start()
     {
+        cardZone = cardview.zone;
         cardNumber = cardview.cardNumber;
         cardName = cardview.cardName;
         cardPower = cardview.cardPower;

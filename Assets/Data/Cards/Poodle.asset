@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae4268323ab816a46adf4a38c5905a34, type: 3}
   m_Name: Poodle
   m_EditorClassIdentifier: 
-  cardNumber: 17
+  cardNumber: 16
   cardName: Poodle Coquette
   cardPower: 5
   cardHability: gyhn
@@ -21,3 +21,4 @@ MonoBehaviour:
   cardPowerImage: {fileID: 21300000, guid: 43380dab59c8ec54fa2abc47f17083e2, type: 3}
   cardDescriptionImage: {fileID: 21300000, guid: 796eee6704fb4d64cb0798d71c399ddb, type: 3}
   cardPlaceboardImage: {fileID: 21300000, guid: 5206876d4e405604a955859bf011caa2, type: 3}
+  zone: ar

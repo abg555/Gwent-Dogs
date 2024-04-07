@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine;
 
 public class DeckButton : MonoBehaviour
-{ 
+{
 
     public GameObject Rey;
     public GameObject Aguacero;
@@ -17,14 +17,22 @@ public class DeckButton : MonoBehaviour
     public GameObject Vito;
     public GameObject Rastafari;
     public GameObject Cocky;
+    public GameObject Aqua;
+    public GameObject Capitan;
+    public GameObject Golden;
+    public GameObject Golden2;
+    public GameObject Vientos;
+    public GameObject Pome;
+    public GameObject Chusky;
     public GameObject PlayerArea;
+    public GameObject PlayerLider;
 
 
     List<GameObject> cards = new List<GameObject>();
 
     void Start()
     {
-        cards.Add(Rey);
+
         cards.Add(Rastafari);
         cards.Add(Aguacero);
         cards.Add(Poodle);
@@ -34,8 +42,16 @@ public class DeckButton : MonoBehaviour
         cards.Add(Cocky);
         cards.Add(Sequia);
         cards.Add(Robin);
+        cards.Add(Golden);
+        cards.Add(Golden2);
+        cards.Add(Aqua);
+        cards.Add(Capitan);
+        cards.Add(Pome);
+        cards.Add(Vientos);
+        cards.Add(Chusky);
 
-
+        GameObject lider = Instantiate(Rey, new Vector3(0, 0, 0), Quaternion.identity);
+        lider.transform.SetParent(PlayerLider.transform, false);
 
         for (var i = 0; i < 10; i++)
         {
@@ -61,11 +77,11 @@ public class DeckButton : MonoBehaviour
         }
         else
         {
-            Debug.Log("No hay más cartas en el mazo.");
+            Debug.Log("No hay mï¿½s cartas en el mazo.");
         }
-        
 
-        
+
+
 
     }
 }

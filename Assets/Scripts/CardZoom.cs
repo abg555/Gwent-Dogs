@@ -6,7 +6,7 @@ public class CardZoom : MonoBehaviour
 {
     public GameObject Canvas;
     private GameObject zoomCard;
-    private Vector2 zoomPlace = new Vector2(4, 4);
+    private Vector2 zoomPlace = new Vector2(5, 5);
 
     public void Awake()
     {
@@ -15,7 +15,7 @@ public class CardZoom : MonoBehaviour
     }
     public void OneHoverEnter()
     {
-        zoomCard = Instantiate(gameObject, new Vector2(136, 157), Quaternion.identity);
+        zoomCard = Instantiate(gameObject, new Vector2(110, 157), Quaternion.identity);
         zoomCard.transform.SetParent(Canvas.transform, false);
         zoomCard.transform.localScale = zoomPlace;
         /*zoomCard.layer = LayerMask.NameToLayer("Zoom");

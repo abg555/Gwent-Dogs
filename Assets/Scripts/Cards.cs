@@ -16,6 +16,7 @@ public class Cards : ScriptableObject
     public Sprite cardPowerImage;
     public Sprite cardDescriptionImage;
     public Sprite cardPlaceboardImage;
+    public string zone;
 
 
 public Cards(){

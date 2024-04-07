@@ -7,6 +7,8 @@ public class Drag : MonoBehaviour
     private bool isDragging = false;
     private bool isOverDropZone = false;
     private bool isPlace = false;
+    private bool isSum = false;
+    public GameObject endTurn;
     private GameObject dropZone;
     private GameObject Canvas;
     private GameObject startParent;
@@ -44,15 +46,39 @@ public class Drag : MonoBehaviour
             startPosition = transform.position;
             isDragging = true;
         }
-        
+
     }
-public void Enddrag()
+    public void Enddrag()
     {
         isDragging = false;
-        if (isOverDropZone)
+        if (isOverDropZone && ZoneSpace())
         {
             transform.SetParent(dropZone.transform, false);
             isPlace = true;
+            PowerZoneManager zonePowerManager = dropZone.GetComponent<PowerZoneManager>();
+            PowerZoneManager2 zonePowerManager2 = dropZone.GetComponent<PowerZoneManager2>();
+
+            if (zonePowerManager != null && !isSum)
+            {
+                // Asume que el script Cardview está adjunto a la carta y tiene un método para obtener el poder
+                int cardPower = GetComponent<Cardview>().cardPower;
+                // Añade el poder de la carta al total de la zona
+                zonePowerManager.AddCardPower("c", cardPower);
+                isSum = true;
+
+            }
+            if (zonePowerManager2 != null && !isSum)
+            {
+                // Asume que el script Cardview está adjunto a la carta y tiene un método para obtener el poder
+                int cardPower = GetComponent<Cardview>().cardPower;
+                // Añade el poder de la carta al total de la zona
+
+                zonePowerManager2.AddCardPower2("c2", cardPower);
+                isSum = true;
+            }
+
+
+            endTurn.GetComponent<TurnManager>().ChangeTurn();
         }
         else
         {
@@ -60,4 +86,14 @@ public void Enddrag()
             transform.SetParent(startParent.transform, false);
         }
     }
+    public bool ZoneSpace()
+    {
+        Zone conditions = dropZone.GetComponent<Zone>();
+        string word = conditions.zoneNames;
+        string ca = gameObject.GetComponent<Cardview>().cardZone;
+
+        if (word == ca) return true;
+        else return false;
+    }
+
 }

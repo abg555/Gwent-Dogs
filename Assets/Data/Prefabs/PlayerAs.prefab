@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 5285099998225339395}
   - component: {fileID: 8662528758288405051}
   - component: {fileID: 551663898387522721}
+  - component: {fileID: 4942776132941432297}
+  - component: {fileID: 466307922339712224}
   m_Layer: 5
   m_Name: PlayerAs
   m_TagString: Untagged
@@ -36,7 +38,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 68.55237, y: -95.6}
+  m_AnchoredPosition: {x: 70.25, y: -158.25}
   m_SizeDelta: {x: 315.8001, y: 56.7752}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8298695156405224021
@@ -146,3 +148,30 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 314, y: 57}
   m_EdgeRadius: 0
+--- !u!114 &4942776132941432297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1556744136578312089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb6dc82791cb3f04d8cf710ade372163, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  zoneNames: as
+--- !u!114 &466307922339712224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1556744136578312089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4bbf6d922a42b04cb0c1d2a89451ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  totalPower: 0
+  zone: {fileID: 0}
