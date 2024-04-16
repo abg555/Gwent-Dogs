@@ -19,7 +19,7 @@ public class PowerZoneManager2 : MonoBehaviour
         if (specificZones2.Contains(zoneName))
         {
             zonePowers2[zoneName] += power;
-            zone.AddZonePower2(zoneName, power); // Asegúrate de que esto es lo que quieres hacer
+            zone.AddZonePower2(zoneName, power); 
             Debug.Log("Poder en zona " + zoneName + ": " + zonePowers2[zoneName]);
         }
         else
@@ -33,7 +33,7 @@ public class PowerZoneManager2 : MonoBehaviour
         if (specificZones2.Contains(zoneName))
         {
             zonePowers2[zoneName] -= power;
-            zone.RemoveZonePower2(zoneName, power); // Asegúrate de que esto es lo que quieres hacer
+            zone.RemoveZonePower2(zoneName, power); 
             Debug.Log("Poder en zona " + zoneName + ": " + zonePowers2[zoneName]);
         }
         else

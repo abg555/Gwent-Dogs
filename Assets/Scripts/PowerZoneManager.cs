@@ -14,12 +14,26 @@ public class PowerZoneManager : MonoBehaviour
             zonePowers[zone] = 0;
         }
     }
+
+    public void SumInDropZone ()
+    {
+        foreach (Transform child in transform)
+        {
+            child.GetComponent<Cardview>().cardPower++;
+
+
+            // child.GetComponent<Cardview>().powerText.text. ++.ToString();
+        }    
+    }
+
+
+
     public void AddCardPower(string zoneName, int power)
     {
         if (specificZones.Contains(zoneName))
         {
             zonePowers[zoneName] += power;
-            zone.AddZonePower(zoneName, power); // Asegúrate de que esto es lo que quieres hacer
+            zone.AddZonePower(zoneName, power); 
             Debug.Log("Poder en zona " + zoneName + ": " + zonePowers[zoneName]);
         }
         else
@@ -33,7 +47,7 @@ public class PowerZoneManager : MonoBehaviour
         if (specificZones.Contains(zoneName))
         {
             zonePowers[zoneName] -= power;
-            zone.RemoveZonePower(zoneName, power); // Asegúrate de que esto es lo que quieres hacer
+            zone.RemoveZonePower(zoneName, power); 
             Debug.Log("Poder en zona " + zoneName + ": " + zonePowers[zoneName]);
         }
         else

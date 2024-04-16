@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ae4268323ab816a46adf4a38c5905a34, type: 3}
-  m_Name: New Card
+  m_Name: Poodler5
   m_EditorClassIdentifier: 
-  cardNumber: 30
-  cardName: AquaDogO
-  cardPower: 0
-  cardHability: dsc
+  cardNumber: 43
+  cardName: Poodler Coquette
+  cardPower: 5
+  cardHability: xdb
   cardBackgroundImage: {fileID: 21300000, guid: e9db37abbc530694abf701eb746ee3d2, type: 3}
-  cardDogImage: {fileID: 21300000, guid: 44735d2b52c4c07489d24bf36ddceadf, type: 3}
+  cardDogImage: {fileID: 21300000, guid: 4b4c708947541a045bfdf6fd72e2ca79, type: 3}
   cardPowerImage: {fileID: 21300000, guid: 43380dab59c8ec54fa2abc47f17083e2, type: 3}
   cardDescriptionImage: {fileID: 21300000, guid: 796eee6704fb4d64cb0798d71c399ddb, type: 3}
   cardPlaceboardImage: {fileID: 21300000, guid: 5206876d4e405604a955859bf011caa2, type: 3}

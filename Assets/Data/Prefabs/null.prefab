@@ -44,6 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6c40fc96ed14804189ff007c65a8196, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turn: 0
-  playerArea: {fileID: 4259695711726603023, guid: 8450f5e8cf3dee640a2e8ab5e1f80f62, type: 3}
-  enemyArea: {fileID: 1553135318139497759, guid: 05e305dae1357a643b2f40ceaaba9cf9, type: 3}
+  playerArea: {fileID: 0}
+  enemyArea: {fileID: 0}
+  specificZones:
+  - c
+  - ar
+  - as
+  isPlayerTurn: 1

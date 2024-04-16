@@ -7,19 +7,21 @@ public class Count2 : MonoBehaviour
 {
 
 
-    public TMP_Text scoreText; // Referencia al componente Text
-    public turn2 turn2;// Referencia al ZoneManager
+    public TMP_Text scoreText;
+    public turn2 turn2;
+    public int TotalPlayerPower2 { get; private set; } = 0;
 
-    void Update()
+
+    public void Update()
     {
-        // Actualiza el texto del objeto UI para mostrar el total de puntos
-        int totalPlayerPower = 0;
+
+        TotalPlayerPower2 = 0;
         foreach (var zonePower in turn2.zonePowers2.Values)
         {
-            totalPlayerPower += zonePower;
+            TotalPlayerPower2 += zonePower;
         }
-        scoreText.text = "Total de Puntos: " + totalPlayerPower;
+        scoreText.text = "Total de Puntos: " + TotalPlayerPower2;
     }
 
-
 }
+

@@ -8,15 +8,17 @@ public class Drag : MonoBehaviour
     private bool isOverDropZone = false;
     private bool isPlace = false;
     private bool isSum = false;
-    public GameObject endTurn;
     private GameObject dropZone;
     private GameObject Canvas;
     private GameObject startParent;
     private Vector2 startPosition;
+    private TurnButton turnButton;
+
 
     private void Awake()
     {
         Canvas = GameObject.Find("MainCanvas");
+        turnButton = GameObject.FindObjectOfType<TurnButton>();
     }
 
     void Update()
@@ -60,30 +62,35 @@ public class Drag : MonoBehaviour
 
             if (zonePowerManager != null && !isSum)
             {
-                // Asume que el script Cardview está adjunto a la carta y tiene un método para obtener el poder
+
                 int cardPower = GetComponent<Cardview>().cardPower;
-                // Añade el poder de la carta al total de la zona
+
                 zonePowerManager.AddCardPower("c", cardPower);
                 isSum = true;
+                turnButton.CardPlayed();
+
 
             }
             if (zonePowerManager2 != null && !isSum)
             {
-                // Asume que el script Cardview está adjunto a la carta y tiene un método para obtener el poder
+
                 int cardPower = GetComponent<Cardview>().cardPower;
-                // Añade el poder de la carta al total de la zona
+
 
                 zonePowerManager2.AddCardPower2("c2", cardPower);
                 isSum = true;
+                turnButton.CardPlayed();
+
             }
 
+            GetComponent<Effect>().PlayEffect(transform.parent.gameObject);
 
-            endTurn.GetComponent<TurnManager>().ChangeTurn();
         }
         else
         {
             transform.position = startPosition;
             transform.SetParent(startParent.transform, false);
+
         }
     }
     public bool ZoneSpace()
@@ -92,7 +99,7 @@ public class Drag : MonoBehaviour
         string word = conditions.zoneNames;
         string ca = gameObject.GetComponent<Cardview>().cardZone;
 
-        if (word == ca) return true;
+        if (word == ca && !turnButton.isCard) return true;
         else return false;
     }
 

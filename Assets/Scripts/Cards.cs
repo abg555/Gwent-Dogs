@@ -19,9 +19,10 @@ public class Cards : ScriptableObject
     public string zone;
 
 
-public Cards(){
+    public Cards()
+    {
 
-}
+    }
 
 
 }

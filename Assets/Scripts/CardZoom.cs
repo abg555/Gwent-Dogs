@@ -18,10 +18,7 @@ public class CardZoom : MonoBehaviour
         zoomCard = Instantiate(gameObject, new Vector2(110, 157), Quaternion.identity);
         zoomCard.transform.SetParent(Canvas.transform, false);
         zoomCard.transform.localScale = zoomPlace;
-        /*zoomCard.layer = LayerMask.NameToLayer("Zoom");
-
-        RectTransform rect = zoomCard.GetComponent<RectTransform>();
-        rect.sizeDelta = new Vector2(186, 207);*/
+       
     }
     public void OnHoverExit()
     {

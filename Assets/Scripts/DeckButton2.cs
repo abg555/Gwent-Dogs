@@ -47,7 +47,35 @@ public class DeckButton2 : MonoBehaviour
         cards.Add(Chusky);
 
 
-        for (var i = 0; i < 10; i++)
+        Hand2();
+        GameObject lider2 = Instantiate(Rey, new Vector3(0, 0, 0), Quaternion.identity);
+        lider2.transform.SetParent(PlayerLider.transform, false);
+
+        void OnClick2()
+        {
+
+            if (cards.Count > 0)
+            {
+                int randomIndex2 = Random.Range(0, cards.Count);
+                GameObject enemyCard = Instantiate(cards[randomIndex2], new Vector3(0, 0, 0), Quaternion.identity);
+                enemyCard.transform.SetParent(EnemyArea.transform, false);
+                cards.RemoveAt(randomIndex2);
+            }
+            else
+            {
+                Debug.Log("No hay m�s cartas en el mazo.");
+            }
+
+
+
+        }
+        void Update()
+        {
+
+        }
+
+         void Hand2(){
+            for (var i = 0; i < 5; i++)
         {
             int randomIndex2 = Random.Range(0, cards.Count);
             GameObject enemyCard1 = Instantiate(cards[randomIndex2], new Vector3(0, 0, 0), Quaternion.identity);
@@ -56,31 +84,6 @@ public class DeckButton2 : MonoBehaviour
 
 
         }
-        GameObject lider2 = Instantiate(Rey, new Vector3(0, 0, 0), Quaternion.identity);
-        lider2.transform.SetParent(PlayerLider.transform, false);
-
-    }
-
-    public void OnClick2()
-    {
-
-        if (cards.Count > 0)
-        {
-            int randomIndex2 = Random.Range(0, cards.Count);
-            GameObject enemyCard = Instantiate(cards[randomIndex2], new Vector3(0, 0, 0), Quaternion.identity);
-            enemyCard.transform.SetParent(EnemyArea.transform, false);
-            cards.RemoveAt(randomIndex2);
         }
-        else
-        {
-            Debug.Log("No hay m�s cartas en el mazo.");
-        }
-
-
-
-    }
-    void Update()
-    {
-
     }
 }

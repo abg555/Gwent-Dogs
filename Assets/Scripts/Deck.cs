@@ -9,12 +9,12 @@ public class Deck : MonoBehaviour
 
     //deck.Add(AssetDatabase.LoadAssetAtPath<GameObject>(""));
 
-    void Awake ()
+    void Awake()
     {
         for (int i = 0; i < 10; i++)
             deck.Add(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Data/CardsGameObject/Rey.prefab"));
-            
-            Debug.Log($"la cantidqad de cartas en el deck es de: {deck.Count}");
+
+        Debug.Log($"la cantidqad de cartas en el deck es de: {deck.Count}");
     }
-    
+
 }

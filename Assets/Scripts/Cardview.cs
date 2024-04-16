@@ -7,7 +7,7 @@ using TMPro;
 using Unity.VisualScripting;
 
 public class Cardview : MonoBehaviour
-{   
+{
     public Cards cardview;
     public string cardZone;
     public int viewCardNumber;
@@ -20,12 +20,12 @@ public class Cardview : MonoBehaviour
     public Sprite cardPowerImage;
     public Sprite cardDescriptionImage;
     public Sprite cardPlaceboardImage;
-    
+
     public TMP_Text nameText;
     public TMP_Text habilityText;
     public TMP_Text powerText;
     public Image backgroundImage;
-    public Image placeImage; 
+    public Image placeImage;
     public Image dogImage;
     public Image powerImage;
     public Image descriptionImage;
@@ -43,11 +43,11 @@ public class Cardview : MonoBehaviour
         cardPowerImage = cardview.cardPowerImage;
         cardDescriptionImage = cardview.cardDescriptionImage;
         cardPlaceboardImage = cardview.cardPlaceboardImage;
-    
-        nameText.text =  cardName;
+
+        nameText.text = cardName;
         habilityText.text = cardHability;
         powerText.text = cardPower.ToString();
-        backgroundImage.sprite =  cardBackgroundImage;
+        backgroundImage.sprite = cardBackgroundImage;
         placeImage.sprite = cardPlaceboardImage;
         dogImage.sprite = cardDogImage;
         powerImage.sprite = cardPowerImage;

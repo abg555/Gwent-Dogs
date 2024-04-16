@@ -515,6 +515,7 @@ GameObject:
   - component: {fileID: 4056178303292903087}
   - component: {fileID: 4522053688354032108}
   - component: {fileID: 431663181785826875}
+  - component: {fileID: -1019105838931419713}
   m_Layer: 7
   m_Name: Card
   m_TagString: Untagged
@@ -696,7 +697,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c039085f72a23244a2aa3a401e3483b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  endTurn: {fileID: 2203736513667252997, guid: ec5cf5c8ad87689478a86a4e6cf91839, type: 3}
 --- !u!114 &4522053688354032108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -799,6 +799,18 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &-1019105838931419713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4802584632490794908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8621adcba815e9418b142da4db1e302, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4967593531897399499
 GameObject:
   m_ObjectHideFlags: 0

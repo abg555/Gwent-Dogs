@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ae4268323ab816a46adf4a38c5905a34, type: 3}
-  m_Name: New Card 2
+  m_Name: Capitan2
   m_EditorClassIdentifier: 
-  cardNumber: 32
-  cardName: Premios Golden Retriever
+  cardNumber: 31
+  cardName: "Capit\xE1n Rottweiler"
   cardPower: 0
-  cardHability: nl
+  cardHability: cx
   cardBackgroundImage: {fileID: 21300000, guid: e9db37abbc530694abf701eb746ee3d2, type: 3}
-  cardDogImage: {fileID: 21300000, guid: 5ec8c2c74e31c2a41a9f4403fe538491, type: 3}
+  cardDogImage: {fileID: 21300000, guid: 41aba742f713fc143a9370a3f7298e4b, type: 3}
   cardPowerImage: {fileID: 21300000, guid: 43380dab59c8ec54fa2abc47f17083e2, type: 3}
   cardDescriptionImage: {fileID: 21300000, guid: 796eee6704fb4d64cb0798d71c399ddb, type: 3}
-  cardPlaceboardImage: {fileID: 21300000, guid: 5e4c49d394e135e4a82bd1137407db02, type: 3}
-  zone: au2
+  cardPlaceboardImage: {fileID: 21300000, guid: e7784b5e4e54cae43a3e92412f41304c, type: 3}
+  zone: as2
