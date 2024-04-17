@@ -90,7 +90,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3245392130926752610, guid: 0a10a44a3a1ec2345964c72e4b807269, type: 3}
       propertyPath: m_Name
-      value: Card Variant
+      value: Golden2
       objectReference: {fileID: 0}
     - target: {fileID: 8200951309181576374, guid: 0a10a44a3a1ec2345964c72e4b807269, type: 3}
       propertyPath: cardview

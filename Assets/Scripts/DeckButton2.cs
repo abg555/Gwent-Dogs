@@ -24,66 +24,71 @@ public class DeckButton2 : MonoBehaviour
     public GameObject Vientos;
     public GameObject Pome;
     public GameObject Chusky;
-    List<GameObject> cards = new List<GameObject>();
+    public List<GameObject> cards2 = new List<GameObject>();
 
     void Start()
     {
 
-        cards.Add(Rastafari);
-        cards.Add(Aguacero);
-        cards.Add(Poodle);
-        cards.Add(Poodle2);
-        cards.Add(Poodle3);
-        cards.Add(Vito);
-        cards.Add(Cocky);
-        cards.Add(Sequia);
-        cards.Add(Robin);
-        cards.Add(Golden);
-        cards.Add(Golden2);
-        cards.Add(Aqua);
-        cards.Add(Capitan);
-        cards.Add(Pome);
-        cards.Add(Vientos);
-        cards.Add(Chusky);
+        cards2.Add(Rastafari);
+        cards2.Add(Aguacero);
+        cards2.Add(Poodle);
+        cards2.Add(Poodle2);
+        cards2.Add(Poodle3);
+        cards2.Add(Vito);
+        cards2.Add(Cocky);
+        cards2.Add(Sequia);
+        cards2.Add(Robin);
+        cards2.Add(Golden);
+        cards2.Add(Golden2);
+        cards2.Add(Aqua);
+        cards2.Add(Capitan);
+        cards2.Add(Pome);
+        cards2.Add(Vientos);
+        cards2.Add(Chusky);
 
 
         Hand2();
         GameObject lider2 = Instantiate(Rey, new Vector3(0, 0, 0), Quaternion.identity);
         lider2.transform.SetParent(PlayerLider.transform, false);
+    }
 
-        void OnClick2()
+    void OnClick2()
+    {
+
+        if (cards2.Count > 0)
         {
-
-            if (cards.Count > 0)
-            {
-                int randomIndex2 = Random.Range(0, cards.Count);
-                GameObject enemyCard = Instantiate(cards[randomIndex2], new Vector3(0, 0, 0), Quaternion.identity);
-                enemyCard.transform.SetParent(EnemyArea.transform, false);
-                cards.RemoveAt(randomIndex2);
-            }
-            else
-            {
-                Debug.Log("No hay m�s cartas en el mazo.");
-            }
-
-
-
+            int randomIndex2 = Random.Range(0, cards2.Count);
+            GameObject enemyCard = Instantiate(cards2[randomIndex2], new Vector3(0, 0, 0), Quaternion.identity);
+            enemyCard.transform.SetParent(EnemyArea.transform, false);
+            cards2.RemoveAt(randomIndex2);
         }
-        void Update()
+        else
         {
-
+            Debug.Log("No hay m�s cartas en el mazo.");
         }
 
-         void Hand2(){
-            for (var i = 0; i < 5; i++)
+
+
+    }
+
+
+
+
+    public void Hand2()
+    {
+        for (var i = 0; i < 5; i++)
         {
-            int randomIndex2 = Random.Range(0, cards.Count);
-            GameObject enemyCard1 = Instantiate(cards[randomIndex2], new Vector3(0, 0, 0), Quaternion.identity);
+            int randomIndex2 = Random.Range(0, cards2.Count);
+            GameObject enemyCard1 = Instantiate(cards2[randomIndex2], new Vector3(0, 0, 0), Quaternion.identity);
             enemyCard1.transform.SetParent(EnemyArea.transform, false);
-            cards.RemoveAt(randomIndex2);
+            cards2.RemoveAt(randomIndex2);
 
+            foreach (GameObject card in cards2)
+            {
+                card.SetActive(false);
+            }
 
-        }
         }
     }
 }
+

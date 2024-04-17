@@ -58,43 +58,5 @@ public class TurnManager : MonoBehaviour
         }
     }
 
-    public void ChangeTurn()
-    {
-        isPlayerTurn = !isPlayerTurn; // Cambia el turno
-
-        if (isPlayerTurn)
-        {
-
-            SetPlayerAreaVisibility(true);
-            SetEnemyAreaVisibility(false);
-        }
-        else
-        {
-
-            SetPlayerAreaVisibility(false);
-            SetEnemyAreaVisibility(true);
-
-        }
-
-        Debug.Log("Turno actual: " + (isPlayerTurn ? "Jugador" : "Enemigo"));
-    }
-
-    private void SetPlayerAreaVisibility(bool isVisible)
-    {
-        foreach (Transform card in playerArea.transform)
-        {
-            card.gameObject.SetActive(isVisible);
-            card.GetComponent<Drag>().enabled = isVisible;
-        }
-    }
-
-    private void SetEnemyAreaVisibility(bool isVisible)
-    {
-        foreach (Transform card in enemyArea.transform)
-        {
-            card.gameObject.SetActive(isVisible);
-            card.GetComponent<Drag>().enabled = isVisible;
-        }
-    }
 
 }

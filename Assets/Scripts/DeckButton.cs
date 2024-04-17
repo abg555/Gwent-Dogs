@@ -30,7 +30,7 @@ public class DeckButton : MonoBehaviour
 
 
 
-    List<GameObject> cards = new List<GameObject>();
+    public List<GameObject> cards = new List<GameObject>();
 
     void Start()
     {
@@ -55,7 +55,7 @@ public class DeckButton : MonoBehaviour
         GameObject lider = Instantiate(Rey, new Vector3(0, 0, 0), Quaternion.identity);
         lider.transform.SetParent(PlayerLider.transform, false);
 
-        Hand();       
+        Hand();
 
     }
     void Update()
@@ -82,14 +82,26 @@ public class DeckButton : MonoBehaviour
 
     }
 
-public void Hand(){
-    for (var i = 0; i < 5; i++)
+    public void Hand()
+    {
+        for (var i = 0; i < 5; i++)
         {
             int randomIndex = Random.Range(0, cards.Count);
             GameObject playerCard1 = Instantiate(cards[randomIndex], new Vector3(0, 0, 0), Quaternion.identity);
             playerCard1.transform.SetParent(PlayerArea.transform, false);
             cards.RemoveAt(randomIndex);
+
+
+            foreach (GameObject card in cards)
+            {
+                card.SetActive(false);
+            }
+
+
+
+
         }
-}
+
+    }
 }
 

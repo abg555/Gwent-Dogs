@@ -14,7 +14,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: b97ddaa60ef67294dacf867cdd84160f, type: 2}
     - target: {fileID: 7254079275109618828, guid: b17eebd1a677e60448902d0576cbf9d9, type: 3}
       propertyPath: m_Name
-      value: Card Variant
+      value: Chusky
       objectReference: {fileID: 0}
     - target: {fileID: 8051504052124188986, guid: b17eebd1a677e60448902d0576cbf9d9, type: 3}
       propertyPath: m_Pivot.x

@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 127378865669177025, guid: 8a14da2347e9c4047b519a73388782a5, type: 3}
       propertyPath: m_Name
-      value: Card Variant
+      value: Pome
       objectReference: {fileID: 0}
     - target: {fileID: 780126087728327543, guid: 8a14da2347e9c4047b519a73388782a5, type: 3}
       propertyPath: m_Pivot.x

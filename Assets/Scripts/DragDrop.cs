@@ -53,13 +53,14 @@ public class Drag : MonoBehaviour
     public void Enddrag()
     {
         isDragging = false;
+
         if (isOverDropZone && ZoneSpace())
         {
             transform.SetParent(dropZone.transform, false);
             isPlace = true;
             PowerZoneManager zonePowerManager = dropZone.GetComponent<PowerZoneManager>();
             PowerZoneManager2 zonePowerManager2 = dropZone.GetComponent<PowerZoneManager2>();
-
+            turnButton.CardPlayed();
             if (zonePowerManager != null && !isSum)
             {
 
@@ -67,7 +68,7 @@ public class Drag : MonoBehaviour
 
                 zonePowerManager.AddCardPower("c", cardPower);
                 isSum = true;
-                turnButton.CardPlayed();
+
 
 
             }
@@ -79,7 +80,7 @@ public class Drag : MonoBehaviour
 
                 zonePowerManager2.AddCardPower2("c2", cardPower);
                 isSum = true;
-                turnButton.CardPlayed();
+
 
             }
 
@@ -99,8 +100,9 @@ public class Drag : MonoBehaviour
         string word = conditions.zoneNames;
         string ca = gameObject.GetComponent<Cardview>().cardZone;
 
-        if (word == ca && !turnButton.isCard) return true;
+        if (word == ca) return true;
         else return false;
     }
 
 }
+// && !turnButton.isCard

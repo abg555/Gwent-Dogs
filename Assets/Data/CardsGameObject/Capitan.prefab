@@ -90,7 +90,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4562206430452499503, guid: 2b6c5934a88e4e84ba676b3f3f1def17, type: 3}
       propertyPath: m_Name
-      value: Card Variant
+      value: Capitan
       objectReference: {fileID: 0}
     - target: {fileID: 7176034805063717883, guid: 2b6c5934a88e4e84ba676b3f3f1def17, type: 3}
       propertyPath: cardview

@@ -23,5 +23,11 @@ public class Count2 : MonoBehaviour
         scoreText.text = "Total de Puntos: " + TotalPlayerPower2;
     }
 
+    public void ResetPower2()
+    {
+        TotalPlayerPower2 = 0;
+        scoreText.text = "Total de Puntos: " + TotalPlayerPower2;
+        Update();
+    }
 }
 

@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class turn2 : MonoBehaviour
 {
+    public GameObject playerArea;
+    public GameObject enemyArea;
     public List<string> specificZones2 = new List<string> { "c2", "ar2", "as2" };
     public Dictionary<string, int> zonePowers2 = new Dictionary<string, int>();
+    public bool isPlayerTurn = true;
+
+
     public void AddZonePower2(string zoneName, int power)
     {
         if (specificZones2.Contains(zoneName))

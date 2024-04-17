@@ -14,7 +14,11 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: cda9c20a8c0bf994fb3c91c7b9a92b6b, type: 2}
     - target: {fileID: 4802584632490794908, guid: cfbb7b1352a44864380963089f22a7a6, type: 3}
       propertyPath: m_Name
-      value: Card Variant
+      value: Aqua2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4802584632490794908, guid: cfbb7b1352a44864380963089f22a7a6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5310077848278043178, guid: cfbb7b1352a44864380963089f22a7a6, type: 3}
       propertyPath: m_Pivot.x

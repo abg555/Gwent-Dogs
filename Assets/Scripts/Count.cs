@@ -17,8 +17,17 @@ public class Count : MonoBehaviour
         {
             TotalPlayerPower += zonePower;
         }
-        scoreText.text = "Total de Puntos: " + TotalPlayerPower;
+        UpdateText();
+    }
+    public void ResetPower()
+    {
+        TotalPlayerPower = 0;
+        UpdateText();
     }
 
+    void UpdateText()
+    {
+        scoreText.text = "Total de Puntos: " + TotalPlayerPower;
 
+    }
 }

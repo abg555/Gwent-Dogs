@@ -19,6 +19,6 @@ MonoBehaviour:
   cardBackgroundImage: {fileID: 21300000, guid: e9db37abbc530694abf701eb746ee3d2, type: 3}
   cardDogImage: {fileID: 21300000, guid: 73413de6e27a24e4eb98389e9ff8dc9c, type: 3}
   cardPowerImage: {fileID: 21300000, guid: 43380dab59c8ec54fa2abc47f17083e2, type: 3}
-  cardDescriptionImage: {fileID: 21300000, guid: 43380dab59c8ec54fa2abc47f17083e2, type: 3}
+  cardDescriptionImage: {fileID: 21300000, guid: 796eee6704fb4d64cb0798d71c399ddb, type: 3}
   cardPlaceboardImage: {fileID: 21300000, guid: 37b3f9ea9eb048548a025d27473719b2, type: 3}
   zone: cl

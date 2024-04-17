@@ -20,6 +20,7 @@ public class TurnButton : MonoBehaviour
     public void OnClick()
     {
         ChangeTurn();
+
     }
     public void ChangeTurn()
     {
@@ -45,7 +46,7 @@ public class TurnButton : MonoBehaviour
         Debug.Log("Turno actual: " + (isPlayerTurn ? "Jugador" : "Enemigo"));
     }
 
-    private void SetPlayerAreaVisibility(bool isVisible)
+    public void SetPlayerAreaVisibility(bool isVisible)
     {
         if (!isCard)
         {
@@ -59,7 +60,7 @@ public class TurnButton : MonoBehaviour
     }
 
 
-    private void SetEnemyAreaVisibility(bool isVisible)
+    public void SetEnemyAreaVisibility(bool isVisible)
     {
 
         if (!isCard)

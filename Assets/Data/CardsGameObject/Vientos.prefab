@@ -94,7 +94,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5362393892656088256, guid: 828273314c5e53544a96eb80864e4e03, type: 3}
       propertyPath: m_Name
-      value: Card Variant
+      value: Vientos
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
