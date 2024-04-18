@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pluss : MonoBehaviour
-{
+public class Pluss2 : MonoBehaviour
 
+{
     public GameObject ased;
     public PowerZoneManager powerZoneManager;
     private List<GameObject> processedCards = new List<GameObject>();
 
-    public void Plusss()
+    public void Plusss2()
     {
         // Debug.Log("hola");
         foreach (Transform child in ased.transform)
@@ -33,5 +33,3 @@ public class Pluss : MonoBehaviour
 
     }
 }
-
-

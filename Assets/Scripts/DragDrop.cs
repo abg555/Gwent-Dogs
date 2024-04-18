@@ -4,13 +4,16 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 public class Drag : MonoBehaviour
 {
-    private bool isDragging = false;
+
+    public bool isDragging = false;
     private bool isOverDropZone = false;
     private bool isPlace = false;
     private bool isSum = false;
     private GameObject dropZone;
     private GameObject Canvas;
     private GameObject startParent;
+
+
     private Vector2 startPosition;
     private TurnButton turnButton;
 
@@ -47,6 +50,9 @@ public class Drag : MonoBehaviour
             startParent = transform.parent.gameObject;
             startPosition = transform.position;
             isDragging = true;
+
+
+
         }
 
     }
@@ -54,13 +60,24 @@ public class Drag : MonoBehaviour
     {
         isDragging = false;
 
+
         if (isOverDropZone && ZoneSpace())
         {
+            if (!isPlace) // Comprobamos si la carta está en su lugar
+            {
+                turnButton = GameObject.Find("Button").GetComponent<TurnButton>();
+                turnButton.ChangeTurn();
+            }
             transform.SetParent(dropZone.transform, false);
             isPlace = true;
+
             PowerZoneManager zonePowerManager = dropZone.GetComponent<PowerZoneManager>();
             PowerZoneManager2 zonePowerManager2 = dropZone.GetComponent<PowerZoneManager2>();
-            turnButton.CardPlayed();
+
+
+
+
+
             if (zonePowerManager != null && !isSum)
             {
 
@@ -84,7 +101,7 @@ public class Drag : MonoBehaviour
 
             }
 
-            GetComponent<Effect>().PlayEffect(transform.parent.gameObject);
+
 
         }
         else
@@ -99,10 +116,10 @@ public class Drag : MonoBehaviour
         Zone conditions = dropZone.GetComponent<Zone>();
         string word = conditions.zoneNames;
         string ca = gameObject.GetComponent<Cardview>().cardZone;
+        string ca1 = gameObject.GetComponent<Cardview>().cardZone2;
 
-        if (word == ca) return true;
+        if (word == ca || word == ca1) return true;
         else return false;
     }
 
 }
-// && !turnButton.isCard

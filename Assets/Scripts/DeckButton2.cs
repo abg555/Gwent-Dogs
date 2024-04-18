@@ -83,10 +83,7 @@ public class DeckButton2 : MonoBehaviour
             enemyCard1.transform.SetParent(EnemyArea.transform, false);
             cards2.RemoveAt(randomIndex2);
 
-            foreach (GameObject card in cards2)
-            {
-                card.SetActive(false);
-            }
+
 
         }
     }

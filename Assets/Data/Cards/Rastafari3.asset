@@ -15,6 +15,8 @@ MonoBehaviour:
   cardNumber: 39
   cardName: Rastafari
   cardPower: 8
+  cardParent: 0
+  cardKind: 1
   cardHability: ad
   cardBackgroundImage: {fileID: 21300000, guid: e9db37abbc530694abf701eb746ee3d2, type: 3}
   cardDogImage: {fileID: 21300000, guid: 3c84697dbb9cc9d4bb2b4fbdac0457f1, type: 3}
@@ -22,3 +24,4 @@ MonoBehaviour:
   cardDescriptionImage: {fileID: 21300000, guid: 796eee6704fb4d64cb0798d71c399ddb, type: 3}
   cardPlaceboardImage: {fileID: 21300000, guid: 5206876d4e405604a955859bf011caa2, type: 3}
   zone: ar2
+  zone2: 

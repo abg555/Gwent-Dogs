@@ -26,6 +26,7 @@ public class DeckButton : MonoBehaviour
     public GameObject Chusky;
     public GameObject PlayerArea;
     public GameObject PlayerLider;
+    public GameObject specificDropZone;
 
 
 
@@ -84,18 +85,17 @@ public class DeckButton : MonoBehaviour
 
     public void Hand()
     {
-        for (var i = 0; i < 5; i++)
+        for (var i = 0; i < 10; i++)
         {
             int randomIndex = Random.Range(0, cards.Count);
             GameObject playerCard1 = Instantiate(cards[randomIndex], new Vector3(0, 0, 0), Quaternion.identity);
             playerCard1.transform.SetParent(PlayerArea.transform, false);
             cards.RemoveAt(randomIndex);
+            playerCard1.SetActive(true);
+            Debug.Log("se instanciaron");
 
 
-            foreach (GameObject card in cards)
-            {
-                card.SetActive(false);
-            }
+
 
 
 
@@ -103,5 +103,10 @@ public class DeckButton : MonoBehaviour
         }
 
     }
+
+
+
 }
+
+
 

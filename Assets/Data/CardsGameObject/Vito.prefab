@@ -9,6 +9,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2188862076094203976, guid: cfbb7b1352a44864380963089f22a7a6, type: 3}
+      propertyPath: cardZone
+      value: c
+      objectReference: {fileID: 0}
+    - target: {fileID: 2188862076094203976, guid: cfbb7b1352a44864380963089f22a7a6, type: 3}
       propertyPath: cardview
       value: 
       objectReference: {fileID: 11400000, guid: bf8c944dd2ea5e542a64190d7f042a79, type: 2}

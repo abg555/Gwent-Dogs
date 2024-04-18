@@ -10,8 +10,12 @@ public class Cardview : MonoBehaviour
 {
     public Cards cardview;
     public string cardZone;
+    public string cardZone2;
     public int viewCardNumber;
     public int cardNumber;
+    public int cardParent;
+    public int cardKind;
+
     public string cardName;
     public int cardPower;
     public string cardHability;
@@ -33,7 +37,10 @@ public class Cardview : MonoBehaviour
 
     void Start()
     {
+        cardParent = cardview.cardParent;
+        cardKind = cardview.cardKind;
         cardZone = cardview.zone;
+        cardZone2 = cardview.zone2;
         cardNumber = cardview.cardNumber;
         cardName = cardview.cardName;
         cardPower = cardview.cardPower;

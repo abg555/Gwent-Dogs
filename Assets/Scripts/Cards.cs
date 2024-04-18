@@ -10,6 +10,8 @@ public class Cards : ScriptableObject
     public int cardNumber;
     public string cardName;
     public int cardPower;
+    public int cardParent;
+    public int cardKind;
     public string cardHability;
     public Sprite cardBackgroundImage;
     public Sprite cardDogImage;
@@ -17,6 +19,7 @@ public class Cards : ScriptableObject
     public Sprite cardDescriptionImage;
     public Sprite cardPlaceboardImage;
     public string zone;
+    public string zone2;
 
 
     public Cards()

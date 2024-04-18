@@ -102,14 +102,14 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 5570411451974571002, guid: 27d594c669a1f3740bdaf0b3382f280a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 7497608971406900837}
+      addedObject: {fileID: 7101671952916044711}
   m_SourcePrefab: {fileID: 100100000, guid: 27d594c669a1f3740bdaf0b3382f280a, type: 3}
 --- !u!1 &3245392130926752610 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5570411451974571002, guid: 27d594c669a1f3740bdaf0b3382f280a, type: 3}
   m_PrefabInstance: {fileID: 6937761420394815640}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7497608971406900837
+--- !u!114 &7101671952916044711
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -121,5 +121,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab5a1d313ecdfdd49829e4722cfb2452, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arqueroPosition: {fileID: 3245392130926752610}
+  arqueroPosition: {fileID: 0}
   newCardPower: 10

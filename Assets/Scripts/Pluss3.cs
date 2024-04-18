@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pluss : MonoBehaviour
+public class Pluss3 : MonoBehaviour
 {
+
 
     public GameObject ased;
     public PowerZoneManager powerZoneManager;
     private List<GameObject> processedCards = new List<GameObject>();
 
-    public void Plusss()
+    public void Plusss3()
     {
         // Debug.Log("hola");
         foreach (Transform child in ased.transform)
@@ -20,10 +21,10 @@ public class Pluss : MonoBehaviour
                 Cardview cardView = card.GetComponent<Cardview>();
                 if (cardView != null && cardView.cardKind == 1)
                 {
-                    cardView.cardPower += 1;
+                    cardView.cardPower += 2;
                     Debug.Log("El nuevo valor de cardPower para " + cardView.cardName + " es: " + cardView.cardPower);
 
-                    powerZoneManager.AddCardPower(cardView.cardZone, 1);
+                    powerZoneManager.AddCardPower(cardView.cardZone, 2);
 
 
                     processedCards.Add(card);
@@ -33,5 +34,4 @@ public class Pluss : MonoBehaviour
 
     }
 }
-
 
