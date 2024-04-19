@@ -30,6 +30,7 @@ public class DeckButton2 : MonoBehaviour
     public GameObject Pome;
     public GameObject Chusky;
     public GameObject Chusky2;
+    public GameObject Sabueso2;
     public GameObject Duke;
     public GameObject Salchicha;
     public List<GameObject> cards2 = new List<GameObject>();
@@ -42,27 +43,27 @@ public class DeckButton2 : MonoBehaviour
         cards2.Add(Chau);
         cards2.Add(Chau2);
         cards2.Add(Chau3);
-
+        cards2.Add(Sabueso2);
         cards2.Add(Aguacero);
         cards2.Add(Poodle);
         cards2.Add(Poodle2);
         cards2.Add(Poodle3);
         cards2.Add(Vito);
-        // cards2.Add(Cocky);
-        // cards2.Add(Sequia);
+        cards2.Add(Cocky);
+        cards2.Add(Sequia);
         cards2.Add(Robin);
-        // cards2.Add(Golden);
-        // cards2.Add(Golden2);
-        // cards2.Add(caniche);
-        // cards2.Add(caniche2);
-        // cards2.Add(Aqua);
-        // cards2.Add(Capitan);
-        // cards2.Add(Pome);
-        // cards2.Add(Vientos);
+        cards2.Add(Golden);
+        cards2.Add(Golden2);
+        cards2.Add(caniche);
+        cards2.Add(caniche2);
+        cards2.Add(Aqua);
+        cards2.Add(Capitan);
+        cards2.Add(Pome);
+        cards2.Add(Vientos);
         cards2.Add(Duke);
         cards2.Add(Chusky);
         cards2.Add(Chusky2);
-        // cards2.Add(Salchicha);
+        cards2.Add(Salchicha);
 
 
 

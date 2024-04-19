@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
     private bool cards14 = false;
     private bool cards15 = false;
     private bool cards16 = false;
+    private bool cards17 = false;
     private bool cards18 = false;
     private bool cards19 = false;
     private bool cards20 = false;
@@ -42,6 +43,7 @@ public class GameManager : MonoBehaviour
     private bool cards25 = false;
     private bool cards26 = false;
     private bool cards27 = false;
+    private bool cards30 = false;
 
     public DeckButton deckButton;
     public DeckButton2 deckButton2;
@@ -91,6 +93,7 @@ public class GameManager : MonoBehaviour
     public DrawCard drawCard3;
     public DrawCard2 drawCard2;
     public Decoy decoy;
+    public Decoy2 decoy2;
     public NPower nPower;
     public NPower2 nPower1;
     public NPower3 nPower2;
@@ -99,6 +102,8 @@ public class GameManager : MonoBehaviour
     public NPower6 nPower5;
     public Row0 row0;
     public Row02 row02;
+    public Average average;
+    public Average2 average2;
 
     public GameObject cardzone;
     public GameObject cardzone2;
@@ -153,6 +158,7 @@ public class GameManager : MonoBehaviour
         DrawCard();
         DrawCard2();
         Decoy();
+        Decoy2();
         NPower();
         NPower2();
         NPower3();
@@ -162,6 +168,7 @@ public class GameManager : MonoBehaviour
         Row0();
         Row02();
         Average();
+        Average2();
         Card();
         Card2();
 
@@ -459,12 +466,12 @@ public class GameManager : MonoBehaviour
         foreach (Transform child in ar2.transform)
         {
             Cardview cardView = child.GetComponent<Cardview>();
-            if (!cards13 && cardView != null && cardView.cardNumber == 36)
+            if (!cards15 && cardView != null && cardView.cardNumber == 36)
             {
 
                 Debug.Log("mai");
                 morePower4.MorePower1();
-                cards13 = true;
+                cards15 = true;
                 break;
             }
 
@@ -644,6 +651,22 @@ public class GameManager : MonoBehaviour
 
         }
     }
+    void Decoy2()
+    {
+
+        foreach (Transform child in c2.transform)
+        {
+            Cardview cardView = child.GetComponent<Cardview>();
+            if (!cards17 && cardView != null && cardView.cardNumber == 38)
+            {
+                Debug.Log("hola");
+                decoy2.DecoySalchicha();
+                cards17 = true;
+                break;
+            }
+
+        }
+    }
     void NPower()
     {
 
@@ -779,11 +802,27 @@ public class GameManager : MonoBehaviour
         foreach (Transform child in c.transform)
         {
             Cardview cardView = child.GetComponent<Cardview>();
-            if (!cards7 && cardView != null && cardView.cardNumber == 24)
+            if (!cards7 && cardView != null && cardView.cardNumber == 15)
             {
                 Debug.Log("hola");
-                // average.Average1();
+                average.Average1();
                 cards7 = true;
+                break;
+            }
+
+        }
+    }
+    void Average2()
+    {
+
+        foreach (Transform child in c2.transform)
+        {
+            Cardview cardView = child.GetComponent<Cardview>();
+            if (!cards30 && cardView != null && cardView.cardNumber == 41)
+            {
+                Debug.Log("hola");
+                average2.Average1();
+                cards30 = true;
                 break;
             }
 
@@ -904,8 +943,8 @@ public class GameManager : MonoBehaviour
         {
 
             winPlayer++;
-            CallHand2();
-            CallHand3();
+            CallHand4();
+            CallHand();
 
 
         }
@@ -925,8 +964,8 @@ public class GameManager : MonoBehaviour
 
             winPlayer++;
             winEnemy++;
-            CallHand2();
-            CallHand3();
+            CallHand4();
+            CallHand();
 
 
         }
@@ -993,92 +1032,49 @@ public class GameManager : MonoBehaviour
     }
     void MoveCardsToHolder()
     {
-        List<GameObject> cardsToDestroy = new List<GameObject>();
-
         foreach (GameObject position in positions)
         {
-            foreach (Transform card in position.transform)
+            if (position == null)
             {
+                Debug.Log("La posición es null.");
+                continue;
+            }
 
-                string zoneName = card.GetComponent<Cardview>().cardZone;
+            List<GameObject> childrenToDestroy = new List<GameObject>();
+            foreach (Transform child in position.transform)
+            {
+                if (child == null)
+                {
+                    Debug.Log("El hijo es null.");
+                    continue;
+                }
 
-                int cardPower = card.GetComponent<Cardview>().cardPower;
 
+                string zoneName = child.GetComponent<Cardview>().cardZone;
+
+                int cardPower = child.GetComponent<Cardview>().cardPower;
 
 
 
                 position.GetComponent<PowerZoneManager>().RemoveCardPower(zoneName, cardPower);
 
-
-
-
-
-                cementerys.Add(card.gameObject);
-                cardsToDestroy.Add(card.gameObject);
+                childrenToDestroy.Add(child.gameObject);
 
 
             }
-        }
-        foreach (GameObject card in cardsToDestroy)
-        {
-            Destroy(card);
-        }
 
-
-        Debug.Log("Cementerys count: " + cementerys.Count);
-        foreach (GameObject card in cementerys)
-        {
-            if (card != null)
+            foreach (GameObject child in childrenToDestroy)
             {
-                Debug.Log("Card added: " + card.name);
+                Destroy(child);
             }
 
 
         }
     }
+
     void MoveCardsToHolder2()
     {
-        // List<GameObject> cardsToDestroy = new List<GameObject>();
-        // foreach (GameObject position in positions2)
-        // {
-        //     foreach (Transform card in position.transform)
-        //     {
 
-        //         string zoneName = card.GetComponent<Cardview>().cardZone;
-
-        //         int cardPower = card.GetComponent<Cardview>().cardPower;
-
-
-
-        //         position.GetComponent<PowerZoneManager>().RemoveCardPower(zoneName, cardPower);
-
-
-
-
-
-        //         cementerys.Add(card.gameObject);
-        //         cardsToDestroy.Add(card.gameObject);
-
-
-        //     }
-        // }
-        // foreach (GameObject card in cardsToDestroy)
-        // {
-        //     Destroy(card);
-        // }
-
-
-        // Debug.Log("Cementerys count: " + cementerys.Count);
-        // foreach (GameObject card in cementerys)
-        // {
-        //     if (card != null)
-        //     {
-        //         Debug.Log("Card added: " + card.name);
-        //     }
-
-
-        // }
-        List<GameObject> cardsToDestroy = new List<GameObject>();
         foreach (GameObject position in positions2)
         {
             if (position == null)
@@ -1087,50 +1083,32 @@ public class GameManager : MonoBehaviour
                 continue;
             }
 
-            foreach (Transform card in position.transform)
+            List<GameObject> childrenToDestroy = new List<GameObject>();
+            foreach (Transform child in position.transform)
             {
-                if (card == null)
+                if (child == null)
                 {
-                    Debug.Log("La tarjeta es null.");
+                    Debug.Log("El hijo es null.");
                     continue;
                 }
+                string zoneName = child.GetComponent<Cardview>().cardZone;
 
-                Cardview cardView = card.GetComponent<Cardview>();
-                if (cardView == null)
-                {
-                    Debug.Log("Cardview es null.");
-                    continue;
-                }
+                int cardPower = child.GetComponent<Cardview>().cardPower;
 
-                string zoneName = cardView.cardZone;
-                int cardPower = cardView.cardPower;
 
-                PowerZoneManager powerZoneManager = position.GetComponent<PowerZoneManager>();
-                if (powerZoneManager == null)
-                {
-                    Debug.Log("PowerZoneManager es null.");
-                    continue;
-                }
 
-                powerZoneManager.RemoveCardPower(zoneName, cardPower);
+                position.GetComponent<PowerZoneManager2>().RemoveCardPower2(zoneName, cardPower);
 
-                cementerys.Add(card.gameObject);
-                cardsToDestroy.Add(card.gameObject);
+                childrenToDestroy.Add(child.gameObject);
+
             }
-        }
 
-        foreach (GameObject card in cardsToDestroy)
-        {
-            Destroy(card);
-        }
-
-        Debug.Log("Cementerys count: " + cementerys.Count);
-        foreach (GameObject card in cementerys)
-        {
-            if (card != null)
+            foreach (GameObject child in childrenToDestroy)
             {
-                Debug.Log("Card added: " + card.name);
+                Destroy(child);
             }
+
+
         }
     }
     void CallHand()

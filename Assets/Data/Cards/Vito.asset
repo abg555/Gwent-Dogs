@@ -10,18 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ae4268323ab816a46adf4a38c5905a34, type: 3}
-  m_Name: Poodler4
+  m_Name: Vito
   m_EditorClassIdentifier: 
-  cardNumber: 42
-  cardName: Poodler Coquette
-  cardPower: 5
+  cardNumber: 15
+  cardName: Vito Corgione
+  cardPower: 10
   cardParent: 0
   cardKind: 1
-  cardHability: "Quien diga que no soy bella, \xA1MIENTE!"
+  cardHability: 'Calcula el promedio de poder entre todas las unidades cuerpo a cuerpo
+    y lo iguala al poder de las unidades cuerpo a cuerpo del enemigo '
   cardBackgroundImage: {fileID: 21300000, guid: e9db37abbc530694abf701eb746ee3d2, type: 3}
-  cardDogImage: {fileID: 21300000, guid: 4b4c708947541a045bfdf6fd72e2ca79, type: 3}
+  cardDogImage: {fileID: 21300000, guid: c489d003df4e513418cf5796b6f8e6c2, type: 3}
   cardPowerImage: {fileID: 21300000, guid: 43380dab59c8ec54fa2abc47f17083e2, type: 3}
   cardDescriptionImage: {fileID: 21300000, guid: 796eee6704fb4d64cb0798d71c399ddb, type: 3}
-  cardPlaceboardImage: {fileID: 21300000, guid: 5206876d4e405604a955859bf011caa2, type: 3}
-  zone: ar2
-  zone2: s
+  cardPlaceboardImage: {fileID: 21300000, guid: 9c96bd1afe33e02468de4a1c81870d98, type: 3}
+  zone: c
+  zone2: n

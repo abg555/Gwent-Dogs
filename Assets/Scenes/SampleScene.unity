@@ -620,7 +620,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 462, y: -209}
+  m_AnchoredPosition: {x: -189, y: 217}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &269926075
@@ -1541,7 +1541,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -428, y: -213}
+  m_AnchoredPosition: {x: -187, y: -227}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &652022374
@@ -2089,6 +2089,7 @@ MonoBehaviour:
   drawCard3: {fileID: 1990537568}
   drawCard2: {fileID: 1073216489}
   decoy: {fileID: 1990537562}
+  decoy2: {fileID: 1073216501}
   nPower: {fileID: 1748962025}
   nPower1: {fileID: 1748962038}
   nPower2: {fileID: 1748962037}
@@ -2097,6 +2098,8 @@ MonoBehaviour:
   nPower5: {fileID: 2056553233}
   row0: {fileID: 1990537586}
   row02: {fileID: 1073216495}
+  average: {fileID: 1990537580}
+  average2: {fileID: 1073216502}
   cardzone: {fileID: 442230779}
   cardzone2: {fileID: 429836554}
   playerButton: {fileID: 2288205022064671482, guid: 48f0750d44fee3c49934a56faa62ce97, type: 3}
@@ -2176,6 +2179,36 @@ MonoBehaviour:
   powerZoneManager: {fileID: 1990537555}
   powerZoneManager2: {fileID: 985315075}
   powerZoneManager3: {fileID: 1748962019}
+--- !u!114 &1073216501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 297922066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7aa523a2f26597c408de01c4270f865c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  c2: {fileID: 297922066}
+  enemyArea: {fileID: 1980251938}
+  powerZoneManager2: {fileID: 1073216488}
+--- !u!114 &1073216502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 297922066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdcf1ebdbccd7dc4da7b20063bafa269, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  c: {fileID: 1273204107}
+  c2: {fileID: 297922066}
+  powerZoneManager: {fileID: 1990537555}
 --- !u!1001 &1136838241
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3268,6 +3301,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2538882529830348491, guid: 3dd59309596962d44868522dec883d6c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1073216495}
+    - targetCorrespondingSourceObject: {fileID: 2538882529830348491, guid: 3dd59309596962d44868522dec883d6c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1073216501}
+    - targetCorrespondingSourceObject: {fileID: 2538882529830348491, guid: 3dd59309596962d44868522dec883d6c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1073216502}
   m_SourcePrefab: {fileID: 100100000, guid: 3dd59309596962d44868522dec883d6c, type: 3}
 --- !u!1 &1713578126
 GameObject:
@@ -3891,6 +3930,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e57f3174e55ded44a5d082dd996acc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  c: {fileID: 1273204107}
+  c2: {fileID: 297922066}
+  powerZoneManager2: {fileID: 1073216488}
 --- !u!114 &1990537586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4383,7 +4425,7 @@ PrefabInstance:
     - target: {fileID: 3984056480230473054, guid: 0babed00e572e394cbecce03abf24713, type: 3}
       propertyPath: Vito
       value: 
-      objectReference: {fileID: 6391805098806285161, guid: dd4c49f78d62c0248a5a8f0647d8db6e, type: 3}
+      objectReference: {fileID: 8330628088132271267, guid: 253437390e9693548a5804a629f98faa, type: 3}
     - target: {fileID: 3984056480230473054, guid: 0babed00e572e394cbecce03abf24713, type: 3}
       propertyPath: Chau2
       value: 
@@ -4424,6 +4466,10 @@ PrefabInstance:
       propertyPath: Golden2
       value: 
       objectReference: {fileID: 127378865669177025, guid: 8a14da2347e9c4047b519a73388782a5, type: 3}
+    - target: {fileID: 3984056480230473054, guid: 0babed00e572e394cbecce03abf24713, type: 3}
+      propertyPath: Sabueso
+      value: 
+      objectReference: {fileID: 6391805098806285161, guid: dd4c49f78d62c0248a5a8f0647d8db6e, type: 3}
     - target: {fileID: 3984056480230473054, guid: 0babed00e572e394cbecce03abf24713, type: 3}
       propertyPath: Vientos
       value: 
@@ -4790,7 +4836,7 @@ PrefabInstance:
     - target: {fileID: 4532670328032892248, guid: f5d6f2b3ee95c5b4fa30bfe1e72f4a4e, type: 3}
       propertyPath: Vito
       value: 
-      objectReference: {fileID: 9099002220641708909, guid: 17c4177e7aed25a478692660dad26ed0, type: 3}
+      objectReference: {fileID: 2656671688361744519, guid: 7f7b7327c075f664eaf8a7f0d440f166, type: 3}
     - target: {fileID: 4532670328032892248, guid: f5d6f2b3ee95c5b4fa30bfe1e72f4a4e, type: 3}
       propertyPath: Chau2
       value: 
@@ -4859,6 +4905,10 @@ PrefabInstance:
       propertyPath: Aguacero
       value: 
       objectReference: {fileID: 5849279716401717593, guid: fd84777954ae3eb4f94e20b91ee74682, type: 3}
+    - target: {fileID: 4532670328032892248, guid: f5d6f2b3ee95c5b4fa30bfe1e72f4a4e, type: 3}
+      propertyPath: Sabueso2
+      value: 
+      objectReference: {fileID: 9099002220641708909, guid: 17c4177e7aed25a478692660dad26ed0, type: 3}
     - target: {fileID: 4532670328032892248, guid: f5d6f2b3ee95c5b4fa30bfe1e72f4a4e, type: 3}
       propertyPath: caniche2
       value: 

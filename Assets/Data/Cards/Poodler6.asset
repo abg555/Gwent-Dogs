@@ -17,7 +17,7 @@ MonoBehaviour:
   cardPower: 5
   cardParent: 0
   cardKind: 1
-  cardHability: sv
+  cardHability: "Quien diga que no soy bella, \xA1MIENTE!"
   cardBackgroundImage: {fileID: 21300000, guid: e9db37abbc530694abf701eb746ee3d2, type: 3}
   cardDogImage: {fileID: 21300000, guid: 4b4c708947541a045bfdf6fd72e2ca79, type: 3}
   cardPowerImage: {fileID: 21300000, guid: 43380dab59c8ec54fa2abc47f17083e2, type: 3}

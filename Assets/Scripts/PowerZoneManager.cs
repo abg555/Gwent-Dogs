@@ -15,7 +15,7 @@ public class PowerZoneManager : MonoBehaviour
         }
     }
 
-    public void SumInDropZone ()
+    public void SumInDropZone()
     {
         foreach (Transform child in transform)
         {
@@ -23,7 +23,7 @@ public class PowerZoneManager : MonoBehaviour
 
 
             // child.GetComponent<Cardview>().powerText.text. ++.ToString();
-        }    
+        }
     }
 
 
@@ -33,7 +33,7 @@ public class PowerZoneManager : MonoBehaviour
         if (specificZones.Contains(zoneName))
         {
             zonePowers[zoneName] += power;
-            zone.AddZonePower(zoneName, power); 
+            zone.AddZonePower(zoneName, power);
             Debug.Log("Poder en zona " + zoneName + ": " + zonePowers[zoneName]);
         }
         else
@@ -47,7 +47,7 @@ public class PowerZoneManager : MonoBehaviour
         if (specificZones.Contains(zoneName))
         {
             zonePowers[zoneName] -= power;
-            zone.RemoveZonePower(zoneName, power); 
+            zone.RemoveZonePower(zoneName, power);
             Debug.Log("Poder en zona " + zoneName + ": " + zonePowers[zoneName]);
         }
         else
@@ -55,5 +55,6 @@ public class PowerZoneManager : MonoBehaviour
             Debug.Log("La zona " + zoneName + " no está en la lista de zonas específicas del jugador.");
         }
     }
+
 }
 

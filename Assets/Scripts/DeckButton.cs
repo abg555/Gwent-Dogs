@@ -33,6 +33,7 @@ public class DeckButton : MonoBehaviour
     public GameObject Duke;
     public GameObject Chusky;
     public GameObject Chusky2;
+    public GameObject Sabueso;
     public GameObject PlayerArea;
     public GameObject PlayerLider;
     public GameObject specificDropZone;
@@ -45,31 +46,32 @@ public class DeckButton : MonoBehaviour
     void Start()
     {
 
-        // cards.Add(Rastafari);
-        // cards.Add(Rastafari2);
-        // cards.Add(Aguacero);
+        cards.Add(Rastafari);
+        cards.Add(Rastafari2);
+        cards.Add(Aguacero);
         cards.Add(Poodle);
-        // cards.Add(Poodle2);
-        // cards.Add(Poodle3);
+        cards.Add(Poodle2);
+        cards.Add(Poodle3);
         cards.Add(Vito);
         cards.Add(Duke);
-        // cards.Add(Cocky);
-        // cards.Add(Sequia);
+        cards.Add(Cocky);
+        cards.Add(Sequia);
         cards.Add(Robin);
-        // cards.Add(Golden);
-        // cards.Add(Golden2);
-        // cards.Add(Caniche);
-        // cards.Add(Chau);
-        // cards.Add(Chau2);
+        cards.Add(Golden);
+        cards.Add(Golden2);
+        cards.Add(Caniche);
+        cards.Add(Chau);
+        cards.Add(Chau2);
         cards.Add(Chau3);
         cards.Add(Caniche2);
-        // cards.Add(Aqua);
+        cards.Add(Aqua);
         cards.Add(Salchicha);
         cards.Add(Capitan);
         cards.Add(Pome);
-        // cards.Add(Vientos);
-        // cards.Add(Chusky);
+        cards.Add(Vientos);
+        cards.Add(Chusky);
         cards.Add(Chusky2);
+        cards.Add(Sabueso);
 
         GameObject lider = Instantiate(Rey, new Vector3(0, 0, 0), Quaternion.identity);
         lider.transform.SetParent(PlayerLider.transform, false);

@@ -2,37 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Average : MonoBehaviour
+public class Average2 : MonoBehaviour
 {
+
     public GameObject c;
     public GameObject c2;
 
-    public PowerZoneManager2 powerZoneManager2;
+    public PowerZoneManager powerZoneManager;
 
 
     public void Average1()
     {
-        int powerZone = SumCardPowers(c);
-        int powerZones = SumCardPowers(c2);
-        int child = c.transform.childCount;
+        int powerZone = SumCardPowers(c2);
+        int powerZones = SumCardPowers(c);
+        int child = c2.transform.childCount;
         if (child != 0)
         {
             int totalPower = powerZone / child;
-            powerZoneManager2.RemoveCardPower2("c2", powerZones);
-            powerZoneManager2.AddCardPower2("c2", totalPower);
+            powerZoneManager.RemoveCardPower("c", powerZones);
+            powerZoneManager.AddCardPower("c", totalPower);
         }
-
-
-
-
-
     }
-
-
-
-
-
-
 
     public int SumCardPowers(GameObject zone)
     {
@@ -50,4 +40,6 @@ public class Average : MonoBehaviour
         return totalPower;
     }
 
+
 }
+

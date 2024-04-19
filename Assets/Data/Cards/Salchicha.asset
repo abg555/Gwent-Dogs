@@ -17,7 +17,7 @@ MonoBehaviour:
   cardPower: 0
   cardParent: 0
   cardKind: 0
-  cardHability: zczz
+  cardHability: Sustituye una carta de cuerpo a cuerpo y la devuelve a la mano
   cardBackgroundImage: {fileID: 21300000, guid: e9db37abbc530694abf701eb746ee3d2, type: 3}
   cardDogImage: {fileID: 21300000, guid: 7f67bb4735b0d4f48872353e0553215c, type: 3}
   cardPowerImage: {fileID: 21300000, guid: 43380dab59c8ec54fa2abc47f17083e2, type: 3}

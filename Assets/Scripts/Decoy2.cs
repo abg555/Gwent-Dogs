@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Decoy : MonoBehaviour
+public class Decoy2 : MonoBehaviour
 {
-    public GameObject c;
-    public GameObject playerArea;
-    public PowerZoneManager powerZoneManager;
+    public GameObject c2;
+    public GameObject enemyArea;
+    public PowerZoneManager2 powerZoneManager2;
 
 
 
     public void DecoySalchicha()
     {
-        int childCount = c.transform.childCount;
+        int childCount = c2.transform.childCount;
 
         if (childCount > 0)
         {
@@ -25,24 +25,24 @@ public class Decoy : MonoBehaviour
             while (attempts < maxAttempts)
             {
                 int randomIndex = Random.Range(0, childCount);
-                randomChild = c.transform.GetChild(randomIndex);
+                randomChild = c2.transform.GetChild(randomIndex);
                 cardView = randomChild.GetComponent<Cardview>();
-                if (cardView != null && cardView.cardNumber != 12 && cardView.cardKind == 1)
+                if (cardView != null && cardView.cardNumber != 38 && cardView.cardKind == 1)
                 {
                     break;
                 }
                 attempts++;
             }
 
-            if (cardView != null && cardView.cardNumber != 12 && cardView.cardKind == 1)
+            if (cardView != null && cardView.cardNumber != 38 && cardView.cardKind == 1)
             {
                 // Crea una nueva carta en playerArea que es una copia de la carta seleccionada
-                GameObject newCard = Instantiate(randomChild.gameObject, playerArea.transform.position, Quaternion.identity);
-                newCard.transform.SetParent(playerArea.transform, false);
+                GameObject newCard = Instantiate(randomChild.gameObject, enemyArea.transform.position, Quaternion.identity);
+                newCard.transform.SetParent(enemyArea.transform, false);
                 newCard.SetActive(false);
 
                 // Destruye la carta original en c
-                powerZoneManager.RemoveCardPower("c", cardView.cardPower);
+                powerZoneManager2.RemoveCardPower2("c2", cardView.cardPower);
                 Destroy(randomChild.gameObject);
             }
         }
@@ -52,4 +52,3 @@ public class Decoy : MonoBehaviour
         }
     }
 }
-

@@ -17,7 +17,7 @@ MonoBehaviour:
   cardPower: 4
   cardParent: 0
   cardKind: 1
-  cardHability: dd
+  cardHability: Roba una carta del enemigo
   cardBackgroundImage: {fileID: 21300000, guid: e9db37abbc530694abf701eb746ee3d2, type: 3}
   cardDogImage: {fileID: 21300000, guid: 1c1b78dcf09934c4b87d30fd081e5f0a, type: 3}
   cardPowerImage: {fileID: 21300000, guid: 43380dab59c8ec54fa2abc47f17083e2, type: 3}
