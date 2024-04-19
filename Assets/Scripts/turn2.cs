@@ -6,7 +6,7 @@ public class turn2 : MonoBehaviour
 {
     public GameObject playerArea;
     public GameObject enemyArea;
-    public List<string> specificZones2 = new List<string> { "c2", "ar2", "as2" };
+    public List<string> specificZones2 = new List<string> { };
     public Dictionary<string, int> zonePowers2 = new Dictionary<string, int>();
     public bool isPlayerTurn = true;
 

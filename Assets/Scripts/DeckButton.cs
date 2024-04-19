@@ -21,8 +21,15 @@ public class DeckButton : MonoBehaviour
     public GameObject Capitan;
     public GameObject Golden;
     public GameObject Golden2;
+    public GameObject Chau;
+    public GameObject Chau2;
+    public GameObject Chau3;
+    public GameObject Caniche;
+    public GameObject Caniche2;
+    public GameObject Salchicha;
     public GameObject Vientos;
     public GameObject Pome;
+    public GameObject Duke;
     public GameObject Chusky;
     public GameObject PlayerArea;
     public GameObject PlayerLider;
@@ -36,18 +43,25 @@ public class DeckButton : MonoBehaviour
     void Start()
     {
 
-        cards.Add(Rastafari);
-        cards.Add(Aguacero);
-        cards.Add(Poodle);
-        cards.Add(Poodle2);
-        cards.Add(Poodle3);
+        // cards.Add(Rastafari);
+        // cards.Add(Aguacero);
+        // cards.Add(Poodle);
+        // cards.Add(Poodle2);
+        // cards.Add(Poodle3);
         cards.Add(Vito);
-        cards.Add(Cocky);
-        cards.Add(Sequia);
-        cards.Add(Robin);
-        cards.Add(Golden);
-        cards.Add(Golden2);
+        cards.Add(Duke);
+        // cards.Add(Cocky);
+        // cards.Add(Sequia);
+        // cards.Add(Robin);
+        // cards.Add(Golden);
+        // cards.Add(Golden2);
+        // cards.Add(Caniche);
+        cards.Add(Chau);
+        cards.Add(Chau2);
+        cards.Add(Chau3);
+        cards.Add(Caniche2);
         cards.Add(Aqua);
+        cards.Add(Salchicha);
         cards.Add(Capitan);
         cards.Add(Pome);
         cards.Add(Vientos);
@@ -59,10 +73,7 @@ public class DeckButton : MonoBehaviour
         Hand();
 
     }
-    void Update()
-    {
 
-    }
     void OnClick()
     {
 
@@ -78,9 +89,6 @@ public class DeckButton : MonoBehaviour
             Debug.Log("No hay m�s cartas en el mazo.");
         }
 
-
-
-
     }
 
     public void Hand()
@@ -92,7 +100,7 @@ public class DeckButton : MonoBehaviour
             playerCard1.transform.SetParent(PlayerArea.transform, false);
             cards.RemoveAt(randomIndex);
             playerCard1.SetActive(true);
-            Debug.Log("se instanciaron");
+
 
 
 
@@ -103,6 +111,35 @@ public class DeckButton : MonoBehaviour
         }
 
     }
+    public void Hand2()
+    {
+        for (var i = 0; i < 2; i++)
+        {
+            int randomIndex = Random.Range(0, cards.Count);
+            GameObject playerCard1 = Instantiate(cards[randomIndex], new Vector3(0, 0, 0), Quaternion.identity);
+            playerCard1.transform.SetParent(PlayerArea.transform, false);
+            cards.RemoveAt(randomIndex);
+            playerCard1.SetActive(true);
+
+
+        }
+
+    }
+    public void Hand3()
+    {
+        for (var i = 0; i < 2; i++)
+        {
+            int randomIndex = Random.Range(0, cards.Count);
+            GameObject playerCard1 = Instantiate(cards[randomIndex], new Vector3(0, 0, 0), Quaternion.identity);
+            playerCard1.transform.SetParent(PlayerArea.transform, false);
+            cards.RemoveAt(randomIndex);
+            playerCard1.SetActive(false);
+
+
+        }
+
+    }
+
 
 
 

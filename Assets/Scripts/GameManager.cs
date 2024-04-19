@@ -14,20 +14,33 @@ public class GameManager : MonoBehaviour
     public Count count;
     public Count2 count2;
     private bool isEnd = false;
+    private bool isEnd2 = false;
     private bool cards = false;
-    private bool isReallyEnd = false;
+    private bool cards2 = false;
+    private bool cards3 = false;
+    private bool cards4 = false;
+    private bool cards5 = false;
+    private bool cards6 = false;
+    private bool cards7 = false;
+    private bool cards8 = false;
+    private bool cards9 = false;
     public DeckButton deckButton;
     public DeckButton2 deckButton2;
     public TurnButton turnButton;
     public int winPlayer;
     public int winEnemy;
+
+
     public GameObject[] specificZones;
+    public GameObject[] specificZones2;
     public TMP_Text textWinner;
     public GameObject dropZone;
+    public GameObject dropZone2;
     public GameObject au;
     public GameObject cl;
     public GameObject c;
-
+    public GameObject ar;
+    public GameObject as1;
     public Pluss pluss;
     public Pluss2 pluss2;
     public Pluss3 pluss3;
@@ -35,10 +48,18 @@ public class GameManager : MonoBehaviour
     public Weather2 weather2;
     public Weather3 weather3;
     public MorePower morePower;
+    public CleamWeather cleamWeather;
+    public DrawCard drawCard;
+    public Decoy decoy;
+    public NPower nPower;
+    public Row0 row0;
+    public GameObject cardzone;
+    public GameObject cardzone2;
 
-    int cardPlayer;
-    int cardDropZone;
-    private int previousChildCount = 0;
+
+
+
+
 
     public List<GameObject> cementerys = new List<GameObject>();
 
@@ -61,79 +82,54 @@ public class GameManager : MonoBehaviour
         Weather2();
         Weather3();
         MorePower();
-        foreach (Transform zone in dropZone.transform)
-        {
-            cardDropZone += zone.transform.childCount;
-            Debug.Log(cardDropZone);
-        }
-        if (cardDropZone == 1)
-        {
-            Card();
-            cards = true;
-        }
+        Cleam();
+        DrawCard();
+        Decoy();
+        NPower();
+        Row0();
+        Average();
+        Card();
+        Card2();
+
         CheckAndDestroyExtraCards();
-        if (!isEnd && playerArea.transform.childCount == 0 && enemyArea.transform.childCount == 0)
+        if (!isEnd && turnButton.Count == 1 && turnButton.Count2 == 1)
         {
-            int cardInZone = 0;
-            foreach (GameObject zone in specificZones)
-            {
-                cardInZone += zone.transform.childCount;
-            }
-            if (cardInZone >= 9)
-            {
-                count.Update();
-                count2.Update();
-                DetermineWinner();
-                isEnd = true;
-                StartCoroutine(ResetGame());
 
-            }
+            // count.Update();
+            // count2.Update();
+            DetermineWinner();
+            isEnd = true;
+            turnButton.turn = false;
+            // StartCoroutine(ResetGame());
+
+
+
+        }
+        if (!isEnd2 && turnButton.Count == 2 && turnButton.Count2 == 2)
+        {
+
+            // count.Update();
+            // count2.Update();
+            DetermineWinner();
+            isEnd2 = true;
+            turnButton.turn = false;
+            // StartCoroutine(ResetGame());
+
+
+
         }
 
 
-        if (!isReallyEnd && playerArea.transform.childCount == 0 && enemyArea.transform.childCount == 0 && cementerys.Count >= 29)
-        {
-            Debug.Log("Condiciones para DetermineFinalWinner cumplidas");
+        // if (!isReallyEnd && playerArea.transform.childCount == 0 && enemyArea.transform.childCount == 0 && cementerys.Count >= 29)
+        // {
+        //     Debug.Log("Condiciones para DetermineFinalWinner cumplidas");
 
-            Debug.Log("Llamando a DetermineFinalWinner");
-            DetermineFinalWinner();
-            isReallyEnd = true;
-        }
+        //     Debug.Log("Llamando a DetermineFinalWinner");
+        //     DetermineFinalWinner();
+        //     isReallyEnd = true;
+        // }
 
 
-    }
-
-    void Card()
-    {
-        Debug.Log("Iniciando el método Card()...");
-        turnButton.shouldChangeTurn = false;
-
-        foreach (Transform zone in playerArea.transform)
-        {
-            cardPlayer += zone.transform.childCount;
-            Debug.Log(cardPlayer);
-        }
-        int cardInZone = 0;
-        foreach (GameObject zone in specificZones)
-        {
-            cardInZone += zone.transform.childCount;
-        }
-
-        if (cardDropZone == 1 && cardPlayer == 9 && cardInZone == 0)
-        {
-            foreach (Transform child in dropZone.transform)
-            {
-                GameObject card = child.gameObject;
-                deckButton.cards.Add(card);
-                Destroy(card);
-                int randomIndex = Random.Range(0, deckButton.cards.Count);
-                GameObject playerCard1 = Instantiate(deckButton.cards[randomIndex], new Vector3(0, 0, 0), Quaternion.identity);
-                playerCard1.transform.SetParent(deckButton.PlayerArea.transform, false);
-                deckButton.cards.RemoveAt(randomIndex);
-                playerCard1.SetActive(true);
-            }
-        }
-        turnButton.shouldChangeTurn = true;
     }
 
     void Sum()
@@ -228,20 +224,168 @@ public class GameManager : MonoBehaviour
     }
     void MorePower()
     {
-        Debug.Log("hola");
+
+        foreach (Transform child in ar.transform)
+        {
+            Cardview cardView = child.GetComponent<Cardview>();
+            if (!cards && cardView != null && cardView.cardNumber == 9)
+            {
+
+                Debug.Log("mai");
+                morePower.MorePower1();
+                cards = true;
+                break;
+            }
+
+        }
+    }
+    void Cleam()
+    {
+        foreach (Transform child in ar.transform)
+        {
+            Cardview cardView = child.GetComponent<Cardview>();
+            if (!cards2 && cardView != null && cardView.cardNumber == 4)
+            {
+
+                cleamWeather.Cleam();
+                cards2 = true;
+                break;
+            }
+
+        }
+    }
+    void DrawCard()
+    {
         foreach (Transform child in c.transform)
         {
             Cardview cardView = child.GetComponent<Cardview>();
-            if (cardView != null && cardView.cardNumber == 11)
+            if (!cards3 && cardView != null && cardView.cardNumber == 11)
             {
 
-                morePower.MorePower1();
+                drawCard.Draw();
+                cards3 = true;
+                break;
+            }
+
+        }
+    }
+    void Decoy()
+    {
+
+        foreach (Transform child in c.transform)
+        {
+            Cardview cardView = child.GetComponent<Cardview>();
+            if (!cards4 && cardView != null && cardView.cardNumber == 12)
+            {
+                Debug.Log("hola");
+                decoy.DecoySalchicha();
+                cards4 = true;
+                break;
+            }
+
+        }
+    }
+    void NPower()
+    {
+
+        foreach (Transform child in as1.transform)
+        {
+            Cardview cardView = child.GetComponent<Cardview>();
+            if (!cards5 && cardView != null && cardView.cardNumber == 21)
+            {
+                Debug.Log("k");
+                nPower.NPowerChau();
+                cards5 = true;
+                break;
+            }
+
+        }
+    }
+    void Row0()
+    {
+
+        foreach (Transform child in c.transform)
+        {
+            Cardview cardView = child.GetComponent<Cardview>();
+            if (!cards6 && cardView != null && cardView.cardNumber == 15)
+            {
+                Debug.Log("hola");
+                row0.CleamRow();
+                cards6 = true;
+                break;
+            }
+
+        }
+    }
+    void Average()
+    {
+
+        foreach (Transform child in c.transform)
+        {
+            Cardview cardView = child.GetComponent<Cardview>();
+            if (!cards7 && cardView != null && cardView.cardNumber == 24)
+            {
+                Debug.Log("hola");
+                // average.Average1();
+                cards7 = true;
                 break;
             }
 
         }
     }
 
+    void Card()
+    {
+        int childCount = cardzone.transform.childCount;
+        int childCount2 = playerArea.transform.childCount;
+        if (!cards8 && childCount == 2 && childCount2 == 8)
+        {
+            foreach (Transform child in cardzone.transform)
+            {
+                deckButton.cards.Add(child.gameObject);
+
+                for (var i = 0; i < 2; i++)
+                {
+                    int randomIndex = Random.Range(0, deckButton.cards.Count);
+                    GameObject playerCard = Instantiate(deckButton.cards[randomIndex], new Vector3(0, 0, 0), Quaternion.identity);
+                    playerCard.transform.SetParent(playerArea.transform, false);
+                    deckButton.cards.RemoveAt(randomIndex);
+                    playerCard.SetActive(false);
+
+                }
+                Destroy(child.gameObject);
+            }
+            cards8 = true;
+        }
+
+
+    }
+    void Card2()
+    {
+        int childCount = cardzone2.transform.childCount;
+        int childCount2 = enemyArea.transform.childCount;
+        if (!cards9 && childCount == 2 && childCount2 == 8)
+        {
+            foreach (Transform child in cardzone2.transform)
+            {
+                deckButton2.cards2.Add(child.gameObject);
+
+                for (var i = 0; i < 2; i++)
+                {
+                    int randomIndex = Random.Range(0, deckButton2.cards2.Count);
+                    GameObject playerCard = Instantiate(deckButton2.cards2[randomIndex], new Vector3(0, 0, 0), Quaternion.identity);
+                    playerCard.transform.SetParent(enemyArea.transform, false);
+                    deckButton2.cards2.RemoveAt(randomIndex);
+                    playerCard.SetActive(false);
+
+                }
+                Destroy(child.gameObject);
+            }
+            cards9 = true;
+        }
+
+
+    }
 
     void DetermineWinner()
     {
@@ -253,36 +397,126 @@ public class GameManager : MonoBehaviour
 
             winPlayer++;
 
+            for (var i = 0; i < 2; i++)
+            {
+                if (deckButton.cards.Count > 0)
+                {
+                    int randomIndex = Random.Range(0, deckButton.cards.Count);
+                    GameObject playerCard1 = Instantiate(deckButton.cards[randomIndex], new Vector3(0, 0, 0), Quaternion.identity);
+                    playerCard1.transform.SetParent(playerArea.transform, false);
+                    deckButton.cards.RemoveAt(randomIndex);
+                    playerCard1.SetActive(true);
+
+                }
+            }
+            for (var i = 0; i < 2; i++)
+
+            {
+                if (deckButton2.cards2.Count > 0)
+                {
+                    int randomIndex2 = Random.Range(0, deckButton2.cards2.Count);
+                    GameObject enemyCard1 = Instantiate(deckButton2.cards2[randomIndex2], new Vector3(0, 0, 0), Quaternion.identity);
+                    enemyCard1.transform.SetParent(enemyArea.transform, false);
+                    deckButton2.cards2.RemoveAt(randomIndex2);
+                    enemyCard1.SetActive(false);
+
+
+
+                }
+            }
+
+
         }
         else if (count.TotalPlayerPower < count2.TotalPlayerPower2)
         {
 
             winEnemy++;
-            turnButton.isPlayerTurn = false;
-            CallHand2();
+            turnButton.ChangeTurn();
+
+            for (var i = 0; i < 2; i++)
+            {
+
+                if (deckButton.cards.Count > 0)
+                {
+                    int randomIndex3 = Random.Range(0, deckButton.cards.Count);
+                    GameObject playerCard1 = Instantiate(deckButton.cards[randomIndex3], new Vector3(0, 0, 0), Quaternion.identity);
+                    playerCard1.transform.SetParent(playerArea.transform, false);
+                    deckButton.cards.RemoveAt(randomIndex3);
+                    playerCard1.SetActive(false);
+                }
+
+            }
+            for (var i = 0; i < 2; i++)
+            {
+
+                if (deckButton2.cards2.Count > 0)
+                {
+                    int randomIndex23 = Random.Range(0, deckButton2.cards2.Count);
+                    GameObject enemyCard1 = Instantiate(deckButton2.cards2[randomIndex23], new Vector3(0, 0, 0), Quaternion.identity);
+                    enemyCard1.transform.SetParent(enemyArea.transform, false);
+                    deckButton2.cards2.RemoveAt(randomIndex23);
+                    enemyCard1.SetActive(true);
+                }
+
+
+
+            }
+
 
 
         }
         else
         {
-        }
-        if (count.TotalPlayerPower != 0 && count2.TotalPlayerPower2 != 0 && count.TotalPlayerPower == count2.TotalPlayerPower2)
-        {
 
             winPlayer++;
             winEnemy++;
+            for (var i = 0; i < 2; i++)
+            {
+
+                if (deckButton.cards.Count > 0)
+                {
+                    int randomIndex4 = Random.Range(0, deckButton.cards.Count);
+                    GameObject playerCard1 = Instantiate(deckButton.cards[randomIndex4], new Vector3(0, 0, 0), Quaternion.identity);
+                    playerCard1.transform.SetParent(playerArea.transform, false);
+                    deckButton.cards.RemoveAt(randomIndex4);
+                    playerCard1.SetActive(true);
+                }
+
+            }
+            for (var i = 0; i < 2; i++)
+            {
+
+
+                if (deckButton2.cards2.Count > 0)
+                {
+                    int randomIndex24 = Random.Range(0, deckButton2.cards2.Count);
+                    GameObject enemyCard1 = Instantiate(deckButton2.cards2[randomIndex24], new Vector3(0, 0, 0), Quaternion.identity);
+                    enemyCard1.transform.SetParent(enemyArea.transform, false);
+                    deckButton2.cards2.RemoveAt(randomIndex24);
+                    enemyCard1.SetActive(false);
+
+                }
+
+
+            }
 
         }
+
+
+
+
+
+
         Debug.Log(winPlayer);
         Debug.Log(winEnemy);
 
-        Invoke("MoveCardsToHolder", 3.0f);
-        Invoke("MoveCardsToHolder2", 3.0f);
-        // Invoke("CallHand", 3.0f);
-        // Invoke("CallHand2", 3.0f);
+        MoveCardsToHolder();
+        MoveCardsToHolder2();
 
 
     }
+
+
     void DetermineFinalWinner()
     {
         if (winPlayer > winEnemy)
@@ -369,16 +603,24 @@ public class GameManager : MonoBehaviour
     }
     void CallHand()
     {
-        deckButton.Hand();
+        deckButton.Hand2();
 
+    }
+    void CallHand3()
+    {
+        deckButton.Hand3();
 
     }
     void CallHand2()
     {
-        deckButton2.Hand2();
+        deckButton2.Hand3();
 
     }
+    void CallHand4()
+    {
+        deckButton2.Hand4();
 
+    }
     void CheckAndDestroyExtraCards()
     {
 

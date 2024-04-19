@@ -24,4 +24,4 @@ MonoBehaviour:
   cardDescriptionImage: {fileID: 21300000, guid: 796eee6704fb4d64cb0798d71c399ddb, type: 3}
   cardPlaceboardImage: {fileID: 21300000, guid: e7784b5e4e54cae43a3e92412f41304c, type: 3}
   zone: as2
-  zone2: 
+  zone2: s

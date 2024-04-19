@@ -22,6 +22,7 @@ public class Drag : MonoBehaviour
     {
         Canvas = GameObject.Find("MainCanvas");
         turnButton = GameObject.FindObjectOfType<TurnButton>();
+
     }
 
     void Update()
@@ -63,7 +64,7 @@ public class Drag : MonoBehaviour
 
         if (isOverDropZone && ZoneSpace())
         {
-            if (!isPlace) // Comprobamos si la carta está en su lugar
+            if (!isPlace)
             {
                 turnButton = GameObject.Find("Button").GetComponent<TurnButton>();
                 turnButton.ChangeTurn();
