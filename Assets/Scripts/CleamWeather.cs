@@ -49,8 +49,10 @@ public class CleamWeather : MonoBehaviour
             }
             else if (hasCardNumber4 && hasCardNumber30)
             {
-                Increase3();
-                Increase4();
+                // Increase3();
+                // Increase4();
+                Increase();
+                Increase2();
                 Destroy(child.gameObject);
             }
         }

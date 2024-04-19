@@ -17,7 +17,7 @@ MonoBehaviour:
   cardPower: 7
   cardParent: 0
   cardKind: 1
-  cardHability: sxs
+  cardHability: Elimina la carta con menos puntos del enemigo
   cardBackgroundImage: {fileID: 21300000, guid: e9db37abbc530694abf701eb746ee3d2, type: 3}
   cardDogImage: {fileID: 21300000, guid: 2a31b0bd5a1702b4d8f4843d6b194a2d, type: 3}
   cardPowerImage: {fileID: 21300000, guid: 43380dab59c8ec54fa2abc47f17083e2, type: 3}

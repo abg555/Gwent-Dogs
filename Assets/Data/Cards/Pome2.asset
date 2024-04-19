@@ -17,7 +17,7 @@ MonoBehaviour:
   cardPower: 0
   cardParent: 0
   cardKind: 0
-  cardHability: ' cb c'
+  cardHability: Aumenta en 2 las unidades asedio
   cardBackgroundImage: {fileID: 21300000, guid: e9db37abbc530694abf701eb746ee3d2, type: 3}
   cardDogImage: {fileID: 21300000, guid: 5013aa4a654e29f40aabecd4c1f0037a, type: 3}
   cardPowerImage: {fileID: 21300000, guid: 43380dab59c8ec54fa2abc47f17083e2, type: 3}

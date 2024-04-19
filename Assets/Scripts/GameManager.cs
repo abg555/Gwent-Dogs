@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public Count2 count2;
     private bool isEnd = false;
     private bool isEnd2 = false;
+    private bool isEnd3 = false;
     private bool cards = false;
     private bool cards2 = false;
     private bool cards3 = false;
@@ -24,6 +25,24 @@ public class GameManager : MonoBehaviour
     private bool cards7 = false;
     private bool cards8 = false;
     private bool cards9 = false;
+    private bool cards10 = false;
+    private bool cards11 = false;
+    private bool cards12 = false;
+    private bool cards13 = false;
+    private bool cards14 = false;
+    private bool cards15 = false;
+    private bool cards16 = false;
+    private bool cards18 = false;
+    private bool cards19 = false;
+    private bool cards20 = false;
+    private bool cards21 = false;
+    private bool cards22 = false;
+    private bool cards23 = false;
+    private bool cards24 = false;
+    private bool cards25 = false;
+    private bool cards26 = false;
+    private bool cards27 = false;
+
     public DeckButton deckButton;
     public DeckButton2 deckButton2;
     public TurnButton turnButton;
@@ -37,24 +56,56 @@ public class GameManager : MonoBehaviour
     public GameObject dropZone;
     public GameObject dropZone2;
     public GameObject au;
+    public GameObject au2;
     public GameObject cl;
     public GameObject c;
+    public GameObject c2;
     public GameObject ar;
+    public GameObject ar2;
     public GameObject as1;
+    public GameObject as2;
     public Pluss pluss;
     public Pluss2 pluss2;
     public Pluss3 pluss3;
+    public Pluss4 pluss4;
+    public Pluss5 pluss5;
+    public Pluss6 pluss6;
     public Weather weather;
     public Weather2 weather2;
     public Weather3 weather3;
+    public Weather4 weather4;
+    public Weather5 weather5;
+    public Weather6 weather6;
     public MorePower morePower;
+    public MorePower2 morePower2;
+    public MorePower3 morePower3;
+    public MorePower4 morePower4;
+    public LessPower lessPower;
+    public LessPower2 lessPower2;
+    public LessPower3 lessPower3;
+    public LessPower4 lessPower4;
     public CleamWeather cleamWeather;
-    public DrawCard drawCard;
+    public CleamWeather2 cleamWeather2;
+    public CleamWeather3 cleamWeather3;
+    public CleamWeather4 cleamWeather4;
+    public DrawCard drawCard3;
+    public DrawCard2 drawCard2;
     public Decoy decoy;
     public NPower nPower;
+    public NPower2 nPower1;
+    public NPower3 nPower2;
+    public NPower4 nPower3;
+    public NPower5 nPower4;
+    public NPower6 nPower5;
     public Row0 row0;
+    public Row02 row02;
+
     public GameObject cardzone;
     public GameObject cardzone2;
+    public GameObject playerButton;
+    public GameObject playerButton2;
+    public GameObject playerButton3;
+    public GameObject buttZone;
 
 
 
@@ -78,15 +129,38 @@ public class GameManager : MonoBehaviour
         Sum();
         Sum2();
         Sum3();
+        Sum4();
+        Sum5();
+        Sum6();
         Weather();
         Weather2();
         Weather3();
+        Weather4();
+        Weather5();
+        Weather6();
         MorePower();
+        MorePower2();
+        MorePower3();
+        MorePower4();
+        LessPower();
+        LessPower2();
+        LessPower3();
+        LessPower4();
         Cleam();
+        Cleam2();
+        Cleam3();
+        Cleam4();
         DrawCard();
+        DrawCard2();
         Decoy();
         NPower();
+        NPower2();
+        NPower3();
+        NPower4();
+        NPower5();
+        NPower6();
         Row0();
+        Row02();
         Average();
         Card();
         Card2();
@@ -95,8 +169,8 @@ public class GameManager : MonoBehaviour
         if (!isEnd && turnButton.Count == 1 && turnButton.Count2 == 1)
         {
 
-            // count.Update();
-            // count2.Update();
+            count.Update();
+            count2.Update();
             DetermineWinner();
             isEnd = true;
             turnButton.turn = false;
@@ -108,16 +182,35 @@ public class GameManager : MonoBehaviour
         if (!isEnd2 && turnButton.Count == 2 && turnButton.Count2 == 2)
         {
 
-            // count.Update();
-            // count2.Update();
+            count.Update();
+            count2.Update();
             DetermineWinner();
+
             isEnd2 = true;
             turnButton.turn = false;
             // StartCoroutine(ResetGame());
 
 
 
+
+
+
         }
+        if (!isEnd3 && turnButton.Count == 3 && turnButton.Count2 == 3)
+        {
+
+            count.Update();
+            count2.Update();
+            DetermineWinner();
+            isEnd3 = true;
+            turnButton.turn = false;
+            DetermineFinalWinner();
+            // StartCoroutine(ResetGame());
+
+
+
+        }
+
 
 
         // if (!isReallyEnd && playerArea.transform.childCount == 0 && enemyArea.transform.childCount == 0 && cementerys.Count >= 29)
@@ -137,7 +230,7 @@ public class GameManager : MonoBehaviour
         foreach (Transform child in au.transform)
         {
             Cardview cardView = child.GetComponent<Cardview>();
-            if (cardView != null && cardView.cardHability == "aumento")
+            if (cardView != null && cardView.cardNumber == 6)
             {
 
                 pluss.Plusss();
@@ -152,7 +245,7 @@ public class GameManager : MonoBehaviour
         foreach (Transform child in au.transform)
         {
             Cardview cardView = child.GetComponent<Cardview>();
-            if (cardView != null && cardView.cardHability == "aumento2")
+            if (cardView != null && cardView.cardNumber == 7)
             {
 
                 pluss2.Plusss2();
@@ -166,10 +259,52 @@ public class GameManager : MonoBehaviour
         foreach (Transform child in au.transform)
         {
             Cardview cardView = child.GetComponent<Cardview>();
-            if (cardView != null && cardView.cardHability == "ssw")
+            if (cardView != null && cardView.cardNumber == 8)
             {
 
                 pluss3.Plusss3();
+                break;
+            }
+
+        }
+    }
+    void Sum4()
+    {
+        foreach (Transform child in au2.transform)
+        {
+            Cardview cardView = child.GetComponent<Cardview>();
+            if (cardView != null && cardView.cardNumber == 32)
+            {
+
+                pluss4.Plusss();
+                break;
+            }
+
+        }
+    }
+    void Sum5()
+    {
+        foreach (Transform child in au2.transform)
+        {
+            Cardview cardView = child.GetComponent<Cardview>();
+            if (cardView != null && cardView.cardNumber == 33)
+            {
+
+                pluss5.Plusss();
+                break;
+            }
+
+        }
+    }
+    void Sum6()
+    {
+        foreach (Transform child in au2.transform)
+        {
+            Cardview cardView = child.GetComponent<Cardview>();
+            if (cardView != null && cardView.cardNumber == 34)
+            {
+
+                pluss6.Plusss3();
                 break;
             }
 
@@ -182,10 +317,25 @@ public class GameManager : MonoBehaviour
         foreach (Transform child in cl.transform)
         {
             Cardview cardView = child.GetComponent<Cardview>();
-            if (cardView != null && cardView.cardHability == "Reduce en dos")
+            if (cardView != null && cardView.cardNumber == 1)
             {
 
                 weather.Weather1();
+                break;
+            }
+
+        }
+    }
+    void Weather4()
+    {
+
+        foreach (Transform child in cl.transform)
+        {
+            Cardview cardView = child.GetComponent<Cardview>();
+            if (cardView != null && cardView.cardNumber == 27)
+            {
+
+                weather4.Weather1();
                 break;
             }
 
@@ -207,6 +357,21 @@ public class GameManager : MonoBehaviour
 
         }
     }
+    void Weather5()
+    {
+
+        foreach (Transform child in cl.transform)
+        {
+            Cardview cardView = child.GetComponent<Cardview>();
+            if (cardView != null && cardView.cardNumber == 28)
+            {
+
+                weather5.Weather22();
+                break;
+            }
+
+        }
+    }
     void Weather3()
     {
 
@@ -217,6 +382,21 @@ public class GameManager : MonoBehaviour
             {
 
                 weather3.Weather33();
+                break;
+            }
+
+        }
+    }
+    void Weather6()
+    {
+
+        foreach (Transform child in cl.transform)
+        {
+            Cardview cardView = child.GetComponent<Cardview>();
+            if (cardView != null && cardView.cardNumber == 29)
+            {
+
+                weather6.Weather33();
                 break;
             }
 
@@ -239,6 +419,125 @@ public class GameManager : MonoBehaviour
 
         }
     }
+    void MorePower2()
+    {
+
+        foreach (Transform child in ar.transform)
+        {
+            Cardview cardView = child.GetComponent<Cardview>();
+            if (!cards13 && cardView != null && cardView.cardNumber == 10)
+            {
+
+                Debug.Log("mai");
+                morePower2.MorePower1();
+                cards13 = true;
+                break;
+            }
+
+        }
+    }
+    void MorePower3()
+    {
+
+        foreach (Transform child in ar2.transform)
+        {
+            Cardview cardView = child.GetComponent<Cardview>();
+            if (!cards14 && cardView != null && cardView.cardNumber == 35)
+            {
+
+                Debug.Log("mai");
+                morePower3.MorePower1();
+                cards14 = true;
+                break;
+            }
+
+        }
+    }
+    void MorePower4()
+    {
+
+        foreach (Transform child in ar2.transform)
+        {
+            Cardview cardView = child.GetComponent<Cardview>();
+            if (!cards13 && cardView != null && cardView.cardNumber == 36)
+            {
+
+                Debug.Log("mai");
+                morePower4.MorePower1();
+                cards13 = true;
+                break;
+            }
+
+        }
+    }
+    void LessPower()
+    {
+
+        foreach (Transform child in as1.transform)
+        {
+            Cardview cardView = child.GetComponent<Cardview>();
+            if (!cards23 && cardView != null && cardView.cardNumber == 19)
+            {
+
+                Debug.Log("mai");
+                lessPower.LessPower1();
+                cards23 = true;
+                break;
+            }
+
+        }
+    }
+    void LessPower2()
+    {
+
+        foreach (Transform child in as1.transform)
+        {
+            Cardview cardView = child.GetComponent<Cardview>();
+            if (!cards24 && cardView != null && cardView.cardNumber == 20)
+            {
+
+                Debug.Log("mai");
+                lessPower2.LessPower1();
+                cards24 = true;
+                break;
+            }
+
+        }
+    }
+    void LessPower3()
+    {
+
+        foreach (Transform child in as2.transform)
+        {
+            Cardview cardView = child.GetComponent<Cardview>();
+            if (!cards25 && cardView != null && cardView.cardNumber == 47)
+            {
+
+                Debug.Log("mai");
+                lessPower3.LessPower1();
+                cards25 = true;
+                break;
+            }
+
+        }
+    }
+    void LessPower4()
+    {
+
+        foreach (Transform child in as2.transform)
+        {
+            Cardview cardView = child.GetComponent<Cardview>();
+            if (!cards26 && cardView != null && cardView.cardNumber == 48)
+            {
+
+                Debug.Log("mai");
+                lessPower4.LessPower1();
+                cards26 = true;
+                break;
+            }
+
+        }
+    }
     void Cleam()
     {
         foreach (Transform child in ar.transform)
@@ -254,6 +553,51 @@ public class GameManager : MonoBehaviour
 
         }
     }
+    void Cleam2()
+    {
+        foreach (Transform child in ar2.transform)
+        {
+            Cardview cardView = child.GetComponent<Cardview>();
+            if (!cards11 && cardView != null && cardView.cardNumber == 30)
+            {
+
+                cleamWeather2.Cleam();
+                cards11 = true;
+                break;
+            }
+
+        }
+    }
+    void Cleam3()
+    {
+        foreach (Transform child in as1.transform)
+        {
+            Cardview cardView = child.GetComponent<Cardview>();
+            if (!cards10 && cardView != null && cardView.cardNumber == 5)
+            {
+
+                cleamWeather3.Cleam();
+                cards10 = true;
+                break;
+            }
+
+        }
+    }
+    void Cleam4()
+    {
+        foreach (Transform child in as2.transform)
+        {
+            Cardview cardView = child.GetComponent<Cardview>();
+            if (!cards12 && cardView != null && cardView.cardNumber == 31)
+            {
+
+                cleamWeather4.Cleam();
+                cards12 = true;
+                break;
+            }
+
+        }
+    }
     void DrawCard()
     {
         foreach (Transform child in c.transform)
@@ -262,8 +606,23 @@ public class GameManager : MonoBehaviour
             if (!cards3 && cardView != null && cardView.cardNumber == 11)
             {
 
-                drawCard.Draw();
+                drawCard3.Draw();
                 cards3 = true;
+                break;
+            }
+
+        }
+    }
+    void DrawCard2()
+    {
+        foreach (Transform child in c2.transform)
+        {
+            Cardview cardView = child.GetComponent<Cardview>();
+            if (!cards16 && cardView != null && cardView.cardNumber == 37)
+            {
+
+                drawCard2.Draw();
+                cards16 = true;
                 break;
             }
 
@@ -301,13 +660,93 @@ public class GameManager : MonoBehaviour
 
         }
     }
+    void NPower2()
+    {
+
+        foreach (Transform child in as1.transform)
+        {
+            Cardview cardView = child.GetComponent<Cardview>();
+            if (!cards18 && cardView != null && cardView.cardNumber == 22)
+            {
+                Debug.Log("k");
+                nPower1.NPowerChau();
+                cards18 = true;
+                break;
+            }
+
+        }
+    }
+    void NPower3()
+    {
+
+        foreach (Transform child in as1.transform)
+        {
+            Cardview cardView = child.GetComponent<Cardview>();
+            if (!cards19 && cardView != null && cardView.cardNumber == 52)
+            {
+                Debug.Log("k");
+                nPower2.NPowerChau();
+                cards19 = true;
+                break;
+            }
+
+        }
+    }
+    void NPower4()
+    {
+
+        foreach (Transform child in as2.transform)
+        {
+            Cardview cardView = child.GetComponent<Cardview>();
+            if (!cards20 && cardView != null && cardView.cardNumber == 45)
+            {
+                Debug.Log("k");
+                nPower3.NPowerChau();
+                cards20 = true;
+                break;
+            }
+
+        }
+    }
+    void NPower5()
+    {
+
+        foreach (Transform child in as2.transform)
+        {
+            Cardview cardView = child.GetComponent<Cardview>();
+            if (!cards21 && cardView != null && cardView.cardNumber == 46)
+            {
+                Debug.Log("k");
+                nPower4.NPowerChau();
+                cards21 = true;
+                break;
+            }
+
+        }
+    }
+    void NPower6()
+    {
+
+        foreach (Transform child in as2.transform)
+        {
+            Cardview cardView = child.GetComponent<Cardview>();
+            if (!cards22 && cardView != null && cardView.cardNumber == 53)
+            {
+                Debug.Log("k");
+                nPower5.NPowerChau();
+                cards22 = true;
+                break;
+            }
+
+        }
+    }
     void Row0()
     {
 
         foreach (Transform child in c.transform)
         {
             Cardview cardView = child.GetComponent<Cardview>();
-            if (!cards6 && cardView != null && cardView.cardNumber == 15)
+            if (!cards6 && cardView != null && cardView.cardNumber == 24)
             {
                 Debug.Log("hola");
                 row0.CleamRow();
@@ -317,6 +756,23 @@ public class GameManager : MonoBehaviour
 
         }
     }
+    void Row02()
+    {
+
+        foreach (Transform child in c2.transform)
+        {
+            Cardview cardView = child.GetComponent<Cardview>();
+            if (!cards27 && cardView != null && cardView.cardNumber == 50)
+            {
+                Debug.Log("hola");
+                row02.CleamRow();
+                cards27 = true;
+                break;
+            }
+
+        }
+    }
+
     void Average()
     {
 
@@ -336,55 +792,107 @@ public class GameManager : MonoBehaviour
 
     void Card()
     {
+        // int childCount = cardzone.transform.childCount;
+        // int childCount2 = playerArea.transform.childCount;
+        // if (!cards8 && childCount == 2 && childCount2 == 7)
+        // {
+        //     foreach (Transform child in cardzone.transform)
+        //     {
+        //         GameObject card = Instantiate(child.gameObject, new Vector3(0, 0, 0), Quaternion.identity);
+        //         deckButton.cards.Add(child.gameObject);
+
+        //         for (var i = 0; i < 1; i++)
+        //         {
+        //             int randomIndex = Random.Range(0, deckButton.cards.Count);
+        //             GameObject playerCard = Instantiate(deckButton.cards[randomIndex], new Vector3(0, 0, 0), Quaternion.identity);
+        //             playerCard.transform.SetParent(playerArea.transform, false);
+        //             deckButton.cards.RemoveAt(randomIndex);
+        //             playerCard.SetActive(false);
+
+        //         }
+        //         Destroy(child.gameObject);
+        //     }
+        //     cards8 = true;
+        // }
         int childCount = cardzone.transform.childCount;
         int childCount2 = playerArea.transform.childCount;
-        if (!cards8 && childCount == 2 && childCount2 == 8)
+        if (!cards8 && childCount == 2 && childCount2 == 7)
         {
+            List<GameObject> childrenToDestroy = new List<GameObject>();
             foreach (Transform child in cardzone.transform)
             {
-                deckButton.cards.Add(child.gameObject);
+                GameObject card = Instantiate(child.gameObject, new Vector3(0, 0, 0), Quaternion.identity);
+                deckButton.cards.Add(card);
 
-                for (var i = 0; i < 2; i++)
+                for (var i = 0; i < 1; i++)
                 {
                     int randomIndex = Random.Range(0, deckButton.cards.Count);
                     GameObject playerCard = Instantiate(deckButton.cards[randomIndex], new Vector3(0, 0, 0), Quaternion.identity);
                     playerCard.transform.SetParent(playerArea.transform, false);
                     deckButton.cards.RemoveAt(randomIndex);
                     playerCard.SetActive(false);
-
                 }
-                Destroy(child.gameObject);
+                childrenToDestroy.Add(child.gameObject);
+            }
+            foreach (GameObject child in childrenToDestroy)
+            {
+                Destroy(child);
             }
             cards8 = true;
+
         }
-
-
     }
     void Card2()
     {
+        // int childCount = cardzone2.transform.childCount;
+        // int childCount2 = enemyArea.transform.childCount;
+        // if (!cards9 && childCount == 2 && childCount2 == 7)
+        // {
+        //     foreach (Transform child in cardzone2.transform)
+        //     {
+        //         GameObject card = Instantiate(child.gameObject, new Vector3(0, 0, 0), Quaternion.identity);
+        //         deckButton2.cards2.Add(child.gameObject);
+
+        //         for (var i = 0; i < 1; i++)
+        //         {
+        //             int randomIndex = Random.Range(0, deckButton2.cards2.Count);
+        //             GameObject playerCard = Instantiate(deckButton2.cards2[randomIndex], new Vector3(0, 0, 0), Quaternion.identity);
+        //             playerCard.transform.SetParent(enemyArea.transform, false);
+        //             deckButton2.cards2.RemoveAt(randomIndex);
+        //             playerCard.SetActive(false);
+
+        //         }
+        //         Destroy(child.gameObject);
+        //     }
+        //     cards9 = true;
+        // }
+
         int childCount = cardzone2.transform.childCount;
         int childCount2 = enemyArea.transform.childCount;
-        if (!cards9 && childCount == 2 && childCount2 == 8)
+        if (!cards9 && childCount == 2 && childCount2 == 7)
         {
+            List<GameObject> childrenToDestroy = new List<GameObject>();
             foreach (Transform child in cardzone2.transform)
             {
-                deckButton2.cards2.Add(child.gameObject);
+                GameObject card = Instantiate(child.gameObject, new Vector3(0, 0, 0), Quaternion.identity);
+                deckButton2.cards2.Add(card);
 
-                for (var i = 0; i < 2; i++)
+                for (var i = 0; i < 1; i++)
                 {
                     int randomIndex = Random.Range(0, deckButton2.cards2.Count);
                     GameObject playerCard = Instantiate(deckButton2.cards2[randomIndex], new Vector3(0, 0, 0), Quaternion.identity);
                     playerCard.transform.SetParent(enemyArea.transform, false);
                     deckButton2.cards2.RemoveAt(randomIndex);
                     playerCard.SetActive(false);
-
                 }
-                Destroy(child.gameObject);
+                childrenToDestroy.Add(child.gameObject);
+            }
+            foreach (GameObject child in childrenToDestroy)
+            {
+                Destroy(child);
             }
             cards9 = true;
         }
-
-
     }
 
     void DetermineWinner()
@@ -396,34 +904,8 @@ public class GameManager : MonoBehaviour
         {
 
             winPlayer++;
-
-            for (var i = 0; i < 2; i++)
-            {
-                if (deckButton.cards.Count > 0)
-                {
-                    int randomIndex = Random.Range(0, deckButton.cards.Count);
-                    GameObject playerCard1 = Instantiate(deckButton.cards[randomIndex], new Vector3(0, 0, 0), Quaternion.identity);
-                    playerCard1.transform.SetParent(playerArea.transform, false);
-                    deckButton.cards.RemoveAt(randomIndex);
-                    playerCard1.SetActive(true);
-
-                }
-            }
-            for (var i = 0; i < 2; i++)
-
-            {
-                if (deckButton2.cards2.Count > 0)
-                {
-                    int randomIndex2 = Random.Range(0, deckButton2.cards2.Count);
-                    GameObject enemyCard1 = Instantiate(deckButton2.cards2[randomIndex2], new Vector3(0, 0, 0), Quaternion.identity);
-                    enemyCard1.transform.SetParent(enemyArea.transform, false);
-                    deckButton2.cards2.RemoveAt(randomIndex2);
-                    enemyCard1.SetActive(false);
-
-
-
-                }
-            }
+            CallHand2();
+            CallHand3();
 
 
         }
@@ -431,36 +913,9 @@ public class GameManager : MonoBehaviour
         {
 
             winEnemy++;
+            CallHand4();
+            CallHand();
             turnButton.ChangeTurn();
-
-            for (var i = 0; i < 2; i++)
-            {
-
-                if (deckButton.cards.Count > 0)
-                {
-                    int randomIndex3 = Random.Range(0, deckButton.cards.Count);
-                    GameObject playerCard1 = Instantiate(deckButton.cards[randomIndex3], new Vector3(0, 0, 0), Quaternion.identity);
-                    playerCard1.transform.SetParent(playerArea.transform, false);
-                    deckButton.cards.RemoveAt(randomIndex3);
-                    playerCard1.SetActive(false);
-                }
-
-            }
-            for (var i = 0; i < 2; i++)
-            {
-
-                if (deckButton2.cards2.Count > 0)
-                {
-                    int randomIndex23 = Random.Range(0, deckButton2.cards2.Count);
-                    GameObject enemyCard1 = Instantiate(deckButton2.cards2[randomIndex23], new Vector3(0, 0, 0), Quaternion.identity);
-                    enemyCard1.transform.SetParent(enemyArea.transform, false);
-                    deckButton2.cards2.RemoveAt(randomIndex23);
-                    enemyCard1.SetActive(true);
-                }
-
-
-
-            }
 
 
 
@@ -470,35 +925,9 @@ public class GameManager : MonoBehaviour
 
             winPlayer++;
             winEnemy++;
-            for (var i = 0; i < 2; i++)
-            {
+            CallHand2();
+            CallHand3();
 
-                if (deckButton.cards.Count > 0)
-                {
-                    int randomIndex4 = Random.Range(0, deckButton.cards.Count);
-                    GameObject playerCard1 = Instantiate(deckButton.cards[randomIndex4], new Vector3(0, 0, 0), Quaternion.identity);
-                    playerCard1.transform.SetParent(playerArea.transform, false);
-                    deckButton.cards.RemoveAt(randomIndex4);
-                    playerCard1.SetActive(true);
-                }
-
-            }
-            for (var i = 0; i < 2; i++)
-            {
-
-
-                if (deckButton2.cards2.Count > 0)
-                {
-                    int randomIndex24 = Random.Range(0, deckButton2.cards2.Count);
-                    GameObject enemyCard1 = Instantiate(deckButton2.cards2[randomIndex24], new Vector3(0, 0, 0), Quaternion.identity);
-                    enemyCard1.transform.SetParent(enemyArea.transform, false);
-                    deckButton2.cards2.RemoveAt(randomIndex24);
-                    enemyCard1.SetActive(false);
-
-                }
-
-
-            }
 
         }
 
@@ -522,7 +951,11 @@ public class GameManager : MonoBehaviour
         if (winPlayer > winEnemy)
         {
             Debug.Log("gana player");
-            textWinner.text = "Gano Player";
+            GameObject butt = Instantiate(playerButton2, new Vector3(0, 0, 0), Quaternion.identity);
+
+            butt.transform.SetParent(buttZone.transform, false);
+            butt.transform.position = new Vector3(butt.transform.position.x + 451, butt.transform.position.y, butt.transform.position.z);
+
 
 
         }
@@ -530,15 +963,20 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("gana enemy");
             textWinner.text = "Gano enemy";
+            GameObject butt = Instantiate(playerButton3, new Vector3(0, 0, 0), Quaternion.identity);
 
+            butt.transform.SetParent(buttZone.transform, false);
+            butt.transform.position = new Vector3(butt.transform.position.x + 451, butt.transform.position.y, butt.transform.position.z);
 
         }
         else
         {
             Debug.Log("empate");
-            textWinner.text = "empate";
 
+            GameObject butt = Instantiate(playerButton, new Vector3(0, 0, 0), Quaternion.identity);
 
+            butt.transform.SetParent(buttZone.transform, false);
+            butt.transform.position = new Vector3(butt.transform.position.x + 451, butt.transform.position.y, butt.transform.position.z);
 
         }
     }
@@ -555,6 +993,7 @@ public class GameManager : MonoBehaviour
     }
     void MoveCardsToHolder()
     {
+        List<GameObject> cardsToDestroy = new List<GameObject>();
 
         foreach (GameObject position in positions)
         {
@@ -566,40 +1005,133 @@ public class GameManager : MonoBehaviour
                 int cardPower = card.GetComponent<Cardview>().cardPower;
 
 
+
+
                 position.GetComponent<PowerZoneManager>().RemoveCardPower(zoneName, cardPower);
 
 
+
+
+
                 cementerys.Add(card.gameObject);
-                Destroy(card.gameObject);
+                cardsToDestroy.Add(card.gameObject);
+
 
             }
         }
+        foreach (GameObject card in cardsToDestroy)
+        {
+            Destroy(card);
+        }
+
+
         Debug.Log("Cementerys count: " + cementerys.Count);
         foreach (GameObject card in cementerys)
         {
-            Debug.Log("Card added: " + card.name);
+            if (card != null)
+            {
+                Debug.Log("Card added: " + card.name);
+            }
+
+
         }
     }
     void MoveCardsToHolder2()
     {
+        // List<GameObject> cardsToDestroy = new List<GameObject>();
+        // foreach (GameObject position in positions2)
+        // {
+        //     foreach (Transform card in position.transform)
+        //     {
 
+        //         string zoneName = card.GetComponent<Cardview>().cardZone;
+
+        //         int cardPower = card.GetComponent<Cardview>().cardPower;
+
+
+
+        //         position.GetComponent<PowerZoneManager>().RemoveCardPower(zoneName, cardPower);
+
+
+
+
+
+        //         cementerys.Add(card.gameObject);
+        //         cardsToDestroy.Add(card.gameObject);
+
+
+        //     }
+        // }
+        // foreach (GameObject card in cardsToDestroy)
+        // {
+        //     Destroy(card);
+        // }
+
+
+        // Debug.Log("Cementerys count: " + cementerys.Count);
+        // foreach (GameObject card in cementerys)
+        // {
+        //     if (card != null)
+        //     {
+        //         Debug.Log("Card added: " + card.name);
+        //     }
+
+
+        // }
+        List<GameObject> cardsToDestroy = new List<GameObject>();
         foreach (GameObject position in positions2)
         {
+            if (position == null)
+            {
+                Debug.Log("La posición es null.");
+                continue;
+            }
+
             foreach (Transform card in position.transform)
             {
+                if (card == null)
+                {
+                    Debug.Log("La tarjeta es null.");
+                    continue;
+                }
 
-                string zoneName = card.GetComponent<Cardview>().cardZone;
+                Cardview cardView = card.GetComponent<Cardview>();
+                if (cardView == null)
+                {
+                    Debug.Log("Cardview es null.");
+                    continue;
+                }
 
-                int cardPower = card.GetComponent<Cardview>().cardPower;
+                string zoneName = cardView.cardZone;
+                int cardPower = cardView.cardPower;
 
+                PowerZoneManager powerZoneManager = position.GetComponent<PowerZoneManager>();
+                if (powerZoneManager == null)
+                {
+                    Debug.Log("PowerZoneManager es null.");
+                    continue;
+                }
 
-                position.GetComponent<PowerZoneManager2>().RemoveCardPower2(zoneName, cardPower);
+                powerZoneManager.RemoveCardPower(zoneName, cardPower);
 
                 cementerys.Add(card.gameObject);
-                Destroy(card.gameObject);
+                cardsToDestroy.Add(card.gameObject);
             }
         }
 
+        foreach (GameObject card in cardsToDestroy)
+        {
+            Destroy(card);
+        }
+
+        Debug.Log("Cementerys count: " + cementerys.Count);
+        foreach (GameObject card in cementerys)
+        {
+            if (card != null)
+            {
+                Debug.Log("Card added: " + card.name);
+            }
+        }
     }
     void CallHand()
     {
@@ -621,6 +1153,7 @@ public class GameManager : MonoBehaviour
         deckButton2.Hand4();
 
     }
+
     void CheckAndDestroyExtraCards()
     {
 

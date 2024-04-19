@@ -16,6 +16,7 @@ public class DeckButton : MonoBehaviour
     public GameObject Poodle3;
     public GameObject Vito;
     public GameObject Rastafari;
+    public GameObject Rastafari2;
     public GameObject Cocky;
     public GameObject Aqua;
     public GameObject Capitan;
@@ -31,6 +32,7 @@ public class DeckButton : MonoBehaviour
     public GameObject Pome;
     public GameObject Duke;
     public GameObject Chusky;
+    public GameObject Chusky2;
     public GameObject PlayerArea;
     public GameObject PlayerLider;
     public GameObject specificDropZone;
@@ -44,28 +46,30 @@ public class DeckButton : MonoBehaviour
     {
 
         // cards.Add(Rastafari);
+        // cards.Add(Rastafari2);
         // cards.Add(Aguacero);
-        // cards.Add(Poodle);
+        cards.Add(Poodle);
         // cards.Add(Poodle2);
         // cards.Add(Poodle3);
         cards.Add(Vito);
         cards.Add(Duke);
         // cards.Add(Cocky);
         // cards.Add(Sequia);
-        // cards.Add(Robin);
+        cards.Add(Robin);
         // cards.Add(Golden);
         // cards.Add(Golden2);
         // cards.Add(Caniche);
-        cards.Add(Chau);
-        cards.Add(Chau2);
+        // cards.Add(Chau);
+        // cards.Add(Chau2);
         cards.Add(Chau3);
         cards.Add(Caniche2);
-        cards.Add(Aqua);
+        // cards.Add(Aqua);
         cards.Add(Salchicha);
         cards.Add(Capitan);
         cards.Add(Pome);
-        cards.Add(Vientos);
-        cards.Add(Chusky);
+        // cards.Add(Vientos);
+        // cards.Add(Chusky);
+        cards.Add(Chusky2);
 
         GameObject lider = Instantiate(Rey, new Vector3(0, 0, 0), Quaternion.identity);
         lider.transform.SetParent(PlayerLider.transform, false);
@@ -93,7 +97,7 @@ public class DeckButton : MonoBehaviour
 
     public void Hand()
     {
-        for (var i = 0; i < 10; i++)
+        for (var i = 0; i < 9; i++)
         {
             int randomIndex = Random.Range(0, cards.Count);
             GameObject playerCard1 = Instantiate(cards[randomIndex], new Vector3(0, 0, 0), Quaternion.identity);
@@ -115,12 +119,15 @@ public class DeckButton : MonoBehaviour
     {
         for (var i = 0; i < 2; i++)
         {
-            int randomIndex = Random.Range(0, cards.Count);
-            GameObject playerCard1 = Instantiate(cards[randomIndex], new Vector3(0, 0, 0), Quaternion.identity);
-            playerCard1.transform.SetParent(PlayerArea.transform, false);
-            cards.RemoveAt(randomIndex);
-            playerCard1.SetActive(true);
-
+            if (cards.Count > 0)
+            {
+                int randomIndex = Random.Range(0, cards.Count);
+                GameObject card = cards[randomIndex];
+                GameObject playerCard1 = Instantiate(card, new Vector3(0, 0, 0), Quaternion.identity);
+                playerCard1.transform.SetParent(PlayerArea.transform, false);
+                cards.RemoveAt(randomIndex);
+                playerCard1.SetActive(true);
+            }
 
         }
 
@@ -129,13 +136,15 @@ public class DeckButton : MonoBehaviour
     {
         for (var i = 0; i < 2; i++)
         {
-            int randomIndex = Random.Range(0, cards.Count);
-            GameObject playerCard1 = Instantiate(cards[randomIndex], new Vector3(0, 0, 0), Quaternion.identity);
-            playerCard1.transform.SetParent(PlayerArea.transform, false);
-            cards.RemoveAt(randomIndex);
-            playerCard1.SetActive(false);
-
-
+            if (cards.Count > 0)
+            {
+                int randomIndex = Random.Range(0, cards.Count);
+                GameObject card = cards[randomIndex];
+                GameObject playerCard1 = Instantiate(card, new Vector3(0, 0, 0), Quaternion.identity);
+                playerCard1.transform.SetParent(PlayerArea.transform, false);
+                cards.RemoveAt(randomIndex);
+                playerCard1.SetActive(false);
+            }
         }
 
     }

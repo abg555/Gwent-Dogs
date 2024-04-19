@@ -15,7 +15,9 @@ MonoBehaviour:
   cardNumber: 5
   cardName: "Capit\xE1n Rottweiler"
   cardPower: 0
-  cardHability: 
+  cardParent: 0
+  cardKind: 0
+  cardHability: "Elimina el da\xF1o provocado por los fuertes vientos "
   cardBackgroundImage: {fileID: 21300000, guid: e9db37abbc530694abf701eb746ee3d2, type: 3}
   cardDogImage: {fileID: 21300000, guid: 41aba742f713fc143a9370a3f7298e4b, type: 3}
   cardPowerImage: {fileID: 21300000, guid: 43380dab59c8ec54fa2abc47f17083e2, type: 3}

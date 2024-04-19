@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae4268323ab816a46adf4a38c5905a34, type: 3}
   m_Name: Chusky3
   m_EditorClassIdentifier: 
-  cardNumber: 45
-  cardName: C-Husky el perro diabolico
+  cardNumber: 47
+  cardName: "C-Husky el perro diab\xF3lico"
   cardPower: 7
   cardParent: 0
   cardKind: 1
-  cardHability: ad
+  cardHability: Elimina la carta con menos puntos del enemigo
   cardBackgroundImage: {fileID: 21300000, guid: e9db37abbc530694abf701eb746ee3d2, type: 3}
   cardDogImage: {fileID: 21300000, guid: 2a31b0bd5a1702b4d8f4843d6b194a2d, type: 3}
   cardPowerImage: {fileID: 21300000, guid: 43380dab59c8ec54fa2abc47f17083e2, type: 3}

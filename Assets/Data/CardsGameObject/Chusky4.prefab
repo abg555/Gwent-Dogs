@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &2341859723922546437
+--- !u!1001 &3836444360561964702
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -11,14 +11,10 @@ PrefabInstance:
     - target: {fileID: 2188862076094203976, guid: cfbb7b1352a44864380963089f22a7a6, type: 3}
       propertyPath: cardview
       value: 
-      objectReference: {fileID: 11400000, guid: 1b0e93d3fad15344fa5f71a62d86fd89, type: 2}
+      objectReference: {fileID: 11400000, guid: 6d42584d072e68a4187da64539c3d25f, type: 2}
     - target: {fileID: 4802584632490794908, guid: cfbb7b1352a44864380963089f22a7a6, type: 3}
       propertyPath: m_Name
-      value: Vito2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4802584632490794908, guid: cfbb7b1352a44864380963089f22a7a6, type: 3}
-      propertyPath: m_IsActive
-      value: 0
+      value: Card (1) Variant
       objectReference: {fileID: 0}
     - target: {fileID: 5310077848278043178, guid: cfbb7b1352a44864380963089f22a7a6, type: 3}
       propertyPath: m_Pivot.x

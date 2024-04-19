@@ -17,7 +17,7 @@ MonoBehaviour:
   cardPower: 0
   cardParent: 2
   cardKind: 0
-  cardHability: sdg
+  cardHability: Reduce la fuerza de todas las unidades arquero en 1
   cardBackgroundImage: {fileID: 21300000, guid: e9db37abbc530694abf701eb746ee3d2, type: 3}
   cardDogImage: {fileID: 21300000, guid: 732d6789e35c8ff46b58e21ff4ed5f2a, type: 3}
   cardPowerImage: {fileID: 21300000, guid: 43380dab59c8ec54fa2abc47f17083e2, type: 3}

@@ -23,7 +23,7 @@ public class MorePower : MonoBehaviour
             foreach (Transform child in position.transform)
             {
                 Cardview cardvio = child.GetComponent<Cardview>();
-                if (cardvio != null && cardvio.cardPower > maxPower)
+                if (cardvio != null && cardvio.cardKind == 1 && cardvio.cardPower > maxPower)
                 {
                     maxPower = cardvio.cardPower;
                     maxPowerCard = child.gameObject;

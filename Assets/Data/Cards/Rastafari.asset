@@ -16,8 +16,9 @@ MonoBehaviour:
   cardName: Rastafari
   cardPower: 8
   cardParent: 0
-  cardKind: 1
-  cardHability: bbyhh
+  cardKind: 0
+  cardHability: Invisible, suele pasar desapercibido frente a las habilidades de
+    las cartas
   cardBackgroundImage: {fileID: 21300000, guid: e9db37abbc530694abf701eb746ee3d2, type: 3}
   cardDogImage: {fileID: 21300000, guid: 3c84697dbb9cc9d4bb2b4fbdac0457f1, type: 3}
   cardPowerImage: {fileID: 21300000, guid: 43380dab59c8ec54fa2abc47f17083e2, type: 3}

@@ -13,8 +13,11 @@ public class DeckButton2 : MonoBehaviour
     public GameObject Poodle3;
     public GameObject Vito;
     public GameObject Rastafari;
+    public GameObject Rastafari2;
     public GameObject Cocky;
-
+    public GameObject Chau;
+    public GameObject Chau2;
+    public GameObject Chau3;
     public GameObject EnemyArea;
     public GameObject PlayerLider;
     public GameObject Aqua;
@@ -26,6 +29,8 @@ public class DeckButton2 : MonoBehaviour
     public GameObject Vientos;
     public GameObject Pome;
     public GameObject Chusky;
+    public GameObject Chusky2;
+    public GameObject Duke;
     public GameObject Salchicha;
     public List<GameObject> cards2 = new List<GameObject>();
 
@@ -33,24 +38,31 @@ public class DeckButton2 : MonoBehaviour
     {
 
         cards2.Add(Rastafari);
+        cards2.Add(Rastafari2);
+        cards2.Add(Chau);
+        cards2.Add(Chau2);
+        cards2.Add(Chau3);
+
         cards2.Add(Aguacero);
         cards2.Add(Poodle);
         cards2.Add(Poodle2);
         cards2.Add(Poodle3);
         cards2.Add(Vito);
-        cards2.Add(Cocky);
-        cards2.Add(Sequia);
+        // cards2.Add(Cocky);
+        // cards2.Add(Sequia);
         cards2.Add(Robin);
-        cards2.Add(Golden);
-        cards2.Add(Golden2);
-        cards2.Add(caniche);
-        cards2.Add(caniche2);
-        cards2.Add(Aqua);
-        cards2.Add(Capitan);
-        cards2.Add(Pome);
-        cards2.Add(Vientos);
+        // cards2.Add(Golden);
+        // cards2.Add(Golden2);
+        // cards2.Add(caniche);
+        // cards2.Add(caniche2);
+        // cards2.Add(Aqua);
+        // cards2.Add(Capitan);
+        // cards2.Add(Pome);
+        // cards2.Add(Vientos);
+        cards2.Add(Duke);
         cards2.Add(Chusky);
-        cards2.Add(Salchicha);
+        cards2.Add(Chusky2);
+        // cards2.Add(Salchicha);
 
 
 
@@ -83,7 +95,7 @@ public class DeckButton2 : MonoBehaviour
 
     public void Hand2()
     {
-        for (var i = 0; i < 10; i++)
+        for (var i = 0; i < 9; i++)
         {
             int randomIndex2 = Random.Range(0, cards2.Count);
             GameObject enemyCard1 = Instantiate(cards2[randomIndex2], new Vector3(0, 0, 0), Quaternion.identity);
@@ -100,12 +112,15 @@ public class DeckButton2 : MonoBehaviour
     {
         for (var i = 0; i < 2; i++)
         {
-            int randomIndex2 = Random.Range(0, cards2.Count);
-            GameObject enemyCard1 = Instantiate(cards2[randomIndex2], new Vector3(0, 0, 0), Quaternion.identity);
-            enemyCard1.transform.SetParent(EnemyArea.transform, false);
-            cards2.RemoveAt(randomIndex2);
-            enemyCard1.SetActive(true);
-
+            if (cards2.Count > 0)
+            {
+                int randomIndex2 = Random.Range(0, cards2.Count);
+                GameObject card = cards2[randomIndex2];
+                GameObject enemyCard1 = Instantiate(card, new Vector3(0, 0, 0), Quaternion.identity);
+                enemyCard1.transform.SetParent(EnemyArea.transform, false);
+                cards2.RemoveAt(randomIndex2);
+                enemyCard1.SetActive(true);
+            }
 
 
 
@@ -115,13 +130,20 @@ public class DeckButton2 : MonoBehaviour
     {
         for (var i = 0; i < 2; i++)
         {
-            int randomIndex2 = Random.Range(0, cards2.Count);
-            GameObject enemyCard1 = Instantiate(cards2[randomIndex2], new Vector3(0, 0, 0), Quaternion.identity);
-            enemyCard1.transform.SetParent(EnemyArea.transform, false);
-            cards2.RemoveAt(randomIndex2);
-            enemyCard1.SetActive(false);
-
-
+            if (cards2.Count > 0)
+            {
+                int randomIndex2 = Random.Range(0, cards2.Count);
+                GameObject card = cards2[randomIndex2];
+                GameObject enemyCard1 = Instantiate(card, new Vector3(0, 0, 0), Quaternion.identity);
+                enemyCard1.transform.SetParent(EnemyArea.transform, false);
+                cards2.RemoveAt(randomIndex2);
+                enemyCard1.SetActive(false);
+            }
+            else
+            {
+                Debug.Log("No hay más cartas en cards2");
+                break;
+            }
 
 
         }

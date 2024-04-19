@@ -17,7 +17,8 @@ MonoBehaviour:
   cardPower: 6
   cardParent: 0
   cardKind: 1
-  cardHability: SCx
+  cardHability: Multiplica por n su ataque, siendo n la cantidad de cartas iguales
+    a ella en el campo.
   cardBackgroundImage: {fileID: 21300000, guid: e9db37abbc530694abf701eb746ee3d2, type: 3}
   cardDogImage: {fileID: 21300000, guid: 81f9d05dec4fe0e42a29256a1c6bc374, type: 3}
   cardPowerImage: {fileID: 21300000, guid: 43380dab59c8ec54fa2abc47f17083e2, type: 3}
