@@ -8,7 +8,7 @@ using Unity.VisualScripting;
 
 public class Cardview : MonoBehaviour
 {
-    public Cards cardview;
+    public Cards cardview;                       /*Estas son las propiedades de vista de las cartas*/
     public string cardZone;
     public string cardZone2;
     public int viewCardNumber;
@@ -36,7 +36,7 @@ public class Cardview : MonoBehaviour
 
 
     void Start()
-    {
+    {   /*se inicializan las propiedades de Cardview con los valores de la carta correspondiente*/
         cardParent = cardview.cardParent;
         cardKind = cardview.cardKind;
         cardZone = cardview.zone;

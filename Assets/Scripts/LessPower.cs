@@ -15,9 +15,9 @@ public class LessPower : MonoBehaviour
         GameObject minPowerCard = null;
         float minPower = float.MaxValue;
 
-        foreach (GameObject position in positions)
+        foreach (GameObject position in positions) //recorre todos los objetos en el arreglo positions
         {
-            foreach (Transform child in position.transform)
+            foreach (Transform child in position.transform) //recorre todos los hijos del objeto position actual en el bucle
             {
                 Cardview cardvio = child.GetComponent<Cardview>();
                 if (cardvio != null && cardvio.cardKind == 1 && cardvio.cardPower < minPower)
@@ -25,7 +25,7 @@ public class LessPower : MonoBehaviour
                     minPower = cardvio.cardPower;
                     minPowerCard = child.gameObject;
                 }
-            }
+            }//Estas líneas obtienen el componente Cardview del hijo actual en el bucle y verifican si el componente existe, si cardKind es 1 y si cardPower es menor que minPower. Si se cumplen estas condiciones, se actualizan minPower y minPowerCard
         }
 
         if (minPowerCard != null)
@@ -35,7 +35,7 @@ public class LessPower : MonoBehaviour
             {
                 Debug.Log("menii");
                 int powerToRemove = cardView.cardPower;
-                cardView.cardPower = 0;
+                cardView.cardPower = 0; //guardan el poder de la carta en powerToRemove y luego establecen el poder de la carta en 0.
                 if (cardView.cardZone == "c2")
                 {
                     powerZoneManager.RemoveCardPower2(cardView.cardZone, powerToRemove);
@@ -47,11 +47,11 @@ public class LessPower : MonoBehaviour
                 if (cardView.cardZone == "as2")
                 {
                     powerZoneManager3.RemoveCardPower2(cardView.cardZone, powerToRemove);
-                }
+                }// se elimina el poder de la carta
 
-                gameManager.cementerys.Add(minPowerCard);
+                gameManager.cementerys.Add(minPowerCard);//la manda al cementerio
             }
-            Destroy(minPowerCard);
+            Destroy(minPowerCard);//detruye la carta
         }
     }
 

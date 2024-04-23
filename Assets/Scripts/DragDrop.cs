@@ -20,12 +20,12 @@ public class Drag : MonoBehaviour
 
     private void Awake()
     {
-        Canvas = GameObject.Find("MainCanvas");
+        Canvas = GameObject.Find("MainCanvas"); /* Busca en la escena un objeto de juego con el nombre "MainCanvas"*/
         turnButton = GameObject.FindObjectOfType<TurnButton>();
 
     }
 
-    void Update()
+    void Update() //Si isDragging es true y isPlace es false, este método mueve la carta a la posición del cursor del ratón y cambia su padre al objeto Canvas.
     {
         if (isDragging && !isPlace)
         {
@@ -34,17 +34,17 @@ public class Drag : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision) //establece isOverDropZone en true y guarda la carta con la que está colisionando en dropZone
     {
         isOverDropZone = true;
         dropZone = collision.gameObject;
     }
-    private void OnCollisionExit2D(Collision2D collision)
+    private void OnCollisionExit2D(Collision2D collision)//establece isOverDropZone en false y borra la referencia a dropZone
     {
         isOverDropZone = false;
         dropZone = null;
     }
-    public void StartDrag()
+    public void StartDrag() //se llama para comenzar a arrastrar la carta. Guarda el padre original y la posición original de la carta, y establece isDragging en true.
     {
         if (!isPlace)
         {
@@ -57,7 +57,7 @@ public class Drag : MonoBehaviour
         }
 
     }
-    public void Enddrag()
+    public void Enddrag()  //se llama para terminar de arrastrar la carta. Si la carta se soltó sobre una zona válida (isOverDropZone es true y ZoneSpace() devuelve true), la carta se mueve a esa zona, se llama al método ChangeTurn del turnButton, y se actualiza el poder de la zona. Si la carta no se soltó sobre una zona válida, se mueve de vuelta a su posición original.
     {
         isDragging = false;
 
@@ -112,7 +112,7 @@ public class Drag : MonoBehaviour
 
         }
     }
-    public bool ZoneSpace()
+    public bool ZoneSpace()  //verifica si la zona en la que se soltó la carta es válida para este objeto. Devuelve true si el nombre de la zona coincide con cardZone o cardZone2 de la carta, y false en caso contrario
     {
         Zone conditions = dropZone.GetComponent<Zone>();
         string word = conditions.zoneNames;

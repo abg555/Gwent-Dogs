@@ -24,7 +24,7 @@ public class TurnButton : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    void Start()//se llama a la función ChangeTurn y se añade un listener al botón para que cuando se haga clic en él, se llame a la función TaskOnClick
     {
 
         ChangeTurn();
@@ -91,7 +91,7 @@ public class TurnButton : MonoBehaviour
 
 
     }
-    public void TaskOnClick()
+    public void TaskOnClick()//Esta función se llama cuando se hace clic en el botón. Dependiendo de si es el turno del jugador o del enemigo, establece la visibilidad de las áreas correspondientes, cambia el valor de isPlayerTurn, incrementa el contador correspondiente, y establece turn a verdadero
     {
 
         if (isPlayerTurn)

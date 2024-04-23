@@ -37,12 +37,14 @@ public class Decoy2 : MonoBehaviour
             if (cardView != null && cardView.cardNumber != 38 && cardView.cardKind == 1)
             {
                 // Crea una nueva carta en playerArea que es una copia de la carta seleccionada
+
                 GameObject newCard = Instantiate(randomChild.gameObject, enemyArea.transform.position, Quaternion.identity);
                 newCard.transform.SetParent(enemyArea.transform, false);
                 newCard.SetActive(false);
 
                 // Destruye la carta original en c
                 powerZoneManager2.RemoveCardPower2("c2", cardView.cardPower);
+
                 Destroy(randomChild.gameObject);
             }
         }

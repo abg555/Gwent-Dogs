@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 [System.Serializable]
 
-[CreateAssetMenu(fileName = "New Card", menuName = "Card")]
-public class Cards : ScriptableObject
+[CreateAssetMenu(fileName = "New Card", menuName = "Card")]  /* [CreateAssetMenu(fileName = "New Card", menuName = "Card")] es un atributo que permite crear instancias de esta clase en el menú de Unity*/
+public class Cards : ScriptableObject      /*ScriptableObject es una clase base en Unity utilizada para crear objetos que no necesitan estar vinculados a un objeto de juego.*/
 {
-    public int cardNumber;
+    public int cardNumber;                      /*Estas son las propiedades de las cartas*/
     public string cardName;
     public int cardPower;
     public int cardParent;

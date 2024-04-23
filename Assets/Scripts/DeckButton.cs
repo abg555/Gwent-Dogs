@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class DeckButton : MonoBehaviour
 {
-
+    /*son las referencias de cada carta*/
     public GameObject Rey;
     public GameObject Aguacero;
     public GameObject Sequia;
@@ -45,7 +45,7 @@ public class DeckButton : MonoBehaviour
 
     void Start()
     {
-
+        /*agrega las cartas a la lista cards*/
         cards.Add(Rastafari);
         cards.Add(Rastafari2);
         cards.Add(Aguacero);
@@ -74,7 +74,7 @@ public class DeckButton : MonoBehaviour
         cards.Add(Sabueso);
 
         GameObject lider = Instantiate(Rey, new Vector3(0, 0, 0), Quaternion.identity);
-        lider.transform.SetParent(PlayerLider.transform, false);
+        lider.transform.SetParent(PlayerLider.transform, false);   /*al iniciar el juego instancia la carta lier en su pocision */
 
         Hand();
 
@@ -106,6 +106,7 @@ public class DeckButton : MonoBehaviour
             playerCard1.transform.SetParent(PlayerArea.transform, false);
             cards.RemoveAt(randomIndex);
             playerCard1.SetActive(true);
+            /*Selecciona 9 cartas random y las instancia en la posicion playerArea haciendo esta posicion su padre despues las elimina de la lista cards y las gace visibles*/
 
 
 
@@ -130,6 +131,7 @@ public class DeckButton : MonoBehaviour
                 cards.RemoveAt(randomIndex);
                 playerCard1.SetActive(true);
             }
+            /*Selecciona 2 cartas random y las instancia en la posicion playerArea haciendo esta posicion su padre despues las elimina de la lista cards y las gace visibles*/
 
         }
 
@@ -148,6 +150,7 @@ public class DeckButton : MonoBehaviour
                 playerCard1.SetActive(false);
             }
         }
+        /*Selecciona 2 cartas random y las instancia en la posicion playerArea haciendo esta posicion su padre despues las elimina de la lista cards y las gace invisibles*/
 
     }
 

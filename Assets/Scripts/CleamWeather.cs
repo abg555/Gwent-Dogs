@@ -17,10 +17,10 @@ public class CleamWeather : MonoBehaviour
     public void Cleam()
     {
 
-        foreach (Transform child in cl.transform)
+        foreach (Transform child in cl.transform)  /*recorre todos los hijos de cl*/
         {
 
-            Cardview cardvio = child.GetComponent<Cardview>();
+            Cardview cardvio = child.GetComponent<Cardview>(); /*almacena su cardView*/
             if (cardvio != null)
             {
 
@@ -49,8 +49,7 @@ public class CleamWeather : MonoBehaviour
             }
             else if (hasCardNumber4 && hasCardNumber30)
             {
-                // Increase3();
-                // Increase4();
+
                 Increase();
                 Increase2();
                 Destroy(child.gameObject);
@@ -60,27 +59,27 @@ public class CleamWeather : MonoBehaviour
     }
     void Increase()
     {
-        foreach (Transform child in ar.transform)
+        foreach (Transform child in ar.transform)    /*recorre tods los hijos de ar*/
         {
-            Cardview cardView = child.GetComponent<Cardview>();
+            Cardview cardView = child.GetComponent<Cardview>();    /*almacena su CardView*/
             if (cardView != null && cardView.cardKind == 1)
             {
-                cardView.cardPower += 1;
+                cardView.cardPower += 1; /*le suma un punto a su cardPower*/
                 Debug.Log("El nuevo valor de cardPower para " + cardView.cardName + " es: " + cardView.cardPower);
-                powerZoneManager.AddCardPower(cardView.cardZone, 1);
+                powerZoneManager.AddCardPower(cardView.cardZone, 1);     /*actualiza su cardPower*/
             }
         }
     }
     void Increase2()
     {
-        foreach (Transform child in ar2.transform)
+        foreach (Transform child in ar2.transform)  /*recorre todos los hijos de ar2*/
         {
-            Cardview cardView = child.GetComponent<Cardview>();
+            Cardview cardView = child.GetComponent<Cardview>();    /*almacena su Cardview*/
             if (cardView != null && cardView.cardKind == 1)
             {
-                cardView.cardPower += 1;
+                cardView.cardPower += 1;/*le suma un punto a su cardPower*/
                 Debug.Log("El nuevo valor de cardPower para " + cardView.cardName + " es: " + cardView.cardPower);
-                powerZoneManager1.AddCardPower2(cardView.cardZone, 1);
+                powerZoneManager1.AddCardPower2(cardView.cardZone, 1);   /*actualiza su cardPower*/
             }
         }
     }

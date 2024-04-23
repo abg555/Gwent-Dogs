@@ -39,6 +39,14 @@ public class Row02 : MonoBehaviour
 
             string zoneName = minChildZone.name;
             Debug.Log("Zona seleccionada: " + zoneName);
+            foreach (Transform child in minChildZone.transform)
+            {
+                Cardview cardView = child.GetComponent<Cardview>();
+                if (cardView != null)
+                {
+                    cardView.cardPower = 0;
+                }
+            }
 
             if (powerZoneManager.specificZones.Contains(zoneName))
             {

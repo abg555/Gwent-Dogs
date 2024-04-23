@@ -16,9 +16,19 @@ public class Average2 : MonoBehaviour
         int powerZone = SumCardPowers(c2);
         int powerZones = SumCardPowers(c);
         int child = c2.transform.childCount;
-        if (child != 0)
+        int child2 = c.transform.childCount;
+        if (child != 0 && child2 != 0)
         {
             int totalPower = powerZone / child;
+            int tt = totalPower / child2;
+            foreach (Transform chil in c2.transform)
+            {
+                Cardview card = chil.GetComponent<Cardview>();
+                if (card != null)
+                {
+                    card.cardPower = tt;
+                }
+            }
             powerZoneManager.RemoveCardPower("c", powerZones);
             powerZoneManager.AddCardPower("c", totalPower);
         }

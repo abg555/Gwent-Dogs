@@ -831,28 +831,7 @@ public class GameManager : MonoBehaviour
 
     void Card()
     {
-        // int childCount = cardzone.transform.childCount;
-        // int childCount2 = playerArea.transform.childCount;
-        // if (!cards8 && childCount == 2 && childCount2 == 7)
-        // {
-        //     foreach (Transform child in cardzone.transform)
-        //     {
-        //         GameObject card = Instantiate(child.gameObject, new Vector3(0, 0, 0), Quaternion.identity);
-        //         deckButton.cards.Add(child.gameObject);
 
-        //         for (var i = 0; i < 1; i++)
-        //         {
-        //             int randomIndex = Random.Range(0, deckButton.cards.Count);
-        //             GameObject playerCard = Instantiate(deckButton.cards[randomIndex], new Vector3(0, 0, 0), Quaternion.identity);
-        //             playerCard.transform.SetParent(playerArea.transform, false);
-        //             deckButton.cards.RemoveAt(randomIndex);
-        //             playerCard.SetActive(false);
-
-        //         }
-        //         Destroy(child.gameObject);
-        //     }
-        //     cards8 = true;
-        // }
         int childCount = cardzone.transform.childCount;
         int childCount2 = playerArea.transform.childCount;
         if (!cards8 && childCount == 2 && childCount2 == 7)
@@ -883,28 +862,7 @@ public class GameManager : MonoBehaviour
     }
     void Card2()
     {
-        // int childCount = cardzone2.transform.childCount;
-        // int childCount2 = enemyArea.transform.childCount;
-        // if (!cards9 && childCount == 2 && childCount2 == 7)
-        // {
-        //     foreach (Transform child in cardzone2.transform)
-        //     {
-        //         GameObject card = Instantiate(child.gameObject, new Vector3(0, 0, 0), Quaternion.identity);
-        //         deckButton2.cards2.Add(child.gameObject);
 
-        //         for (var i = 0; i < 1; i++)
-        //         {
-        //             int randomIndex = Random.Range(0, deckButton2.cards2.Count);
-        //             GameObject playerCard = Instantiate(deckButton2.cards2[randomIndex], new Vector3(0, 0, 0), Quaternion.identity);
-        //             playerCard.transform.SetParent(enemyArea.transform, false);
-        //             deckButton2.cards2.RemoveAt(randomIndex);
-        //             playerCard.SetActive(false);
-
-        //         }
-        //         Destroy(child.gameObject);
-        //     }
-        //     cards9 = true;
-        // }
 
         int childCount = cardzone2.transform.childCount;
         int childCount2 = enemyArea.transform.childCount;
@@ -1018,17 +976,6 @@ public class GameManager : MonoBehaviour
             butt.transform.position = new Vector3(butt.transform.position.x + 451, butt.transform.position.y, butt.transform.position.z);
 
         }
-    }
-    IEnumerator ResetGame()
-    {
-
-        yield return new WaitForSeconds(3.0f);
-        DetermineWinner();
-        CallHand();
-        CallHand2();
-
-        isEnd = false;
-        turnButton.isPlayerTurn = false;
     }
     void MoveCardsToHolder()
     {
