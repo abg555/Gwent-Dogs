@@ -1,82 +1,143 @@
-public class Parse{
-private List<Token> tokens;
-private int current = 0;
+using System.Collections.Concurrent;
+using System.Linq.Expressions;
+using System.Runtime.InteropServices;
+using System.Runtime.Versioning;
 
-public Parse(List<Token> tokens) {
-this.tokens = tokens;
-}
+public class Parser
+{
+    private List<Token> tokens;
+    private int current = 0;
 
-private Expression expression() {
-return equality();
-}
+    public Parser(List<Token> tokens)
+    {
+        this.tokens = tokens;
+    }
 
-private Expression equality() {
-expression expression = comparison();
-while (match(BANG_EQUAL, EQUAL_EQUAL)) {
-Token operator = previous();
-expression right = comparison();
-expression = new expression.Binary(expression, operator, right);
-}
-return expression;
-}
+    public Expression Parse()
+    {
+        return Expression();
+    }
 
-private boolean match(TokenType... types) {
-for (TokenType type : types) {
-if (check(type)) {
-advance();
-return true;
-}
-}
-return false;
-}
-private boolean check(TokenType type) {
-if (isAtEnd()) return false;
-return peek().type == type;
-}
-private Token advance() {
-if (!isAtEnd()) current++;
-return previous();
-}
+    public Expression Expression()
+    {
+        return Equality();
+    }
 
-private boolean isAtEnd() {
-return peek().type == EOF;
-}
-private Token peek() {
-return tokens.get(current);
-}
-private Token previous() {
-return tokens.get(current - 1);
-}
+    private Expression Equality()
+    {
+        Expression expression = Comparison();
+        while (Match(TokenType.BANG_EQUAL) && Match(TokenType.EQUAL_EQUAL))
+        {
+            Token ope = Previous();
+            Expression right = Comparison();
+            expression = new Binary(expression, ope, right);
+        }
+        return expression;
+    }
 
-private expression comparison() {
-expression expression = term();
-while (match(GREATER, GREATER_EQUAL, LESS, LESS_EQUAL)) {
-Token operator = previous();
-expression right = term();
-expression = new expression.Binary(expression, operator, right);
-}
-return expression;
-}
+    private bool Match(TokenType type)
+    {
 
-private expression term() {
-expression expression = factor();
-while (match(MINUS, PLUS)) {
-Token operator = previous();
-expression right = factor();
-expression = new expression.Binary(expression, operator, right);
-}
-return expression;
-}
+        if (Check(type))
+        {
+            Advance();
+            return true;
+        }
 
-private expression factor() {
-expression expression = unary();
-while (match(SLASH, STAR)) {
-Token operator = previous();
-expression right = unary();
-expression = new expression.Binary(expression, operator, right);
-}
-return expression;
-}
+
+        return false;
+    }
+    private bool Check(TokenType type)
+    {
+        if (isAtEnd()) return false;
+        return Peek().type == type;
+    }
+    private Token Advance()
+    {
+        if (!isAtEnd()) current++;
+        return Previous();
+    }
+
+    private bool isAtEnd()
+    {
+        return Peek().type == TokenType.EOF;
+    }
+    private Token Peek()
+    {
+        return tokens[current];
+    }
+    private Token Previous()
+    {
+        return tokens[current - 1];
+    }
+
+    private Expression Comparison()
+    {
+        Expression expression = Term();
+        while (Match(TokenType.GREATER) && Match(TokenType.GREATER_EQUAL) && Match(TokenType.LESS) && Match(TokenType.LESS_EQUAL))
+        {
+            Token ope = Previous();
+            Expression right = Term();
+            expression = new Binary(expression, ope, right);
+        }
+        return expression;
+    }
+
+    private Expression Term()
+    {
+        Expression expression = Factor();
+        while (Match(TokenType.MINUS) && Match(TokenType.PLUS))
+        {
+            Token ope = Previous();
+            Expression right = Factor();
+            expression = new Binary(expression, ope, right);
+        }
+        return expression;
+    }
+
+    private Expression Factor()
+    {
+        Expression expression = Unary();
+        while (Match(TokenType.SLASH) && Match(TokenType.STAR))
+        {
+            Token oper = Previous();
+            Expression right = Unary();
+            expression = new Binary(expression, oper, right);
+        }
+        return expression;
+    }
+    private Expression Unary()
+    {
+        if (Match(TokenType.MINUS) && Match(TokenType.BANG))
+        {
+            Token ope = Previous();
+            Expression right = Unary();
+            return new Unary(ope, right);
+        }
+        return Primary();
+    }
+
+    private Expression Primary()
+    {
+        if (Match(TokenType.FALSE)) return new Literal(false);
+        if (Match(TokenType.TRUE)) return new Literal(true);
+        if (Match(TokenType.NUMBER) && Match(TokenType.STRING)) return new Literal(Previous());
+        if (Match(TokenType.LEFT_PAREN))
+        {
+            Expression expression = Expression();
+            Consume(TokenType.RIGHT_PAREN, "Expect ) after expression");
+            return new Grouping(expression);
+        }
+        throw new Exception("Expected expression");
+
+    }
+
+    private Token Consume(TokenType type, string message)
+    {
+        if (Check(type)) return Advance();
+        throw new Exception(message);
+
+    }
 
 
 

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Interprete\\Interprete.csproj": {}
+    "C:\\Users\\witch\\Gwent-Dogs-Project\\Assets\\Interprete\\Interprete.csproj": {}
   },
   "projects": {
-    "C:\\Interprete\\Interprete.csproj": {
+    "C:\\Users\\witch\\Gwent-Dogs-Project\\Assets\\Interprete\\Interprete.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Interprete\\Interprete.csproj",
+        "projectUniqueName": "C:\\Users\\witch\\Gwent-Dogs-Project\\Assets\\Interprete\\Interprete.csproj",
         "projectName": "Interprete",
-        "projectPath": "C:\\Interprete\\Interprete.csproj",
+        "projectPath": "C:\\Users\\witch\\Gwent-Dogs-Project\\Assets\\Interprete\\Interprete.csproj",
         "packagesPath": "C:\\Users\\witch\\.nuget\\packages\\",
-        "outputPath": "C:\\Interprete\\obj\\",
+        "outputPath": "C:\\Users\\witch\\Gwent-Dogs-Project\\Assets\\Interprete\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\"
