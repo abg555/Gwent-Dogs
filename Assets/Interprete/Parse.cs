@@ -15,18 +15,27 @@ public class Parser
 
     public Expression Parse()
     {
-        return Expression();
+        try
+        {
+            var result = Equality();
+            if (!isAtEnd())
+            {
+                throw new Error($"Unexpected token '{Peek().lexeme}' at line {Peek().line}", ErrorType.LEXICAL);
+            }
+            return result;
+        }
+        catch (Error exception)
+        {
+            Console.WriteLine($"Semantical error:{exception.Message}");
+            throw;
+        }
     }
 
-    public Expression Expression()
-    {
-        return Equality();
-    }
 
     private Expression Equality()
     {
         Expression expression = Comparison();
-        while (Match(TokenType.BANG_EQUAL) && Match(TokenType.EQUAL_EQUAL))
+        while (Match(TokenType.BANG_EQUAL) || Match(TokenType.EQUAL_EQUAL))
         {
             Token ope = Previous();
             Expression right = Comparison();
@@ -74,7 +83,7 @@ public class Parser
     private Expression Comparison()
     {
         Expression expression = Term();
-        while (Match(TokenType.GREATER) && Match(TokenType.GREATER_EQUAL) && Match(TokenType.LESS) && Match(TokenType.LESS_EQUAL))
+        while (Match(TokenType.GREATER) || Match(TokenType.GREATER_EQUAL) || Match(TokenType.LESS) || Match(TokenType.LESS_EQUAL))
         {
             Token ope = Previous();
             Expression right = Term();
@@ -86,7 +95,7 @@ public class Parser
     private Expression Term()
     {
         Expression expression = Factor();
-        while (Match(TokenType.MINUS) && Match(TokenType.PLUS))
+        while (Match(TokenType.MINUS) || Match(TokenType.PLUS))
         {
             Token ope = Previous();
             Expression right = Factor();
@@ -98,7 +107,7 @@ public class Parser
     private Expression Factor()
     {
         Expression expression = Unary();
-        while (Match(TokenType.SLASH) && Match(TokenType.STAR))
+        while (Match(TokenType.SLASH) || Match(TokenType.STAR))
         {
             Token oper = Previous();
             Expression right = Unary();
@@ -108,7 +117,7 @@ public class Parser
     }
     private Expression Unary()
     {
-        if (Match(TokenType.MINUS) && Match(TokenType.BANG))
+        if (Match(TokenType.MINUS) || Match(TokenType.BANG))
         {
             Token ope = Previous();
             Expression right = Unary();
@@ -121,10 +130,11 @@ public class Parser
     {
         if (Match(TokenType.FALSE)) return new Literal(false);
         if (Match(TokenType.TRUE)) return new Literal(true);
-        if (Match(TokenType.NUMBER) && Match(TokenType.STRING)) return new Literal(Previous());
+        if (Match(TokenType.NUMBER)) return new Literal(double.Parse(Previous().lexeme));
+        if (Match(TokenType.STRING)) return new Literal(Previous().lexeme);
         if (Match(TokenType.LEFT_PAREN))
         {
-            Expression expression = Expression();
+            Expression expression = Equality();
             Consume(TokenType.RIGHT_PAREN, "Expect ) after expression");
             return new Grouping(expression);
         }
@@ -135,7 +145,7 @@ public class Parser
     private Token Consume(TokenType type, string message)
     {
         if (Check(type)) return Advance();
-        throw new Exception(message);
+        throw new Exception($"{message} but got {Peek().type}");
 
     }
 

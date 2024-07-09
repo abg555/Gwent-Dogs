@@ -1,0 +1,15 @@
+C:\Users\witch\Gwent-Dogs-Project\Assets\Interprete\obj\Debug\net7.0\Interprete.csproj.AssemblyReference.cache
+C:\Users\witch\Gwent-Dogs-Project\Assets\Interprete\obj\Debug\net7.0\Interprete.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\witch\Gwent-Dogs-Project\Assets\Interprete\obj\Debug\net7.0\Interprete.AssemblyInfoInputs.cache
+C:\Users\witch\Gwent-Dogs-Project\Assets\Interprete\obj\Debug\net7.0\Interprete.AssemblyInfo.cs
+C:\Users\witch\Gwent-Dogs-Project\Assets\Interprete\obj\Debug\net7.0\Interprete.csproj.CoreCompileInputs.cache
+C:\Users\witch\Gwent-Dogs-Project\Assets\Interprete\bin\Debug\net7.0\Interprete.exe
+C:\Users\witch\Gwent-Dogs-Project\Assets\Interprete\bin\Debug\net7.0\Interprete.deps.json
+C:\Users\witch\Gwent-Dogs-Project\Assets\Interprete\bin\Debug\net7.0\Interprete.runtimeconfig.json
+C:\Users\witch\Gwent-Dogs-Project\Assets\Interprete\bin\Debug\net7.0\Interprete.dll
+C:\Users\witch\Gwent-Dogs-Project\Assets\Interprete\bin\Debug\net7.0\Interprete.pdb
+C:\Users\witch\Gwent-Dogs-Project\Assets\Interprete\obj\Debug\net7.0\Interprete.dll
+C:\Users\witch\Gwent-Dogs-Project\Assets\Interprete\obj\Debug\net7.0\refint\Interprete.dll
+C:\Users\witch\Gwent-Dogs-Project\Assets\Interprete\obj\Debug\net7.0\Interprete.pdb
+C:\Users\witch\Gwent-Dogs-Project\Assets\Interprete\obj\Debug\net7.0\Interprete.genruntimeconfig.cache
+C:\Users\witch\Gwent-Dogs-Project\Assets\Interprete\obj\Debug\net7.0\ref\Interprete.dll

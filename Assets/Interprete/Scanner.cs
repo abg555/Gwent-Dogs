@@ -70,11 +70,11 @@ public class Scanner
 
     private void addToken(TokenType type)
     {
-        string text = source.Substring(start, current);
+        string text = source.Substring(start, current - start);
         tokens.Add(new Token(type, text, line, current));
     }
 
-    private void scanToken()
+    public void scanToken()
     {
         char c = Advance();
         switch (c)
@@ -138,7 +138,7 @@ public class Scanner
         }
     }
 
-    List<Token> ScanToken()
+    public List<Token> ScanToken()
     {
         while (!isAtEnd())
         {
@@ -194,7 +194,7 @@ public class Scanner
             Advance();
             while (isDigit(peek())) Advance();
         }
-        tokens.Add(new Token(TokenType.NUMBER, (source.Substring(start, current)), line, current));
+        tokens.Add(new Token(TokenType.NUMBER, (source.Substring(start, current - start)), line, current));
     }
 
     private char peekNext()

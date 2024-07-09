@@ -3,6 +3,9 @@ using System.Reflection.Metadata;
 
 public abstract class Expression
 {
+    public abstract void Print(int indent = 0);
+
+
 
 }
 public class Binary : Expression
@@ -17,6 +20,13 @@ public class Binary : Expression
         this.Left = Left;
         this.Operator = Operator;
         this.Right = Right;
+    }
+
+    public override void Print(int indent = 0)
+    {
+        Console.WriteLine(new string(' ', indent) + Operator.lexeme);
+        Left.Print(indent + 2);
+        Right.Print(indent + 2);
     }
 }
 
@@ -33,17 +43,31 @@ public class Unary : Expression
         this.Operator = Operator;
         this.Right = Right;
     }
+
+    public override void Print(int indent = 0)
+    {
+        Console.WriteLine(new string(' ', indent) + Operator.lexeme);
+        Right.Print(indent + 2);
+    }
 }
 
 public class Literal : Expression
 {
-    public object Value { get; }
+    public Object Value { get; }
 
-    public Literal(object Value)
+    public Literal(Object Value)
     {
         this.Value = Value;
     }
+
+    public override void Print(int indent = 0)
+    {
+
+        Console.WriteLine(new string(' ', indent) + Value.ToString());
+    }
 }
+
+
 
 
 public class Grouping : Expression
@@ -53,6 +77,13 @@ public class Grouping : Expression
     public Grouping(Expression Expression)
     {
         this.Expression = Expression;
+    }
+
+    public override void Print(int indent = 0)
+    {
+
+        Expression.Print(indent);
+
     }
 }
 
@@ -66,6 +97,11 @@ public class Assing : Expression
         this.ID = ID;
         this.Value = Value;
     }
+
+    public override void Print(int indent = 0)
+    {
+        throw new NotImplementedException();
+    }
 }
 
 
@@ -77,22 +113,30 @@ public class Variable : Expression
     {
         this.ID = ID;
     }
+
+    public override void Print(int indent = 0)
+    {
+        throw new NotImplementedException();
+    }
 }
 
-public class IfElseStatement : Expression
+public class WhileStatement : Expression
 {
     public Expression Condition { get; }
-    public Expression thenBranch { get; }
-    public Expression elseBranch { get; }
+    public Compound Body { get; }
 
-    public IfElseStatement(Expression Condition, Expression thenBranch, Expression elseBranch)
+
+    public WhileStatement(Expression Condition, Compound thenBranch)
     {
         this.Condition = Condition;
-        this.thenBranch = thenBranch;
+        Body = thenBranch;
 
-        this.elseBranch = elseBranch;
     }
 
+    public override void Print(int indent = 0)
+    {
+        throw new NotImplementedException();
+    }
 }
 
 public class LetIn : Expression
@@ -105,7 +149,10 @@ public class LetIn : Expression
         this.Body = Body;
     }
 
-
+    public override void Print(int indent = 0)
+    {
+        throw new NotImplementedException();
+    }
 }
 
 public class FunctionDeclaration : Expression
@@ -114,11 +161,16 @@ public class FunctionDeclaration : Expression
     public List<FunctionDeclaration> Arguments;
     public Expression Body { get; }
 
-    public FunctionDeclaration(string Identifier, Expression Body, List<FunctionDeclaration> Arguments)
+    public FunctionDeclaration(string indentifier, Expression Body, List<FunctionDeclaration> Arguments)
     {
-        this.Identifier = Identifier;
+        Identifier = indentifier;
         this.Body = Body;
         this.Arguments = Arguments;
+    }
+
+    public override void Print(int indent = 0)
+    {
+        throw new NotImplementedException();
     }
 }
 
@@ -133,6 +185,11 @@ public class FunctionCall : Expression
         this.Arguments = Arguments;
 
     }
+
+    public override void Print(int ident = 0)
+    {
+        throw new NotImplementedException();
+    }
 }
 
 public class Name : Expression
@@ -143,6 +200,11 @@ public class Name : Expression
     {
         this.name = name;
     }
+
+    public override void Print(int ident = 0)
+    {
+        throw new NotImplementedException();
+    }
 }
 public class Type : Expression
 {
@@ -152,6 +214,11 @@ public class Type : Expression
     {
         this.type = type;
     }
+
+    public override void Print(int ident = 0)
+    {
+        throw new NotImplementedException();
+    }
 }
 public class Faction : Expression
 {
@@ -160,6 +227,11 @@ public class Faction : Expression
     public Faction(string faction)
     {
         this.faction = faction;
+    }
+
+    public override void Print(int ident = 0)
+    {
+        throw new NotImplementedException();
     }
 }
 
@@ -171,6 +243,11 @@ public class Power : Expression
     {
         this.power = power;
     }
+
+    public override void Print(int ident = 0)
+    {
+        throw new NotImplementedException();
+    }
 }
 
 public class Range : Expression
@@ -180,6 +257,11 @@ public class Range : Expression
     public Range(string range)
     {
         this.range = range;
+    }
+
+    public override void Print(int ident = 0)
+    {
+        throw new NotImplementedException();
     }
 }
 
@@ -191,6 +273,11 @@ public class Compound : Expression
     public Compound()
     {
         Children = new List<Expression>();
+    }
+
+    public override void Print(int ident = 0)
+    {
+        throw new NotImplementedException();
     }
 
     public bool ValidCard()
