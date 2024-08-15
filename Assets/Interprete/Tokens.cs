@@ -1,17 +1,20 @@
 ﻿public class Token
 {
-    public TokenType type { get; private set; }
-    public string lexeme { get; private set; }
-    public int line { get; private set; }
-    public int column { get; private set; }
+    public TokenType type { get; set; }
+    public string lexeme { get; set; }
+    public int line { get; set; }
+    public int column { get; set; }
+    public Object Literal { get; set; }
 
 
-    public Token(TokenType type, string lexeme, int line, int column)
+
+    public Token(TokenType type, string lexeme, Object literal, int line, int column)
     {
         this.type = type;
         this.lexeme = lexeme;
         this.line = line;
         this.column = column;
+        this.Literal = literal;
     }
 
 }
@@ -35,8 +38,8 @@ public enum TokenType
     AND, FALSE, FOR, OR, BOOLTYPE, FACTION,
     TRUE, WHILE, EFFECT, CARD, POSTACTION, PREDICATE,
     NAME, IN, PARAMS, ACTION, TYPE, POWER, RANGE, ONACTIVATION,
-    FUN, SELECTOR, SINGLE, POINTER, METHOD, STRINGTYPE, NUMBERTYPE,
-    SOURCE, ONACTIVATIONEFFECT,
+    FUN, SELECTOR, SINGLE, POINTER, STRINGTYPE, NUMBERTYPE,
+    SOURCE, ONACTIVATIONEFFECT, ZONE,
 
 
     EOF

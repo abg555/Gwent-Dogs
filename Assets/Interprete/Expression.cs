@@ -1,20 +1,21 @@
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.Reflection.Metadata;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices.Marshalling;
 
-public abstract class Expression
+public abstract class Expression : Node  //revisado
 {
     public abstract void Print(int indent = 0);
     public abstract object Evaluate();
 
 }
-public abstract class Node
+public interface Node     //revisado
 {
-
+    public void Print(int indent = 0);
 
 }
-
-public class Number : Expression
+public class Number : Expression        //revisado
 {
     public int Value;
     public Number(int value)
@@ -27,12 +28,12 @@ public class Number : Expression
         return Value;
     }
 
-    public override void Print(int indent = 0)
+    public override void Print(int ident = 0)
     {
-        Console.WriteLine(new string(' ', indent) + Value.ToString());
+        Console.WriteLine(new string(' ', ident) + "Number:" + Value);
     }
 }
-public class StringExpression : Expression
+public class StringExpression : Expression       //revisado
 {
     public string Value;
     public StringExpression(string value)
@@ -45,12 +46,12 @@ public class StringExpression : Expression
         return Value;
     }
 
-    public override void Print(int indent = 0)
+    public override void Print(int ident = 0)
     {
-        Console.WriteLine(new string(' ', indent) + Value);
+        Console.WriteLine(new string(' ', ident) + "String:" + Value);
     }
 }
-public class Bool : Expression
+public class Bool : Expression           //revisado
 {
     public bool Value;
     public Bool(bool value)
@@ -65,17 +66,15 @@ public class Bool : Expression
 
     public override void Print(int indent = 0)
     {
-        Console.WriteLine(new string(' ', indent) + Value.ToString());
+        Console.WriteLine(new string(' ', indent) + "Bool:" + Value);
     }
 }
-
-
-public class Binary : Expression
+public class Binary : Expression      //revisado
 {
-    public Expression Left { get; }
+    public Expression Left;
 
-    public Token Operator { get; }
-    public Expression Right { get; }
+    public Token Operator;
+    public Expression Right;
 
     public Binary(Expression Left, Token Operator, Expression Right)
     {
@@ -93,44 +92,44 @@ public class Binary : Expression
 
     public override object Evaluate()
     {
-        object leftValue = Left.Evaluate();
-        object rightValue = Right.Evaluate();
-        if (leftValue is double && rightValue is double)
+        object left = Left.Evaluate();
+        object right = Right.Evaluate();
+        if (left is double && right is double)
         {
             switch (Operator.type)
             {
                 case TokenType.PLUS:
-                    return Convert.ToDouble(leftValue) + Convert.ToDouble(rightValue);
+                    return Convert.ToDouble(left) + Convert.ToDouble(right);
                 case TokenType.MINUS:
-                    return Convert.ToDouble(leftValue) - Convert.ToDouble(rightValue);
+                    return Convert.ToDouble(left) - Convert.ToDouble(right);
                 case TokenType.STAR:
-                    return Convert.ToDouble(leftValue) * Convert.ToDouble(rightValue);
+                    return Convert.ToDouble(left) * Convert.ToDouble(right);
                 case TokenType.SLASH:
-                    return Convert.ToDouble(leftValue) / Convert.ToDouble(rightValue);
+                    return Convert.ToDouble(left) / Convert.ToDouble(right);
                 case TokenType.PERCENT:
-                    return Convert.ToDouble(leftValue) % Convert.ToDouble(rightValue);
+                    return Convert.ToDouble(left) % Convert.ToDouble(right);
                 case TokenType.POW:
-                    return Math.Pow(Convert.ToDouble(leftValue), Convert.ToDouble(rightValue));
+                    return Math.Pow(Convert.ToDouble(left), Convert.ToDouble(right));
                 case TokenType.GREATER:
-                    return Convert.ToDouble(leftValue) > Convert.ToDouble(rightValue);
+                    return Convert.ToDouble(left) > Convert.ToDouble(right);
                 case TokenType.GREATER_EQUAL:
-                    return Convert.ToDouble(leftValue) >= Convert.ToDouble(rightValue);
+                    return Convert.ToDouble(left) >= Convert.ToDouble(right);
                 case TokenType.LESS:
-                    return Convert.ToDouble(leftValue) < Convert.ToDouble(rightValue);
+                    return Convert.ToDouble(left) < Convert.ToDouble(right);
                 case TokenType.LESS_EQUAL:
-                    return Convert.ToDouble(leftValue) <= Convert.ToDouble(rightValue);
-                case TokenType.BANG_EQUAL: return !leftValue.Equals(rightValue);
-                case TokenType.EQUAL_EQUAL: return leftValue.Equals(rightValue);
+                    return Convert.ToDouble(left) <= Convert.ToDouble(right);
+                case TokenType.BANG_EQUAL: return !left.Equals(right);
+                case TokenType.EQUAL_EQUAL: return left.Equals(right);
                 default:
                     throw new InvalidOperationException("Unsupported operator: " + Operator.lexeme);
             }
         }
-        else if (leftValue is string && rightValue is string)
+        else if (left is string && right is string)
         {
             switch (Operator.type)
             {
-                case TokenType.ATSIGN: return leftValue.ToString() + rightValue.ToString();
-                case TokenType.ATSIGN_ATSIGN: return leftValue.ToString() + " " + rightValue.ToString();
+                case TokenType.ATSIGN: return left.ToString() + right.ToString();
+                case TokenType.ATSIGN_ATSIGN: return left.ToString() + " " + right.ToString();
                 default:
                     throw new InvalidOperationException("Unsupported operator: " + Operator.lexeme);
             }
@@ -139,14 +138,27 @@ public class Binary : Expression
     }
 
 }
-
-
-public class Unary : Expression
+public class BinaryBoolean : Binary         //revisado
+{
+    public BinaryBoolean(Expression left, Token operators, Expression right) : base(left, operators, right)
+    { }
+}
+public class BinaryInterger : Binary         //revisado
+{
+    public BinaryInterger(Expression left, Token operators, Expression right) : base(left, operators, right)
+    { }
+}
+public class BinaryString : Binary          //revisado
+{
+    public BinaryString(Expression left, Token operators, Expression right) : base(left, operators, right)
+    { }
+}
+public class Unary : Expression     //revisado
 {
 
 
-    public Token Operator { get; }
-    public Expression Right { get; }
+    public Token Operator;
+    public Expression Right;
     public Unary(Token Operator, Expression Right)
     {
 
@@ -156,61 +168,45 @@ public class Unary : Expression
 
     public override void Print(int indent = 0)
     {
-        Console.WriteLine(new string(' ', indent) + Operator.lexeme);
+        Console.WriteLine(new string(' ', indent) + "Unary:" + Operator.lexeme);
         Right.Print(indent + 2);
     }
     public override object Evaluate()
     {
-        object rightValue = Right.Evaluate();
+        object right = Right.Evaluate();
 
         switch (Operator.type)
         {
             case TokenType.MINUS:
-                return -Convert.ToDouble(rightValue);
+                return -Convert.ToDouble(right);
             case TokenType.BANG:
-                return !(bool)rightValue;
+                return !(bool)right;
             default:
                 throw new InvalidOperationException("Unsupported operator: " + Operator.lexeme);
         }
     }
 }
-
-public class Literal : Expression
+public class UnaryBoolean : Unary       //revisado   
 {
-    public Object Value { get; }
-
-    public Literal(Object Value)
-    {
-        this.Value = Value;
-    }
-
-    public override void Print(int indent = 0)
-    {
-
-        Console.WriteLine(new string(' ', indent) + Value.ToString());
-    }
-    public override object Evaluate()
-    {
-        throw new NotImplementedException();
-    }
+    public UnaryBoolean(Token operators, Expression right) : base(operators, right) { }
 }
-
-
-
-
-public class Grouping : Expression
+public class UnaryInterger : Unary          //revisado
 {
-    public Expression Expression { get; }
+    public UnaryInterger(Token operators, Expression right) : base(operators, right) { }
+}
+public class Grouping : Expression         //revisado
+{
+    public Expression Expression;
 
     public Grouping(Expression Expression)
     {
         this.Expression = Expression;
     }
 
-    public override void Print(int indent = 0)
+    public override void Print(int ident = 0)
     {
-
-        Expression.Print(indent);
+        Console.WriteLine(new string(' ', ident) + "ExpressionGroup:");
+        Expression.Print(ident + 2);
 
     }
     public override object Evaluate()
@@ -218,50 +214,26 @@ public class Grouping : Expression
         return Expression.Evaluate();
     }
 }
-
-public class Assing : Expression
+public class Variable : Expression      //revisado
 {
     public Token ID { get; }
-    public Expression Value { get; }
-
-    public Assing(Token ID, Expression Value)
-    {
-        this.ID = ID;
-        this.Value = Value;
-    }
-
-    public override void Print(int indent = 0)
-    {
-        throw new NotImplementedException();
-    }
-    public override object Evaluate()
-    {
-        throw new NotImplementedException();
-    }
-}
-
-
-public class Variable : Expression
-{
-    public Token ID { get; }
-    public string Value { get; }
+    public string name { get; }
     public Type type;
     public enum Type
     {
-        TARGETS, CONTEXT, CARD, FIELD, INT, STRING, BOOL, VOID, NULL
+        INT, STRING, BOOL, NULL, FIELD, TARGETS, VOID, CARD, CONTEXT
     }
-
-    public void TypeParam(TokenType tokenType)
+    public void SetType(TokenType typeName)
     {
-        if (tokenType == TokenType.BOOLTYPE)
+        if (typeName == TokenType.BOOLTYPE)
         {
             type = Type.BOOL;
         }
-        if (tokenType == TokenType.NUMBERTYPE)
+        if (typeName == TokenType.NUMBERTYPE)
         {
             type = Type.INT;
         }
-        if (tokenType == TokenType.STRINGTYPE)
+        if (typeName == TokenType.STRINGTYPE)
         {
             type = Type.STRING;
         }
@@ -270,204 +242,158 @@ public class Variable : Expression
     public Variable(Token ID)
     {
         this.ID = ID;
-        Value = ID.lexeme;
+        name = ID.lexeme;
+        type = Type.NULL;
     }
 
     public override void Print(int indent = 0)
     {
-        throw new NotImplementedException();
+        Console.WriteLine(new string(' ', indent) + "Variable: " + name + " (" + type.ToString() + ")");
     }
     public override object Evaluate()
     {
         throw new NotImplementedException();
     }
 }
-
-public class LetIn : Expression
+public class VariableCompound : Variable, Statement             //revisado
 {
-    public List<Assing> Assigments { get; }
-    public Expression Body { get; }
-    public LetIn(List<Assing> Assigments, Expression Body)
+    public Params argument;
+
+    public VariableCompound(Token token) : base(token)
     {
-        this.Assigments = Assigments;
-        this.Body = Body;
-    }
-
-    public override void Print(int indent = 0)
-    {
-        throw new NotImplementedException();
-    }
-    public override object Evaluate()
-    {
-        throw new NotImplementedException();
-    }
-}
-
-public class FunctionDeclaration : Expression
-{
-    public string Identifier { get; }
-    public List<FunctionDeclaration> Arguments;
-    public Expression Body { get; }
-
-    public FunctionDeclaration(string indentifier, Expression Body, List<FunctionDeclaration> Arguments)
-    {
-        Identifier = indentifier;
-        this.Body = Body;
-        this.Arguments = Arguments;
-    }
-
-
-    public override void Print(int indent = 0)
-    {
-        throw new NotImplementedException();
-    }
-    public override object Evaluate()
-    {
-        throw new NotImplementedException();
-    }
-}
-
-public class VariableExpression : Expression
-{
-    public Token name { get; }
-
-    public VariableExpression(Token name)
-    {
-        this.name = name;
-    }
-
-    public override void Print(int indent = 0)
-    {
-        Console.WriteLine(new string(' ', indent) + name.lexeme);
-    }
-    public override object Evaluate()
-    {
-        throw new NotImplementedException();
-    }
-}
-
-public class FunctionCall : Expression
-{
-    public string Identifier { get; }
-    public List<FunctionCall> Arguments;
-
-    public FunctionCall(string Identifier, List<FunctionCall> Arguments)
-    {
-        this.Identifier = Identifier;
-        this.Arguments = Arguments;
-
+        argument = new Params();
     }
 
     public override void Print(int ident = 0)
     {
-        throw new NotImplementedException();
-    }
-    public override object Evaluate()
-    {
-        throw new NotImplementedException();
+        Console.WriteLine(new string(' ', ident) + "VariableComp: ");
+        argument?.Print(ident + 2);
     }
 }
-
-public class Name : Expression
+public class Params : Node              //revisado
 {
-    public string name { get; }
+    public List<Node> nodes;
+    public Params()
+    {
+        nodes = new List<Node>();
+    }
+    public void Print(int ident = 0)
+    {
+        Console.WriteLine(new string(' ', ident) + "Args:");
+        foreach (var arg in nodes)
+        {
+            arg.Print(ident + 2);
+        }
+    }
 
-    public Name(string name)
+}
+public class Name : Node      // revisado
+{
+    public Expression name;
+
+    public Name(Expression name)
     {
         this.name = name;
     }
 
-    public override void Print(int ident = 0)
+    public void Print(int ident = 0)
     {
-        throw new NotImplementedException();
+        Console.WriteLine(new string(' ', ident) + "Name:");
+        name.Print(ident + 2);
     }
-    public override object Evaluate()
-    {
-        throw new NotImplementedException();
-    }
-}
-public class Type : Expression
-{
-    public string type { get; }
 
-    public Type(string type)
+}
+public class Type : Node       //revisado
+{
+    public Expression type;
+
+    public Type(Expression type)
     {
         this.type = type;
     }
 
-    public override void Print(int ident = 0)
+    public void Print(int ident = 0)
     {
-        throw new NotImplementedException();
+        Console.WriteLine(new string(' ', ident) + "Name:");
+        type.Print(ident + 2);
     }
-    public override object Evaluate()
-    {
-        throw new NotImplementedException();
-    }
-}
-public class Faction : Expression
-{
-    public string faction { get; }
 
-    public Faction(string faction)
+}
+public class Pow : Node //revisado
+{
+    public Pow() { }
+    public void Print(int indent) { }
+
+}
+public class Faction : Node      //revisado
+{
+    public Expression faction;
+
+    public Faction(Expression faction)
     {
         this.faction = faction;
     }
 
-    public override void Print(int ident = 0)
+    public void Print(int ident = 0)
     {
-        throw new NotImplementedException();
+        Console.WriteLine(new string(' ', ident) + "Name:");
+        faction.Print(ident + 2);
     }
-    public override object Evaluate()
-    {
-        throw new NotImplementedException();
-    }
+
 }
-
-public class Power : Expression
+public class Power : Node        //revisado
 {
-    public int power { get; }
+    public Expression power;
 
-    public Power(int power)
+    public Power(Expression power)
     {
         this.power = power;
     }
 
-    public override void Print(int ident = 0)
+    public void Print(int ident = 0)
     {
-        throw new NotImplementedException();
+        Console.WriteLine(new string(' ', ident) + "Name:");
+        power.Print(ident + 2);
     }
-    public override object Evaluate()
-    {
-        throw new NotImplementedException();
-    }
+
 }
-
-public class Range : Expression
+public class Range : Node        //revisado
 {
-    public string range { get; }
-
+    public Expression[] expressionsRange;
+    public string range;
+    public Range(Expression[] expressionsRange)
+    {
+        this.expressionsRange = expressionsRange;
+    }
     public Range(string range)
     {
         this.range = range;
+
     }
 
-    public override void Print(int ident = 0)
+
+    public void Print(int ident = 0)
     {
-        throw new NotImplementedException();
+        Console.WriteLine(new string(' ', ident) + "Range:");
+        if (range != null)
+        {
+            foreach (var expr in expressionsRange)
+            {
+                expr.Print(ident + 2);
+            }
+        }
+        else
+        {
+            Console.WriteLine(new string(' ', ident) + "Lexeme: " + range);
+        }
     }
-    public override object Evaluate()
-    {
-        throw new NotImplementedException();
-    }
+
+
 }
-
-
-
-
-public class Effect : Node
+public class Effect : Node  //revisado
 {
-    public Expression Name;
-    public List<Variable> Params;
+    public Name Name;
+    public Params Params;
     public Action Action;
 
     public Effect()
@@ -475,15 +401,20 @@ public class Effect : Node
 
 
     }
+    public void Print(int ident = 0)
+    {
+        Console.WriteLine(new string(' ', ident) + "Effect:");
+        Name?.Print(ident + 2);
+        Params?.Print(ident + 2);
+        Action?.Print(ident + 2);
+    }
 
 
 }
-
-
-public class OnActivationEffect
+public class OnActivationEffect : Node  // revisado
 {
-    public string name { get; }
-    public List<Assignment> Params { get; }
+    public string name;
+    public List<Assignment> Params;
 
     public OnActivationEffect(string name, List<Assignment> Params)
     {
@@ -491,11 +422,18 @@ public class OnActivationEffect
         this.Params = Params;
 
     }
-
+    public void Print(int ident = 0)
+    {
+        Console.WriteLine(new string(' ', ident) + "OnActivationEffect:");
+        Console.WriteLine(new string(' ', ident + 2) + "Name: " + name);
+        foreach (var assignment in Params)
+        {
+            assignment.Print(ident + 2);
+        }
+    }
 
 }
-
-public class Selector
+public class Selector : Node       //revisado
 {
     public string Source;
 
@@ -508,10 +446,16 @@ public class Selector
         Predicate = predicate;
     }
 
-
+    public void Print(int ident = 0)
+    {
+        Console.WriteLine(new string(' ', ident) + "Selector:");
+        Console.WriteLine(new string(' ', ident + 2) + "Source: " + Source);
+        Singles?.Print(ident + 2);
+        Predicate?.Print(ident + 2);
+    }
 
 }
-public class Single
+public class Single : Node         //revisado
 {
     public bool Value;
     public Single(Token token)
@@ -524,8 +468,13 @@ public class Single
         }
     }
 
+    public void Print(int ident = 0)
+    {
+        Console.WriteLine(new string(' ', ident) + "Single:" + Value);
+    }
+
 }
-public class Predicate
+public class Predicate : Node   //revisado
 {
     public Variable Variable;
     public Expression Condition;
@@ -534,20 +483,35 @@ public class Predicate
         Variable = variable;
         Condition = condition;
     }
-}
+    public void Print(int ident = 0)
+    {
+        Console.WriteLine(new string(' ', ident) + "Predicate:");
+        Variable?.Print(ident + 2);
+        Condition?.Print(ident + 2);
+    }
 
-public class PostAction
+}
+public class PostAction : Node   //revisado
 {
     public Expression Type;
     public Selector Selector;
+
+    public List<Assignment> Assignments;
     public PostAction(Expression type, Selector selector)
     {
         Type = type;
         Selector = selector;
+        Assignments = new List<Assignment>();
+    }
+
+    public void Print(int ident = 0)
+    {
+        Console.WriteLine(new string(' ', ident) + "PostAction:");
+        Type?.Print(ident + 2);
+        Selector?.Print(ident + 2);
     }
 }
-
-public class Action
+public class Action : Node     //revisado
 {
     public Variable Targets;
     public Variable Context;
@@ -560,16 +524,22 @@ public class Action
         Context = context;
         Block = block;
     }
+    public void Print(int ident = 0)
+    {
+        Console.WriteLine(new string(' ', ident) + "Action:");
+        Targets?.Print(ident + 2);
+        Context?.Print(ident + 2);
+        Block?.Print(ident + 2);
+    }
+
+
 
 }
-
-public abstract class Statement
+public interface Statement : Node //revisado
 {
 
 }
-
-
-public class StatementBlock
+public class StatementBlock : Node        //revisado
 {
     public List<Statement> statements;
 
@@ -578,49 +548,36 @@ public class StatementBlock
         statements = new List<Statement>();
     }
 
-    public void AddStatment(Statement statement)
+    public void Print(int ident = 0)
     {
-        statements.Add(statement);
+        Console.WriteLine(new string(' ', ident) + "StatementsBlock:");
+        foreach (var stmt in statements)
+        {
+            stmt.Print(ident + 2);
+        }
     }
 
 }
-
-public class FunctionStatement : Statement
-{
-    public Token Name { get; }
-    public List<Variable> Parameters { get; }
-    public List<Statement> Body { get; }
-
-    public FunctionStatement(Token name, List<Variable> parameters, List<Statement> body)
-    {
-        Name = name;
-        Parameters = parameters;
-        Body = body;
-    }
-}
-public class ExpressionStatement : Statement
-{
-    public Expression Expression { get; }
-
-    public ExpressionStatement(Expression expression)
-    {
-        Expression = expression;
-    }
-}
-public class Assignment : Statement
+public class Assignment : Statement  //revisado
 {
     public Variable Left;
-    public Token Op;
+    public Token Operator;
     public Expression Right;
     public Assignment(Variable left, Token op, Expression right)
     {
         Left = left;
-        Op = op;
+        Operator = op;
         Right = right;
     }
+    public void Print(int ident = 0)
+    {
+        Console.WriteLine(new string(' ', ident) + "Assignment:");
+        Left?.Print(ident + 2);
+        Console.WriteLine(new string(' ', ident + 2) + "Op: " + Operator.lexeme);
+        Right?.Print(ident + 2);
+    }
 }
-
-public class WhileStatement : Statement
+public class WhileStatement : Statement      //revisado
 {
     public Expression condition;
     public StatementBlock body;
@@ -629,28 +586,40 @@ public class WhileStatement : Statement
         this.condition = condition;
         this.body = body;
     }
-}
-public class ForStatement : Statement
-{
-    public Statement Initializer { get; }
-    public Expression Condition { get; }
-    public Expression Increment { get; }
-    public StatementBlock Body { get; }
-
-    public ForStatement(Statement initializer, Expression condition, Expression increment, StatementBlock body)
+    public void Print(int ident = 0)
     {
-        Initializer = initializer;
-        Condition = condition;
-        Increment = increment;
+        Console.WriteLine(new string(' ', ident) + "WhileStatement:");
+        Console.WriteLine(new string(' ', ident + 2) + "Condition:");
+        condition?.Print(ident + 2);
+        Console.WriteLine(new string(' ', ident + 2) + "Body:");
+        body?.Print(ident + 2);
+    }
+}
+public class ForStatement : Statement     //revisado
+{
+    public Variable Variable;
+    public Variable Target;
+    public StatementBlock Body;
+
+    public ForStatement(Variable condition, Variable increment, StatementBlock body)
+    {
+        Variable = condition;
+        Target = increment;
         Body = body;
+    }
+    public void Print(int ident = 0)
+    {
+        Console.WriteLine(new string(' ', ident) + "ForStatement:");
+        Console.WriteLine(new string(' ', ident + 2) + "Variable:");
+        Variable?.Print(ident + 2);
+        Console.WriteLine(new string(' ', ident + 2) + "Target:");
+        Target?.Print(ident + 2);
+        Console.WriteLine(new string(' ', ident + 2) + "Body:");
+        Body?.Print(ident + 2);
     }
 
 }
-
-
-
-
-public class Program : Node
+public class Program : Node    //revisado
 {
     public List<Effect> effects;
     public List<Card> card;
@@ -660,15 +629,70 @@ public class Program : Node
         card = new List<Card>();
         effects = new List<Effect>();
     }
-
+    public void Print(int indent = 0)
+    {
+        Console.WriteLine(new string(' ', indent) + "Program:");
+        foreach (var card in card)
+        {
+            card.Print(indent + 2);
+        }
+        foreach (var effect in effects)
+        {
+            effect.Print(indent + 2);
+        }
+    }
 
 
 }
-public class Function
+public class Function : Statement  //revisado
 {
-    public Token FunctionName;
+    public string Name;
+    public Params Params;
+    public Variable.Type type;
+    public Function(string name, Params Params)
+    {
+        Name = name;
+        this.Params = Params;
+        type = Variable.Type.NULL;
+        VariableReturn();
+    }
+
+    public void VariableReturn()
+    {
+        if (Name == "FieldOfPlayer") type = Variable.Type.CONTEXT;
+        if (Name == "HandOfPlayer") type = Variable.Type.FIELD;
+        if (Name == "GraveyardOfPlayer") type = Variable.Type.FIELD;
+        if (Name == "DeckOfPlayer") type = Variable.Type.FIELD;
+        if (Name == "Find") type = Variable.Type.TARGETS;
+        if (Name == "Push") type = Variable.Type.VOID;
+        if (Name == "SendBottom") type = Variable.Type.VOID;
+        if (Name == "Pop") type = Variable.Type.CARD;
+        if (Name == "Remove") type = Variable.Type.VOID;
+        if (Name == "Shuffle") type = Variable.Type.VOID;
+        if (Name == "Add") type = Variable.Type.VOID;
+    }
+    public void Print(int indent = 0)
+    {
+        Console.WriteLine(new string(' ', indent) + "Function:");
+        Console.WriteLine(new string(' ', indent + 2) + "FunctionName: " + Name);
+        Params?.Print(indent + 2);
+        Console.WriteLine(new string(' ', indent + 2) + "Return Type: " + type.ToString());
+    }
 }
-public class OnActivation
+public class Pointer : Node    //revisado
+{
+    public string pointer;
+    public Pointer(string pointer)
+    {
+        this.pointer = pointer;
+    }
+
+    public void Print(int ident = 0)
+    {
+        Console.WriteLine(new string(' ', ident) + "Pointer: " + pointer);
+    }
+}
+public class OnActivation : Node   //revisado
 {
     public List<OnActivationElements> Elements;
 
@@ -676,8 +700,17 @@ public class OnActivation
     {
         Elements = new List<OnActivationElements>();
     }
+
+    public void Print(int ident = 0)
+    {
+        Console.WriteLine(new string(' ', ident) + "OnActivation:");
+        foreach (var element in Elements)
+        {
+            element.Print(ident + 2);
+        }
+    }
 }
-public class OnActivationElements
+public class OnActivationElements : Node //revisado
 {
     public OnActivationEffect oae;
     public Selector selector;
@@ -689,86 +722,37 @@ public class OnActivationElements
         this.selector = selector;
         this.postAction = postAction;
     }
-
+    public void Print(int ident = 0)
+    {
+        Console.WriteLine(new string(' ', ident) + "OnActivationElements:");
+        oae?.Print(ident + 2);
+        selector?.Print(ident + 2);
+        postAction?.Print(ident + 2);
+    }
 }
-
-
-public class Card : Node
+public class Card : Node     //revisado
 {
-    public Expression Type;
-    public Expression Name;
-    public Expression Faction;
-    public Expression Power;
-    public Expression[] Range;
+    public Type Type;
+    public Name Name;
+    public Faction Faction;
+    public Power Power;
+    public Range Range;
     public OnActivation OnActivation;
 
     public Card()
     {
 
-
     }
-
+    public void Print(int indent = 0)
+    {
+        Console.WriteLine(new string(' ', indent) + "Card:");
+        Type?.Print(indent + 2);
+        Name?.Print(indent + 2);
+        Faction?.Print(indent + 2);
+        Power?.Print(indent + 2);
+        Range?.Print(indent + 2);
+        OnActivation?.Print(indent + 2);
+    }
 
 }
 
-public class Compound : Expression
-{
-    public List<Expression> Children;
-
-
-    public Compound()
-    {
-        Children = new List<Expression>();
-    }
-
-    public override void Print(int ident = 0)
-    {
-        throw new NotImplementedException();
-    }
-    public override object Evaluate()
-    {
-        throw new NotImplementedException();
-    }
-
-    public bool ValidCard()
-    {
-        Dictionary<TokenType, int> check = new Dictionary<TokenType, int>();
-        foreach (var child in Children)
-        {
-            if (child.GetType() == typeof(Name)) check[TokenType.NAME]++;
-            if (child.GetType() == typeof(Faction)) check[TokenType.FACTION]++;
-            if (child.GetType() == typeof(Type)) check[TokenType.TYPE]++;
-            if (child.GetType() == typeof(Range)) check[TokenType.RANGE]++;
-            if (child.GetType() == typeof(Power)) check[TokenType.POWER]++;
-            if (child.GetType() == typeof(Compound)) check[TokenType.ONACTIVATION]++;
-        }
-        if (Children.Count != 6) return false;
-        if (check.ContainsKey(TokenType.NAME) && check[TokenType.NAME] != 1) return false;
-        if (check.ContainsKey(TokenType.POWER) && check[TokenType.POWER] != 1) return false;
-        if (check.ContainsKey(TokenType.RANGE) && check[TokenType.RANGE] != 1) return false;
-        if (check.ContainsKey(TokenType.TYPE) && check[TokenType.NAME] != 1) return false;
-        if (check.ContainsKey(TokenType.FACTION) && check[TokenType.FACTION] != 1) return false;
-        if (check.ContainsKey(TokenType.ONACTIVATION) && check[TokenType.ONACTIVATION] != 1) return false;
-
-        return true;
-    }
-
-    public bool ValidEffect()
-    {
-        Dictionary<TokenType, int> check = new Dictionary<TokenType, int>();
-        foreach (var child in Children)
-        {
-            if (child.GetType() == typeof(Name)) check[TokenType.NAME]++;
-            if (child.GetType() == typeof(Compound)) check[TokenType.PARAMS]++;
-            if (child.GetType() == typeof(Compound)) check[TokenType.ACTION]++;
-
-        }
-        if (Children.Count > 3) return false;
-        if (check.ContainsKey(TokenType.NAME) && check[TokenType.NAME] != 1) return false;
-        if (check.ContainsKey(TokenType.PARAMS) && check[TokenType.PARAMS] != 1) return false;
-        if (check.ContainsKey(TokenType.ACTION) && check[TokenType.ACTION] != 1) return false;
-
-
-        return true;
-    }
-}

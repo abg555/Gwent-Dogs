@@ -1,5 +1,6 @@
 using System.Collections.Concurrent;
 using System.Linq.Expressions;
+using System.Net;
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
@@ -7,32 +8,38 @@ using System.Text.RegularExpressions;
 
 public class Parser
 {
-    private List<Token> tokens;
+    private List<Token> tokens { get; }
     private int current = 0;
-
+    // private bool isInsideActionBlock = false;
     public Parser(List<Token> tokens)
     {
         this.tokens = tokens;
     }
-
     public Expression ParseExpression()
     {
         try
         {
-            var result = Equality();
-            if (!isAtEnd())
-            {
-                throw new Error($"Unexpected token '{Peek().lexeme}' at line {Peek().line}", ErrorType.LEXICAL);
-            }
-            return result;
+            var equal = Equality();
+
+            return equal;
         }
-        catch (Error exception)
+        catch (Error errorM)
         {
-            Console.WriteLine($"Semantical error:{exception.Message}");
+            Console.WriteLine($"Semantical error:{errorM.Message}");
             throw;
         }
     }
+    Assignment ParseAssignment(Variable variable)
+    {
+        Token opera = Advance();
+        Expression expression = ParseExpression();
+        // if (!isInsideActionBlock)
+        // {
 
+        // }
+        Consume(TokenType.SEMICOLON, "Expected ';'");
+        return new Assignment(variable, opera, expression);
+    }
     public Node Parse()
     {
         Program program = new Program();
@@ -40,16 +47,17 @@ public class Parser
         {
             if (Match(TokenType.CARD))
             {
+                Consume(TokenType.LEFT_BRACE, "Expected '{' after card");
                 program.card.Add(ParseCard());
+                Consume(TokenType.RIGHT_BRACE, "Expected '}' after card finished");
 
             }
             else if (Match(TokenType.EFFECT))
             {
-                if (Match(TokenType.LEFT_BRACE))
-                {
-                    program.effects.Add(ParseEffect());
-                    Consume(TokenType.RIGHT_BRACE, "Expect '}' after card declaration.");
-                }
+                Consume(TokenType.LEFT_BRACE, "Expected '{' after effect");
+                program.effects.Add(ParseEffect());
+                Consume(TokenType.RIGHT_BRACE, "Expect '}' after effect finished.");
+
             }
             else
             {
@@ -58,10 +66,8 @@ public class Parser
         }
         return program;
     }
-
     Card ParseCard()
     {
-        Consume(TokenType.LEFT_BRACE, "Expected '{' after card");
         Card card = new Card();
         int[] counter = new int[6];
         while (!Check(TokenType.RIGHT_BRACE) && !isAtEnd())
@@ -70,7 +76,7 @@ public class Parser
             {
                 counter[0] += 1;
                 Consume(TokenType.COLON, "Expected ':' after Type");
-                card.Type = ParseExpression();
+                card.Type = new Type(ParseExpression());
                 Consume(TokenType.COMMA, "Expected ',' after expression");
 
             }
@@ -78,7 +84,7 @@ public class Parser
             {
                 counter[1] += 1;
                 Consume(TokenType.COLON, "Expected ':' after Name");
-                card.Name = ParseExpression();
+                card.Name = new Name(ParseExpression());
                 Consume(TokenType.COMMA, "Expected ',' after expression");
 
             }
@@ -86,7 +92,7 @@ public class Parser
             {
                 counter[2] += 1;
                 Consume(TokenType.COLON, "Expected ':' after faction");
-                card.Faction = ParseExpression();
+                card.Faction = new Faction(ParseExpression());
                 Consume(TokenType.COMMA, "Expected ',' after expression");
 
             }
@@ -94,7 +100,7 @@ public class Parser
             {
                 counter[3] += 1;
                 Consume(TokenType.COLON, "Expected ':' after power");
-                card.Power = ParseExpression();
+                card.Power = new Power(ParseExpression());
                 Consume(TokenType.COMMA, "Expected ',' after expression");
 
             }
@@ -102,7 +108,7 @@ public class Parser
             {
                 counter[4] += 1;
                 Consume(TokenType.COLON, "Expected ':' after range");
-                Consume(TokenType.COMMA, "Expected ',' after expression");
+                Consume(TokenType.LEFT_BRACKET, "Expected '['");
                 List<Expression> expressions = new List<Expression>();
                 for (int i = 0; i < 3; i++)
                 {
@@ -111,7 +117,8 @@ public class Parser
                     else break;
                 }
                 Consume(TokenType.RIGHT_BRACKET, "Expect ']'");
-                card.Range = expressions.ToArray();
+                Consume(TokenType.COMMA, "Expected ',' after range");
+                card.Range = new Range(expressions.ToArray());
 
             }
             else if (Match(TokenType.ONACTIVATION))
@@ -126,7 +133,7 @@ public class Parser
                 throw new Error($"'{Peek().lexeme}' in {Peek().line} : Invalid card property", ErrorType.SYNTAX);
             }
         }
-        Consume(TokenType.RIGHT_BRACE, "Expected '}' after card declaration");
+
         if (counter[0] < 1) throw new Error("A Type property is missing from card", ErrorType.SYNTAX);
         else if (counter[0] > 1) throw new Error("Only one Type is allowed", ErrorType.SYNTAX);
 
@@ -146,10 +153,8 @@ public class Parser
         else if (counter[5] > 1) throw new Error("Only one OnActivation is allowed", ErrorType.SYNTAX);
         return card;
     }
-
     Effect ParseEffect()
     {
-        Consume(TokenType.LEFT_BRACE, "Expected '{' after effect");
         Effect effect = new Effect();
         int[] counter = new int[3];
         while (!Check(TokenType.RIGHT_BRACE) && !isAtEnd())
@@ -159,7 +164,7 @@ public class Parser
             {
                 counter[0] += 1;
                 Consume(TokenType.COLON, "Expected ':' after Name");
-                effect.Name = ParseExpression();
+                effect.Name = new Name(ParseExpression());
                 Consume(TokenType.COMMA, "Expected ',' after expression");
 
             }
@@ -173,7 +178,8 @@ public class Parser
             }
             else if (Match(TokenType.ACTION))
             {
-                counter[1] += 1;
+
+                counter[2] += 1; //Tenias puesto counter[1]
                 Consume(TokenType.COLON, "Expected ':' after action");
                 effect.Action = ParseAction();
 
@@ -185,12 +191,12 @@ public class Parser
                 throw new Error($"'{Peek().lexeme}' in {Peek().line} : Invalid effect property", ErrorType.SYNTAX);
             }
         }
-        Consume(TokenType.RIGHT_BRACE, "Expected '}' after effect declaration");
+
 
         if (counter[0] < 1) throw new Error("A Name property is missing from effect", ErrorType.SYNTAX);
         else if (counter[0] > 1) throw new Error("Only one Name is allowed", ErrorType.SYNTAX);
 
-        if (counter[1] < 1) throw new Error("A Params property is missing from effect", ErrorType.SYNTAX);
+        if (counter[1] < 1) throw new Error("A Params property is missing from effect", ErrorType.SYNTAX); //Tenias puesto < 2
         else if (counter[1] > 1) throw new Error("Only one Params is allowed", ErrorType.SYNTAX);
 
         if (counter[2] < 1) throw new Error("A Action property is missing from effect", ErrorType.SYNTAX);
@@ -198,50 +204,134 @@ public class Parser
 
         return effect;
     }
-
     OnActivation ParseOnActivation()
     {
-        Consume(TokenType.COLON, "Expected ':' after Range");
+        Consume(TokenType.COLON, "Expected ':' after OnACtivation");
         Consume(TokenType.LEFT_BRACKET, "Expected '['");
         OnActivation onActivation = new OnActivation();
         while (!Check(TokenType.RIGHT_BRACKET) && !isAtEnd())
         {
             onActivation.Elements.Add(ParseOnActivationElements());
-
-
         }
         Consume(TokenType.RIGHT_BRACKET, "Expected ']'");
         return onActivation;
     }
-
-    List<Variable> ParseParams()
+    Params ParseParams()
     {
         Consume(TokenType.LEFT_BRACE, "Expected '{' after Params");
-        List<Variable> param = new List<Variable>();
+        Params param = new Params();
         while (!Check(TokenType.RIGHT_BRACE) && !isAtEnd())
         {
-            param.Add(ParseVariable());
+            Variable variables = ParseVariable();
+            Consume(TokenType.COLON, "Expected ':' after parameter");                               //verificar
+            if (Check(TokenType.NUMBERTYPE) || Check(TokenType.STRINGTYPE) || Check(TokenType.BOOLTYPE))
+            {
+                variables.SetType(Advance().type);
+                param.nodes.Add(variables);
+                if (!Check(TokenType.RIGHT_BRACE))
+                {
+                    Consume(TokenType.COMMA, "Expected ','");
+                }
+            }
+            else
+            {
+                throw new Error($"Expected type but got '{Peek().lexeme}' at line {Peek().line}", ErrorType.SYNTAX); // Verificar
+            }
+
         }
         Consume(TokenType.RIGHT_BRACE, "Expected '}' after Params declaration");
+        //Consume(TokenType.COMMA, "Expected ',' after '}'"); Despues de params no va coma ****
         return param;
+        // Consume(TokenType.LEFT_BRACE, "Expected '{' after Params");
+        // Params param = new Params();
+        // bool firstParam = true;
+        // while (!Check(TokenType.RIGHT_BRACE) && !isAtEnd())
+        // {
+        //     if (!firstParam)
+        //     {
+        //         Consume(TokenType.COMMA, "Expected ',' between parameters");
+        //     }
+        //     Variable variables = ParseVariable();
+        //     Consume(TokenType.COLON, "Expected ':' after parameter name");
+        //     if (Match(TokenType.NUMBERTYPE) || Match(TokenType.STRINGTYPE) || Match(TokenType.BOOLTYPE))
+        //     {
+        //         variables.SetType(Previous().type);
+        //         param.nodes.Add(variables);
+        //     }
+        //     else
+        //     {
+        //         throw new Error($"Expected type but got '{Peek().lexeme}' at line {Peek().line}", ErrorType.SYNTAX);
+        //     }
+        //     firstParam = false;
+        // }
+        // Consume(TokenType.RIGHT_BRACE, "Expected '}' after Params declaration");
+        // Consume(TokenType.COMMA, "Expected ',' after Params");
+        // return param;
     }
-
     Variable ParseVariable()
     {
-        if (Match(TokenType.IDENTIFIER))
-        {
-            Token name = Previous();
-            return new Variable(name);
-        }
-        throw new Error($"Expected variable name but got '{Peek().lexeme}' at line {Peek().line}", ErrorType.SYNTAX);
-    }
 
+        Variable variable = new Variable(Advance());
+        if (Check(TokenType.DOT))
+        {
+            VariableCompound variableComp = new VariableCompound(variable.ID);
+            while (Match(TokenType.DOT) && !isAtEnd())
+            {
+                if (Match(TokenType.FUN))
+                {
+                    Function function = ParseFunctionDeclaration(Previous().lexeme);
+                    variableComp.argument.nodes.Add(function);
+                }
+                else
+                {
+
+                    if (Match(TokenType.TYPE))
+                    {
+                        Type type = new Type(new StringExpression(Previous().lexeme));
+                        variableComp.argument.nodes.Add(type);
+                    }
+                    else if (Match(TokenType.NAME))
+                    {
+                        Name name = new Name(new StringExpression(Previous().lexeme));
+                        variableComp.argument.nodes.Add(name);
+                    }
+                    else if (Match(TokenType.FACTION))
+                    {
+                        Faction faction = new Faction(new StringExpression(Previous().lexeme));
+                        variableComp.argument.nodes.Add(faction);
+                    }
+                    else if (Match(TokenType.POWER))
+                    {
+                        Pow power = new Pow();
+                        variableComp.argument.nodes.Add(power);
+
+                    }
+                    else if (Match(TokenType.RANGE))
+                    {
+                        Range range = new Range(Previous().lexeme);
+                        variableComp.argument.nodes.Add(range);
+                    }
+                    else if (Match(TokenType.POINTER))
+                    {
+                        Pointer pointer = new Pointer(Previous().lexeme);
+                        variableComp.argument.nodes.Add(pointer);
+                    }
+                    else
+                    {
+
+                    }
+                }
+            }
+            variable = variableComp;
+        }
+        return variable;
+    }
     OnActivationElements ParseOnActivationElements()
     {
         Consume(TokenType.LEFT_BRACE, "Expected '{'");
-        OnActivationEffect onActivationEffect = null!;
-        Selector selector = null!;
-        PostAction postAction = null!;
+        OnActivationEffect onActivationEffect = null;
+        Selector selector = null;
+        PostAction postAction = null;
         while (!Check(TokenType.RIGHT_BRACE) && !isAtEnd())
         {
             if (Match(TokenType.ONACTIVATIONEFFECT))
@@ -259,6 +349,7 @@ public class Parser
                 {
                     Consume(TokenType.COLON, "Expected ':'");
                     selector = ParseSelector();
+
                 }
                 else { }
             }
@@ -277,67 +368,89 @@ public class Parser
             }
         }
         Consume(TokenType.RIGHT_BRACE, "Expected '}' after OnActivation declaration");
-        return new OnActivationElements(onActivationEffect, selector!, postAction!);
+        return new OnActivationElements(onActivationEffect, selector, postAction);
     }
     OnActivationEffect ParseOnActivationEffect()
     {
-        Consume(TokenType.LEFT_PAREN, "Expected '{'");
-        string name = null!;
-        List<Assignment> assignments = new List<Assignment>();
-        while (!Check(TokenType.RIGHT_BRACE) && !isAtEnd())
+        string value = null;
+        List<Assignment> assi = new List<Assignment>();
+        if (Check(TokenType.STRING))
         {
-            if (Match(TokenType.NAME))
+            value = Advance().lexeme;
+            Consume(TokenType.COMMA, "Expected ','");
+            while (!Check(TokenType.SELECTOR))
             {
-                if (Match(TokenType.COLON))
+                if (Check(TokenType.IDENTIFIER))
                 {
-                    if (name == null)
+                    Variable variable = ParseVariable();
+                    Token token = Peek();
+                    Consume(TokenType.COLON, "Expected ':");
+                    Expression expre = ParseExpression();
+                    Assignment assig = new Assignment(variable, token, expre);
+                    assi.Add(assig);
+                    Consume(TokenType.COMMA, "Expected ',");
+                }
+                else { }
+            }
+        }
+        else
+        {
+            Consume(TokenType.LEFT_BRACE, "Expected '{'");
+            while (!Check(TokenType.RIGHT_BRACE) && !isAtEnd())
+            {
+                if (Match(TokenType.NAME))
+                {
+                    if (Match(TokenType.COLON))
                     {
-                        name = Advance().lexeme;
-                        if (!Check(TokenType.RIGHT_BRACE)) Consume(TokenType.COMMA, "Expected ','");
+                        if (value == null)
+                        {
+                            value = Advance().lexeme;
+                            if (!Check(TokenType.RIGHT_BRACE)) Consume(TokenType.COMMA, "Expected ','");
+                        }
+                        else
+                        {
+                            throw new Error($"'{Peek().lexeme}' in {Peek().line}: Duplicate", ErrorType.SYNTAX);
+                        }
                     }
                     else
                     {
-                        throw new Error($"'{Peek().lexeme}' in {Peek().line}: Duplicate", ErrorType.SYNTAX);
+                        if (value == null)
+                        {
+                            value = Advance().lexeme;
+                            if (!Check(TokenType.RIGHT_BRACE)) Consume(TokenType.COMMA, "Expected ','");
+                        }
+                        else
+                        {
+                            throw new Error($"'{Peek().lexeme}' in {Peek().line}: Duplicate", ErrorType.SYNTAX);
+                        }
                     }
+                }
+                else if (Check(TokenType.IDENTIFIER))
+                {
+                    Variable variable = ParseVariable();
+                    Token token = Peek();
+                    Consume(TokenType.COLON, "Expected ':'");
+                    Expression expression = ParseExpression();
+                    Assignment assignment = new Assignment(variable, token, expression);
+                    assi.Add(assignment);
+                    if (!Check(TokenType.RIGHT_BRACE)) Consume(TokenType.COMMA, "Expected ','");
                 }
                 else
                 {
-                    if (name == null)
-                    {
-                        name = Advance().lexeme;
-                        if (!Check(TokenType.RIGHT_BRACE)) Consume(TokenType.COMMA, "Expected ','");
-                    }
-                    else
-                    {
-                        throw new Error($"'{Peek().lexeme}' in {Peek().line}: Duplicate", ErrorType.SYNTAX);
-                    }
+
                 }
             }
-            else if (Match(TokenType.IDENTIFIER))
-            {
-                Variable variable = ParseVariable();
-                Token token = Peek();
-                Consume(TokenType.COLON, "Expected ','");
-                Expression expression = ParseExpression();
-                Assignment assignment = new Assignment(variable, token, expression);
-                assignments.Add(assignment);
-                if (!Check(TokenType.RIGHT_BRACE)) Consume(TokenType.COMMA, "Expected ','");
-                else { }
-            }
-
-
+            Consume(TokenType.RIGHT_BRACE, "Expected '}'");
         }
-        if (name == null) throw new Error($"'{Peek().lexeme}' in {Peek().line}: No name", ErrorType.SYNTAX);
-        Consume(TokenType.RIGHT_BRACE, "Expected '}'");
-        return new OnActivationEffect(name, assignments);
+        if (value == null) throw new Error($"'{Peek().lexeme}' in {Peek().line}: No value", ErrorType.SYNTAX);
+        return new OnActivationEffect(value, assi);
     }
-
     Selector ParseSelector()
     {
         Consume(TokenType.LEFT_BRACE, "Expected '{'");
-        string source = null!;
-        Single single = null!;
-        Predicate predicate = null!;
+        string source = null;
+        Single single = null;
+        Predicate predicate = null;
         while (!Check(TokenType.RIGHT_BRACE) && !isAtEnd())
         {
             if (Match(TokenType.SOURCE))
@@ -345,7 +458,14 @@ public class Parser
                 Consume(TokenType.COLON, "Expected ':'");
                 if (source == null)
                 {
-                    source = Advance().lexeme;
+                    if (Convert.ToString(Peek().Literal) == "deck" || Convert.ToString(Peek().Literal) == "otherDeck" || Convert.ToString(Peek().Literal) == "hand" || Convert.ToString(Peek().Literal) == "otherHand" || Convert.ToString(Peek().Literal) == "field" || Convert.ToString(Peek().Literal) == "otherField" || Convert.ToString(Peek().Literal) == "parent" || Convert.ToString(Peek().Literal) == "board")
+                    {
+                        source = Advance().lexeme;
+                    }
+                    else
+                    {
+                        throw new Error("", ErrorType.SYNTAX);
+                    }
                 }
                 else
                 {
@@ -358,8 +478,21 @@ public class Parser
                 Consume(TokenType.COLON, "Expected ':'");
                 if (single == null)
                 {
-                    Token boolToken = Advance(); // Avanza el token actual y asígnalo a boolToken.
-                    single = new Single(boolToken);
+
+                    single = new Single(Advance());
+                }
+                else
+                {
+                    throw new Error($"'{Peek().lexeme}' in {Peek().line}: Duplicate", ErrorType.SYNTAX);
+                }
+                if (!Check(TokenType.RIGHT_BRACE)) Consume(TokenType.COMMA, "Expected ','");
+            }
+            else if (Match(TokenType.PREDICATE))
+            {
+                Consume(TokenType.COLON, "Expected ':'");
+                if (predicate == null)
+                {
+                    predicate = ParsePredicate();
                 }
                 else
                 {
@@ -380,229 +513,171 @@ public class Parser
     PostAction ParsePostAction()
     {
         Consume(TokenType.LEFT_BRACE, "Expected '{' to start post action block");
-        Expression type = null!;
-        Selector selector = null!;
-        if (Match(TokenType.TYPE))
+        Expression type = null;
+        Selector selector = null;
+        List<Assignment> assi = new List<Assignment>();
+        while (!Check(TokenType.RIGHT_BRACE) && !isAtEnd())
         {
-            type = ParseExpression();
-            Consume(TokenType.COLON, "Expected ':' after type");
-        }
-        else
-        {
-            throw new Error($"Expected 'TYPE' but found '{Peek().lexeme}' at line {Peek().line}", ErrorType.SYNTAX);
-        }
+            if (Match(TokenType.TYPE))
+            {
+                Consume(TokenType.COLON, "Expected ':'");
+                type = ParseExpression();
+                if (!Check(TokenType.RIGHT_BRACE)) Consume(TokenType.COMMA, "Expected ','");
+            }
+            else if (Match(TokenType.SELECTOR))
+            {
+                Consume(TokenType.COLON, "Expected ':'");
+                selector = ParseSelector();
+                if (!Check(TokenType.RIGHT_BRACE)) Consume(TokenType.COMMA, "Expected ','");
 
-        // Luego parsea el selector
-        if (Match(TokenType.SELECTOR))
-        {
-            selector = ParseSelector();
-            Consume(TokenType.COLON, "Expected ':' after selector");
-        }
-        else
-        {
-            throw new Error($"Expected 'SELECTOR' but found '{Peek().lexeme}' at line {Peek().line}", ErrorType.SYNTAX);
+            }
+            else if (Check(TokenType.IDENTIFIER))
+            {
+                Variable var = ParseVariable();
+                Token token = Peek();
+                Consume(TokenType.COLON, "Expected ':'");
+                Expression expression = ParseExpression();
+                Assignment ass = new Assignment(var, token, expression);
+                assi.Add(ass);
+                if (!Check(TokenType.RIGHT_BRACE)) Consume(TokenType.COMMA, "Expected ','");
+            }
+            else
+            {
+                throw new Error($"Expected 'SELECTOR' but found '{Peek().lexeme}' at line {Peek().line}", ErrorType.SYNTAX);
+            }
         }
 
         Consume(TokenType.RIGHT_BRACE, "Expected '}' after post action block");
+        if (type == null || selector == null) throw new Error("", ErrorType.SYNTAX);
         return new PostAction(type, selector);
     }
-
     Predicate ParsePredicate()
     {
-        Consume(TokenType.LEFT_BRACE, "Expected '{' to start a predicate");
-        Variable variable = null!;
-        if (Match(TokenType.IDENTIFIER))
-        {
-            variable = ParseVariable();
-            Consume(TokenType.COLON, "Expected ':' after variable");
-        }
-        else
-        {
-            throw new Error($"Expected IDENTIFIER but found '{Peek().lexeme}' at line {Peek().line}", ErrorType.SYNTAX);
-        }
-        Expression condition = null!;
-        if (!isAtEnd() && !Check(TokenType.RIGHT_BRACE))
-        {
-            condition = ParseExpression();
-        }
-        else
-        {
-            throw new Error($"Expected CONDITION but found '{Peek().lexeme}' at line {Peek().line}", ErrorType.SYNTAX);
-        }
-
-        Consume(TokenType.RIGHT_BRACE, "Expected '}' after predicate block");
-
+        Consume(TokenType.LEFT_PAREN, "Expected '(' to start a predicate");
+        Variable variable = ParseVariable();
+        Consume(TokenType.RIGHT_PAREN, "Expected ')' after variable");
+        Consume(TokenType.EQUAL_GREATER, "Expected '=>' afte ')");
+        Expression condition = ParseExpression();
         return new Predicate(variable, condition);
     }
-
-
     Action ParseAction()
     {
-        Consume(TokenType.LEFT_PAREN, "Expected ')'");
-        Variable target = ParseVariable();
-        Consume(TokenType.COMMA, "Expected ','");
+        Consume(TokenType.LEFT_PAREN, "Expected '(' after Action");
+        Variable targets = ParseVariable();
+        Consume(TokenType.COMMA, "Expected ',' between parameters");
         Variable context = ParseVariable();
-        Consume(TokenType.RIGHT_PAREN, "Expected ')'");
-        Consume(TokenType.EQUAL_GREATER, "Expected '=>'");
-        Consume(TokenType.LEFT_BRACE, "Expected '{'");
-        StatementBlock StatementBlock = new StatementBlock();
+        Consume(TokenType.RIGHT_PAREN, "Expected ')' after parameters");
+        Consume(TokenType.EQUAL_GREATER, "Expected '=>' after parameters");
+        Consume(TokenType.LEFT_BRACE, "Expected '{' before action body");
+        //isInsideActionBlock = true;
+        StatementBlock body = ParseStatementBlock();
+        //isInsideActionBlock = false;
+        Consume(TokenType.RIGHT_BRACE, "Expected '}' after action body");
+        return new Action(targets, context, body);
+    }
+    StatementBlock ParseStatementBlock()
+    {
+        StatementBlock block = new StatementBlock();
         while (!Check(TokenType.RIGHT_BRACE) && !isAtEnd())
         {
-            StatementBlock.statements.Add(ParseStatement());
+            block.statements.Add(ParseStatement());
         }
-        Consume(TokenType.RIGHT_BRACE, "Expected '}'");
-        return new Action(target, context, StatementBlock);
-    }
+        return block;
 
+
+    }
     Statement ParseStatement()
     {
-        if (Match(TokenType.WHILE))
-        {
-            return ParseWhileStatement();
-        }
-        else if (Match(TokenType.FOR))
+        if (Match(TokenType.FOR))
         {
             return ParseForStatement();
         }
+        else if (Match(TokenType.WHILE))
+        {
+            return ParseWhileStatement();
+        }
 
+        else if (Check(TokenType.IDENTIFIER))
+        {
+            Variable variable = ParseVariable();
+            if (variable.GetType() == typeof(VariableCompound) && Check(TokenType.SEMICOLON))
+            {
+                VariableCompound v = variable as VariableCompound;
+                if (v.argument.nodes[v.argument.nodes.Count - 1].GetType() == typeof(Function))
+                {
+                    Function function = v.argument.nodes[v.argument.nodes.Count - 1] as Function;
+                    if (function.type != Variable.Type.VOID) throw new Error("", ErrorType.SYNTAX);
+                }
+                else
+                {
+
+                }
+                Consume(TokenType.SEMICOLON, "Expected ';'");
+                return variable as VariableCompound;
+            }
+            else
+            {
+                return ParseAssignment(variable);
+            }
+        }
         else if (Match(TokenType.FUN))
         {
-            return ParseFunctionDeclaration();
+            return ParseFunctionDeclaration(Previous().lexeme);
         }
-
-        else if (Match(TokenType.IDENTIFIER))
-        {
-            return ParseExpressionOrAssignment();
-        }
-
         else
         {
-            return ParseExpressionStatement();
+            throw new Error("", ErrorType.SYNTAX);
         }
 
     }
     Statement ParseWhileStatement()
     {
-        Consume(TokenType.LEFT_PAREN, "Expected '(' after 'while'.");
-        Expression condition = ParseExpression();
-        Consume(TokenType.RIGHT_PAREN, "Expected ')' after condition.");
-        Consume(TokenType.LEFT_BRACE, "Expected '{' to start the body of the while loop.");
-        StatementBlock body = new StatementBlock();
-        while (!Check(TokenType.RIGHT_BRACE) && !isAtEnd())
-        {
-            body.statements.Add(ParseStatement());
-        }
-        Consume(TokenType.RIGHT_BRACE, "Expected '}' after the body of the while loop.");
-        return new WhileStatement(condition, body);
+        Consume(TokenType.LEFT_PAREN, "Expected '('");
+        Expression expression = ParseExpression();
+        Consume(TokenType.RIGHT_PAREN, "Expected ')'");
+        StatementBlock statement = ParseStatementBlock();
+        return new WhileStatement(expression, statement);
     }
     Statement ParseForStatement()
     {
-        Consume(TokenType.LEFT_PAREN, "Expected '(' after 'for'.");
-        Statement initializer = ParseExpressionOrAssignment();
-        Expression condition = null!;
-        if (!Check(TokenType.SEMICOLON))
-        {
-            condition = ParseExpression();
-        }
-        Consume(TokenType.SEMICOLON, "Expected ';' after loop condition.");
-        Expression increment = null!;
-        if (!Check(TokenType.RIGHT_PAREN))
-        {
-            increment = ParseExpression();
-        }
-        Consume(TokenType.RIGHT_PAREN, "Expected ')' after for clauses.");
-        Consume(TokenType.LEFT_BRACE, "Expected '{' to start the body of the for loop.");
-        StatementBlock body = new StatementBlock();
-        while (!Check(TokenType.RIGHT_BRACE) && !isAtEnd())
-        {
-            body.statements.Add(ParseStatement());
-        }
-        Consume(TokenType.RIGHT_BRACE, "Expected '}' after the body of the for loop.");
 
-        return new ForStatement(initializer, condition, increment, body);
+        Variable target1 = ParseVariable();
+        Consume(TokenType.IN, "Expected 'in'");
+        Variable target2 = ParseVariable();
+        Consume(TokenType.LEFT_BRACE, "Expected {");
+        StatementBlock statement = ParseStatementBlock();
+        Consume(TokenType.RIGHT_BRACE, "Expected }");
+        Consume(TokenType.SEMICOLON, "Expected ';'");
+        return new ForStatement(target1, target2, statement);
+
+
 
     }
-
-    Statement ParseFunctionDeclaration()
+    Function ParseFunctionDeclaration(string value)
     {
-        Token name = Consume(TokenType.IDENTIFIER, "Expected function name.");
-        Consume(TokenType.LEFT_PAREN, "Expected '(' after function name.");
-
-        List<Variable> parameters = GetParams();
-
-        Consume(TokenType.RIGHT_PAREN, "Expected ')' after parameters.");
-        Consume(TokenType.LEFT_BRACE, "Expected '{' before function body.");
-
-        List<Statement> body = new List<Statement>();
-        while (!Check(TokenType.RIGHT_BRACE) && !isAtEnd())
+        Consume(TokenType.LEFT_PAREN, "Expected '('");
+        Params param = new Params();
+        while (!Check(TokenType.RIGHT_PAREN) && !isAtEnd())
         {
-            body.Add(ParseStatement());
-        }
-
-        Consume(TokenType.RIGHT_BRACE, "Expected '}' after function body.");
-        return new FunctionStatement(name, parameters, body);
-    }
-
-    Statement ParseExpressionOrAssignment()
-    {
-        Expression expr = ParseExpression();
-
-        if (Match(TokenType.EQUAL))
-        {
-            Token equals = Previous();
-            Expression value = ParseExpression();
-
-            if (expr is VariableExpression variable)
+            if (Check(TokenType.IDENTIFIER))
             {
-                Token name = variable.name;
-                return new Assignment(new Variable(variable.name), equals, value);
+                param.nodes.Add(ParseVariable());
             }
-
-            throw new Error($"Invalid assignment target at line {equals.line}.", ErrorType.SYNTAX);
-        }
-
-        Consume(TokenType.SEMICOLON, "Expected ';' after expression.");
-        return new ExpressionStatement(expr);
-    }
-
-    Statement ParseExpressionStatement()
-    {
-        Expression expr = ParseExpression();
-        Consume(TokenType.SEMICOLON, "Expected ';' after expression.");
-        return new ExpressionStatement(expr);
-    }
-
-
-
-    List<Variable> GetParams()
-    {
-        Consume(TokenType.LEFT_BRACE, "Expected '{' after Params");
-        List<Variable> variables = new List<Variable>();
-        while (!Check(TokenType.RIGHT_BRACE) && !isAtEnd())
-        {
-            var variable = ParseVariable();
-            Consume(TokenType.COLON, "Expected ':' after parameter");
-            if (Match(TokenType.STRINGTYPE) || Match(TokenType.NUMBERTYPE) || Match(TokenType.BOOLTYPE))
+            else if (Check(TokenType.FUN))
             {
-                variable.TypeParam(Peek().type);
-                Advance();
-                variables.Add(variable);
-                if (!Check(TokenType.RIGHT_BRACE))
-                {
-                    Consume(TokenType.COMMA, "Expected ','");
-                }
+                param.nodes.Add(ParseFunctionDeclaration(Advance().lexeme));
             }
             else
             {
-                throw new Exception("Expected type after parameter name");
-                //return variables
+                param.nodes.Add(ParseExpression());
             }
+            if (!Check(TokenType.RIGHT_PAREN)) Consume(TokenType.COMMA, "Expected ','");
         }
-        Consume(TokenType.RIGHT_BRACE, "Expected '}' after Params declaration");
-        return variables;
+        Consume(TokenType.RIGHT_PAREN, "Expected ')'");
+        Function function = new Function(value, param);
+        return function;
     }
-
-    private Expression Equality()
+    Expression Equality()
     {
         Expression expression = Comparison();
         while (Match(TokenType.BANG_EQUAL) || Match(TokenType.EQUAL_EQUAL))
@@ -613,44 +688,55 @@ public class Parser
         }
         return expression;
     }
-
-    private bool Match(TokenType type)
+    bool Match(TokenType[] type)
     {
-
+        for (int i = 0; i < type.Length; i++)
+        {
+            if (Check(type[i]))
+            {
+                Advance();
+                return true;
+            }
+        }
+        return false;
+    }
+    bool Match(TokenType type)
+    {
         if (Check(type))
         {
             Advance();
             return true;
         }
-
-
         return false;
     }
-    private bool Check(TokenType type)
+    bool Check(TokenType type)
     {
         if (isAtEnd()) return false;
         return Peek().type == type;
     }
-    private Token Advance()
+    Token Advance()
     {
         if (!isAtEnd()) current++;
         return Previous();
     }
-
-    private bool isAtEnd()
+    bool isAtEnd()
     {
         return Peek().type == TokenType.EOF;
     }
-    private Token Peek()
+    Token Peek()
     {
         return tokens[current];
     }
-    private Token Previous()
+    Token Previous()
     {
         return tokens[current - 1];
     }
-
-    private Expression Comparison()
+    bool Continue(TokenType type)
+    {
+        if (isAtEnd()) return false;
+        return tokens[current + 1].type == type;
+    }
+    Expression Comparison()
     {
         Expression expression = Term();
         while (Match(TokenType.GREATER) || Match(TokenType.GREATER_EQUAL) || Match(TokenType.LESS) || Match(TokenType.LESS_EQUAL))
@@ -661,23 +747,43 @@ public class Parser
         }
         return expression;
     }
-
-    private Expression Term()
+    Expression Term()
     {
+        // Expression expression = Factor();
+        // while (Match(TokenType.MINUS) || Match(TokenType.PLUS) || Match(TokenType.ATSIGN) || Match(TokenType.ATSIGN_ATSIGN))
+        // {
+        //     Token ope = Previous();
+        //     Expression right = Factor();
+        //     expression = new Binary(expression, ope, right);
+        // }
+        // return expression;
         Expression expression = Factor();
-        while (Match(TokenType.MINUS) || Match(TokenType.PLUS))
+        TokenType[] tokenTypes = { TokenType.PLUS, TokenType.MINUS, TokenType.ATSIGN, TokenType.ATSIGN_ATSIGN };
+        if (Check(TokenType.PLUS) || Check(TokenType.MINUS))
         {
-            Token ope = Previous();
-            Expression right = Factor();
-            expression = new Binary(expression, ope, right);
+            while (Match(tokenTypes))
+            {
+                Token operators = Previous();
+                Expression right = Factor();
+                expression = new BinaryInterger(expression, operators, right);
+            }
+        }
+        else if (Check(TokenType.ATSIGN) || Check(TokenType.ATSIGN_ATSIGN))
+        {
+            while (Match(tokenTypes))
+            {
+                Token operators = Previous();
+                Expression right = Factor();
+                expression = new BinaryString(expression, operators, right);
+            }
         }
         return expression;
-    }
 
-    private Expression Factor()
+    }
+    Expression Factor()
     {
         Expression expression = Unary();
-        while (Match(TokenType.SLASH) || Match(TokenType.STAR))
+        while (Match(TokenType.SLASH) || Match(TokenType.STAR) || Match(TokenType.PERCENT))
         {
             Token oper = Previous();
             Expression right = Unary();
@@ -685,44 +791,56 @@ public class Parser
         }
         return expression;
     }
-    private Expression Unary()
+    Expression Unary()
     {
-        if (Match(TokenType.MINUS) || Match(TokenType.BANG))
+        if (Match(TokenType.MINUS) || Match(TokenType.BANG) || Match(TokenType.PLUS_PLUS))
         {
             Token ope = Previous();
             Expression right = Unary();
             return new Unary(ope, right);
         }
+        else if (Check(TokenType.IDENTIFIER) && Continue(TokenType.PLUS_PLUS))
+        {
+            Expression left = ParseVariable();
+            Token token = Advance();
+            return new Unary(token, left);
+        }
         return Primary();
     }
-
-    private Expression Primary()
+    Expression Primary()
     {
-        if (Match(TokenType.FALSE)) return new Literal(false);
-        if (Match(TokenType.TRUE)) return new Literal(true);
-        if (Match(TokenType.NUMBER)) return new Literal(double.Parse(Previous().lexeme));
-        if (Match(TokenType.STRING)) return new Literal(Previous().lexeme);
+        //Console.WriteLine($"Entering Primary. Current token: {Peek().type} with lexeme: {Peek().lexeme}");
+
+        if (Match(TokenType.FALSE)) return new Bool(false);
+        if (Match(TokenType.TRUE)) return new Bool(true);
+        if (Match(TokenType.NUMBER)) return new Number(Convert.ToInt32(Previous().Literal));
+        if (Match(TokenType.STRING))
+        {
+            Console.WriteLine(Previous().lexeme);
+            return new StringExpression(Previous().lexeme);
+        }
+
         if (Match(TokenType.LEFT_PAREN))
         {
             Expression expression = Equality();
-            Consume(TokenType.RIGHT_PAREN, "Expect ) after expression");
+            Consume(TokenType.RIGHT_PAREN, "Expect ')' after expression.");
             return new Grouping(expression);
         }
-        throw new Exception("Expected expression");
 
+        if (Check(TokenType.IDENTIFIER)) //Tenias puesto Match y era check
+        {
+            return ParseVariable();
+        }
+
+
+        throw new Error($"Unexpected token: {Peek().type} with lexeme: {Peek().lexeme}", ErrorType.SYNTAX);
     }
-
-    private Token Consume(TokenType type, string message)
+    Token Consume(TokenType type, string message)
     {
+        Console.WriteLine(Peek().type + " " + Peek().lexeme);
         if (Check(type)) return Advance();
-        throw new Exception($"{message} but got {Peek().type}");
+        throw new Exception($"{message}. Expected token of type '{type}' but got '{Peek().type}' at line {Peek().line}");
 
     }
-
-
-
-
-
-
 
 }
