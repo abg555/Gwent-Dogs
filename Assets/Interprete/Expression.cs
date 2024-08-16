@@ -219,6 +219,7 @@ public class Variable : Expression      //revisado
     public Token ID { get; }
     public string name { get; }
     public Type type;
+    public bool isConstant { get; set; }
     public enum Type
     {
         INT, STRING, BOOL, NULL, FIELD, TARGETS, VOID, CARD, CONTEXT
@@ -730,7 +731,7 @@ public class OnActivationElements : Node //revisado
         postAction?.Print(ident + 2);
     }
 }
-public class Card : Node     //revisado
+public class Card : Node   //revisado
 {
     public Type Type;
     public Name Name;

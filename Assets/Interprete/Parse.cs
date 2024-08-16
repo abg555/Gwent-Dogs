@@ -45,18 +45,19 @@ public class Parser
         Program program = new Program();
         while (!isAtEnd())
         {
-            if (Match(TokenType.CARD))
-            {
-                Consume(TokenType.LEFT_BRACE, "Expected '{' after card");
-                program.card.Add(ParseCard());
-                Consume(TokenType.RIGHT_BRACE, "Expected '}' after card finished");
 
-            }
-            else if (Match(TokenType.EFFECT))
+            if (Match(TokenType.EFFECT))
             {
                 Consume(TokenType.LEFT_BRACE, "Expected '{' after effect");
                 program.effects.Add(ParseEffect());
                 Consume(TokenType.RIGHT_BRACE, "Expect '}' after effect finished.");
+
+            }
+            else if (Match(TokenType.CARD))
+            {
+                Consume(TokenType.LEFT_BRACE, "Expected '{' after card");
+                program.card.Add(ParseCard());
+                Consume(TokenType.RIGHT_BRACE, "Expected '}' after card finished");
 
             }
             else
@@ -196,7 +197,7 @@ public class Parser
         if (counter[0] < 1) throw new Error("A Name property is missing from effect", ErrorType.SYNTAX);
         else if (counter[0] > 1) throw new Error("Only one Name is allowed", ErrorType.SYNTAX);
 
-        if (counter[1] < 1) throw new Error("A Params property is missing from effect", ErrorType.SYNTAX); //Tenias puesto < 2
+
         else if (counter[1] > 1) throw new Error("Only one Params is allowed", ErrorType.SYNTAX);
 
         if (counter[2] < 1) throw new Error("A Action property is missing from effect", ErrorType.SYNTAX);
@@ -349,6 +350,7 @@ public class Parser
                 {
                     Consume(TokenType.COLON, "Expected ':'");
                     selector = ParseSelector();
+                    if (selector.Source == null) throw new Error($"'{Peek().lexeme}' in {Peek().line}: Invalid Selector field.", ErrorType.SYNTAX);
 
                 }
                 else { }
@@ -506,7 +508,7 @@ public class Parser
             }
         }
         Consume(TokenType.RIGHT_BRACE, "Expected '}' after Selector declaration");
-        if (source == null! || single == null! || predicate == null!) throw new Error($"'{Peek().lexeme}' in {Peek().line}: Missing field", ErrorType.SYNTAX);
+        if (single == null! || predicate == null!) throw new Error($"'{Peek().lexeme}' in {Peek().line}: Missing field", ErrorType.SYNTAX);
         return new Selector(source, single, predicate);
 
     }
@@ -528,6 +530,10 @@ public class Parser
             {
                 Consume(TokenType.COLON, "Expected ':'");
                 selector = ParseSelector();
+                if (selector.Source == null)
+                {
+                    selector.Source = "parent";
+                }
                 if (!Check(TokenType.RIGHT_BRACE)) Consume(TokenType.COMMA, "Expected ','");
 
             }
