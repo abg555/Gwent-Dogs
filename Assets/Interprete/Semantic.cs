@@ -96,6 +96,14 @@
                         }
                     }
                 }
+                if (element.postAction != null)
+                {
+                    string postActionEffectName = ((StringExpression)element.postAction.Type).Value;
+                    if (!effectNames.ContainsKey(postActionEffectName))
+                    {
+                        throw new SemanticError($"El efecto '{postActionEffectName}' mencionado en el PostAction de la carta '{cardName}' no está definido.");
+                    }
+                }
             }
         }
     }
@@ -214,6 +222,8 @@
                 }
                 effectNames[effectName] = effect;
                 CheckEffect(effect);
+                effect.Print();
+                Console.WriteLine("Análisis semántico del efecto completado con éxito.");
             }
 
             // Luego, procesar todas las cartas
@@ -226,7 +236,17 @@
                 }
                 cardNames[cardName] = card;
                 CheckCard(card);
+                card.Print();
+                Console.WriteLine("Análisis semántico de la carta completado con éxito.");
             }
+            if (program.effects.Count == 0 && program.card.Count == 0)
+            {
+                Console.WriteLine("El AST analizado no contiene efectos ni cartas. Análisis semántico omitido.");
+            }
+        }
+        else
+        {
+            Console.WriteLine("El AST analizado no es un programa válido. Análisis semántico omitido.");
         }
     }
 

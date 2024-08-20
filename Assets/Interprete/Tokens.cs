@@ -18,6 +18,8 @@
     }
 
 }
+
+
 public enum TokenType
 {
     //SINGLE_CHARACTER TOKENS

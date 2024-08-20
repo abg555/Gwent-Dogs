@@ -1,43 +1,11 @@
 {
   "version": 3,
   "targets": {
-    "net7.0": {
-      "Antlr4.Runtime.Standard/4.13.1": {
-        "type": "package",
-        "compile": {
-          "lib/netstandard2.0/Antlr4.Runtime.Standard.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/netstandard2.0/Antlr4.Runtime.Standard.dll": {
-            "related": ".xml"
-          }
-        }
-      }
-    }
+    "net7.0": {}
   },
-  "libraries": {
-    "Antlr4.Runtime.Standard/4.13.1": {
-      "sha512": "Da5+i4kFHUseJRZGcBG5fmZGpA/Ns180ibrQMxgZzjpQOnENVvSL5gi5HZ8Ncz8/AR2WsKbOg2lMBzjz0HUQcA==",
-      "type": "package",
-      "path": "antlr4.runtime.standard/4.13.1",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "antlr4.runtime.standard.4.13.1.nupkg.sha512",
-        "antlr4.runtime.standard.nuspec",
-        "lib/net45/Antlr4.Runtime.Standard.dll",
-        "lib/net45/Antlr4.Runtime.Standard.xml",
-        "lib/netstandard2.0/Antlr4.Runtime.Standard.dll",
-        "lib/netstandard2.0/Antlr4.Runtime.Standard.xml"
-      ]
-    }
-  },
+  "libraries": {},
   "projectFileDependencyGroups": {
-    "net7.0": [
-      "Antlr4.Runtime.Standard >= 4.13.1"
-    ]
+    "net7.0": []
   },
   "packageFolders": {
     "C:\\Users\\witch\\.nuget\\packages\\": {},
@@ -82,12 +50,6 @@
     "frameworks": {
       "net7.0": {
         "targetAlias": "net7.0",
-        "dependencies": {
-          "Antlr4.Runtime.Standard": {
-            "target": "Package",
-            "version": "[4.13.1, )"
-          }
-        },
         "imports": [
           "net461",
           "net462",

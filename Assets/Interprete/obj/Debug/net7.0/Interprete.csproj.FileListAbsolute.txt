@@ -13,5 +13,3 @@ C:\Users\witch\Gwent-Dogs-Project\Assets\Interprete\obj\Debug\net7.0\refint\Inte
 C:\Users\witch\Gwent-Dogs-Project\Assets\Interprete\obj\Debug\net7.0\Interprete.pdb
 C:\Users\witch\Gwent-Dogs-Project\Assets\Interprete\obj\Debug\net7.0\Interprete.genruntimeconfig.cache
 C:\Users\witch\Gwent-Dogs-Project\Assets\Interprete\obj\Debug\net7.0\ref\Interprete.dll
-C:\Users\witch\Gwent-Dogs-Project\Assets\Interprete\bin\Debug\net7.0\Antlr4.Runtime.Standard.dll
-C:\Users\witch\Gwent-Dogs-Project\Assets\Interprete\obj\Debug\net7.0\Interprete.csproj.CopyComplete
