@@ -149,26 +149,7 @@ public class Semantic : MonoBehaviour
                     {
                         foreach (var postAction in element.postAction)
                         {
-                            string postActionEffectName;
-                            Debug.Log(postAction.Type);
-
-                            if (postAction.Type is Expression stringExpr)
-                            {
-                                postActionEffectName = stringExpr.ToString();
-                            }
-                            else if (postAction.Type is StringExpression stringExr)
-                            {
-                                postActionEffectName = stringExr.Evaluate(new Scope()).ToString();
-                                Debug.Log(postActionEffectName);
-                            }
-                            else if (postAction.Type is Variable varExpr)
-                            {
-                                postActionEffectName = varExpr.name;
-                            }
-                            else
-                            {
-                                throw new SemanticError($"Tipo de PostAction inválido en la carta '{cardName}'. Se esperaba una expresión de cadena o una variable.");
-                            }
+                            string postActionEffectName = (string)postAction.Type.Evaluate(new Scope());
 
                             if (!effectNames.ContainsKey(postActionEffectName))
                             {

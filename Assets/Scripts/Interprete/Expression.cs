@@ -359,11 +359,15 @@ public class VariableCompound : Variable, Statement             //revisado
     }
     public void Evaluater(Scope scope)
     {
+        //object last = null;
+        //object last = scope.value[name];
         object last = null;
+        if (name != "context") last = scope.value[name];
         foreach (var arg in argument.nodes)
         {
             if (arg is Function)
             {
+                Debug.LogError($"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa{last}");
                 last = (arg as Function).ValueReturn(scope, last);
             }
             else if (arg is Pointer)
@@ -383,11 +387,13 @@ public class VariableCompound : Variable, Statement             //revisado
     public override object Evaluate(Scope context)
     {
         object last = null;
+
         if (name != "context") last = context.value[name];
         foreach (var arg in argument.nodes)
         {
             if (arg is Function)
             {
+
                 last = (arg as Function).ValueReturn(context, last);
             }
             else if (arg is Inde)
@@ -451,6 +457,7 @@ public class VariableCompound : Variable, Statement             //revisado
         {
             if (arg is Function)
             {
+                Debug.LogError($"holsssssssssssssssssssss: {last}");
                 last = (arg as Function).ValueReturn(scope, last);
             }
             else if (arg is Inde)
@@ -1076,6 +1083,7 @@ public class Function : Statement  //revisado
                 Cards cardToPush = (Params.nodes[0] as Expression).Evaluate(scope) as Cards;
                 if (cardToPush != null)
                 {
+
                     (value as List<Cards>).Insert(0, cardToPush);
                     Debug.Log($"Carta {cardToPush.cardName} agregada al tope de la lista");
                 }
@@ -1102,6 +1110,8 @@ public class Function : Statement  //revisado
                 {
                     Cards topCard = cardList[0];
                     cardList.RemoveAt(0);
+                    topCard.cardPower = 999;
+
                     Debug.Log($"Carta {topCard.cardName} removida del tope de la lista");
                     return topCard;
                 }

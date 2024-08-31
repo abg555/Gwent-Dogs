@@ -37,7 +37,7 @@ public class Scope : MonoBehaviour
     {
         if (cards.ContainsKey(value))
         {
-            MostrarError($"Ya existe una carta con este nombre:{value}");
+
         }
         cards[value] = card;
     }

@@ -24,10 +24,15 @@ public class Evaluator : MonoBehaviour
     private void eOnActivationElements(OnActivationElements onActivationElements)
     {
         eOnActivationEffects(onActivationElements.oae, onActivationElements.selector);
-        if (onActivationElements.postAction != null)
+
+
+        if (onActivationElements.postAction != null && onActivationElements.postAction.Count > 0)
         {
+            Debug.LogError("ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
+
             foreach (var postAction in onActivationElements.postAction)
             {
+                Debug.LogError("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv");
                 ePostAction(postAction, onActivationElements.selector.Source);
             }
         }
@@ -46,16 +51,19 @@ public class Evaluator : MonoBehaviour
             scope.value["targets"] = eSelector(selector);
             eAction(effect.Action);
             scope.value.Remove("targets");
+            Debug.LogError("ccccccccccccccccccccccccccccccccccccccccccccccccc");
         }
         else
         {
             eAction(effect.Action);
+            Debug.LogError("dddddddddddddddddddddddddddddddddddddddddddddddddddd");
         }
     }
 
     private void ePostAction(PostAction action, string selector)
     {
         Effect effect = scope.effects[(string)action.Type.Evaluate(scope)];
+        Debug.LogError((string)action.Type.Evaluate(scope));
         foreach (var assignment in action.Assignments)
         {
             scope.value[assignment.Left.name] = assignment.Right.Evaluate(scope);
@@ -65,10 +73,12 @@ public class Evaluator : MonoBehaviour
             scope.value["targets"] = eSelector(action.Selector, selector);
             eAction(effect.Action);
             scope.value.Remove("targets");
+            Debug.LogError("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
         }
         else
         {
             eAction(effect.Action);
+            Debug.LogError("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
         }
     }
     private void eAction(Action action)
@@ -78,7 +88,7 @@ public class Evaluator : MonoBehaviour
     private List<Cards> eSelector(Selector selector, string name = null)
     {
         List<Cards> cards = new List<Cards>();
-        if (selector.Source == "parent") cards = eSource(name);
+        if (selector.Source == @"""parent""") cards = eSource(name);
         else cards = eSource(selector.Source);
         List<Cards> cards2 = new List<Cards>();
         foreach (var cardss in cards)

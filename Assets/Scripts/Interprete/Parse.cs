@@ -453,6 +453,10 @@ public class Parser : MonoBehaviour
 
                 Consume(TokenType.COLON, "Expected ':'");
                 postAction.Add(ParsePostAction());
+                foreach (var uuu in postAction)
+                {
+                    Debug.LogError("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+                }
 
 
             }
@@ -622,6 +626,7 @@ public class Parser : MonoBehaviour
     }
     PostAction ParsePostAction()
     {
+        Debug.LogError("UYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
         Consume(TokenType.LEFT_BRACE, "Expected '{' to start post action block");
         Expression type = null;
         Selector selector = null;
