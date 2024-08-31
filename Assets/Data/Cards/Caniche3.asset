@@ -15,7 +15,7 @@ MonoBehaviour:
   cardNumber: 35
   cardName: Caniche Maliche
   cardPower: 2
-  cardParent: 0
+  Owner: 1
   cardKind: 1
   cardHability: Elimina la carta con mas puntos del enemigo
   cardBackgroundImage: {fileID: 21300000, guid: e9db37abbc530694abf701eb746ee3d2, type: 3}
@@ -25,3 +25,11 @@ MonoBehaviour:
   cardPlaceboardImage: {fileID: 21300000, guid: 5206876d4e405604a955859bf011caa2, type: 3}
   zone: ar2
   zone2: s
+  zone3: 
+  faction: 
+  type: 
+  cardRange:
+  - 
+  - 
+  - 
+  gameObject: {fileID: 2535557763646421929, guid: 802ef39a98dffa540ab1f655d06f3b1b, type: 3}

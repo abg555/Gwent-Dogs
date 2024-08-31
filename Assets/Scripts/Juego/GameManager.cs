@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public GameObject[] positions2;
     public Count count;
     public Count2 count2;
+    public OK oK;
     private bool isEnd = false;
     private bool isEnd2 = false;
     private bool isEnd3 = false;
@@ -44,6 +45,7 @@ public class GameManager : MonoBehaviour
     private bool cards26 = false;
     private bool cards27 = false;
     private bool cards30 = false;
+
 
     public DeckButton deckButton;
     public DeckButton2 deckButton2;
@@ -111,7 +113,7 @@ public class GameManager : MonoBehaviour
     public GameObject playerButton2;
     public GameObject playerButton3;
     public GameObject buttZone;
-
+    public OK ok;
 
 
 
@@ -130,6 +132,102 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        G();
+        foreach (Transform fro in enemyArea.transform)
+        {
+            Cardview cardview = fro.GetComponent<Cardview>();
+            if (cardview.cardview.cardPower == 999)
+            {
+                Debug.Log("El cardview tiene 30 de poder");
+                Destroy(fro.gameObject);
+            }
+        }
+
+        foreach (Transform fro in c.transform)
+        {
+            Cardview cardview = fro.GetComponent<Cardview>();
+            if (cardview.cardview.cardPower == 999)
+            {
+                Debug.Log("El cardview tiene 30 de poder");
+                Destroy(fro.gameObject);
+            }
+        }
+        foreach (Transform fro in c2.transform)
+        {
+            Cardview cardview = fro.GetComponent<Cardview>();
+            if (cardview.cardview.cardPower == 999)
+            {
+                Debug.Log("El cardview tiene 30 de poder");
+                Destroy(fro.gameObject);
+            }
+        }
+        foreach (Transform fro in ar.transform)
+        {
+            Cardview cardview = fro.GetComponent<Cardview>();
+            if (cardview.cardview.cardPower == 999)
+            {
+                Debug.Log("El cardview tiene 30 de poder");
+                Destroy(fro.gameObject);
+            }
+        }
+        foreach (Transform fro in ar2.transform)
+        {
+            Cardview cardview = fro.GetComponent<Cardview>();
+            if (cardview.cardview.cardPower == 999)
+            {
+                Debug.Log("El cardview tiene 30 de poder");
+                Destroy(fro.gameObject);
+            }
+        }
+        foreach (Transform fro in as1.transform)
+        {
+            Cardview cardview = fro.GetComponent<Cardview>();
+            if (cardview.cardview.cardPower == 999)
+            {
+                Debug.Log("El cardview tiene 30 de poder");
+                Destroy(fro.gameObject);
+            }
+        }
+        foreach (Transform fro in as2.transform)
+        {
+            Cardview cardview = fro.GetComponent<Cardview>();
+            if (cardview.cardview.cardPower == 999)
+            {
+                Debug.Log("El cardview tiene 30 de poder");
+                Destroy(fro.gameObject);
+            }
+        }
+        foreach (Transform fro in au.transform)
+        {
+            Cardview cardview = fro.GetComponent<Cardview>();
+            if (cardview.cardview.cardPower == 999)
+            {
+                Debug.Log("El cardview tiene 30 de poder");
+                Destroy(fro.gameObject);
+            }
+        }
+        foreach (Transform fro in au2.transform)
+        {
+            Cardview cardview = fro.GetComponent<Cardview>();
+            if (cardview.cardview.cardPower == 999)
+            {
+                Debug.Log("El cardview tiene 30 de poder");
+                Destroy(fro.gameObject);
+            }
+        }
+        foreach (Transform fro in cl.transform)
+        {
+            Cardview cardview = fro.GetComponent<Cardview>();
+            if (cardview.cardview.cardPower == 999)
+            {
+                Debug.Log("El cardview tiene 30 de poder");
+                Destroy(fro.gameObject);
+            }
+        }
+
+
+        ok.Prueba(ok.scope);
+        ok.Prueba2(ok.scope);
 
         Sum();
         Sum2();
@@ -171,6 +269,7 @@ public class GameManager : MonoBehaviour
         Average2();
         Card();
         Card2();
+
 
         CheckAndDestroyExtraCards();
         if (!isEnd && turnButton.Count == 1 && turnButton.Count2 == 1)
@@ -246,7 +345,19 @@ public class GameManager : MonoBehaviour
 
         }
     }
+    void G()
+    {
+        foreach (Transform fro in playerArea.transform)
+        {
 
+            Cardview cardview = fro.GetComponent<Cardview>();
+            if (cardview.cardview.cardPower == 999)
+            {
+                Debug.Log("El cardview tiene 30 de poder");
+                Destroy(fro.gameObject);
+            }
+        }
+    }
     void Sum2()
     {
         foreach (Transform child in au.transform)
@@ -1159,48 +1270,48 @@ public class GameManager : MonoBehaviour
         List<Cards> cardsBoard = new List<Cards>();
         foreach (Transform child in c.transform)
         {
-            Cards card = child.GetComponent<Cards>();
-            cardsBoard.Add(card);
+            Cardview card = child.GetComponent<Cardview>();
+            cardsBoard.Add(card.cardview);
         }
         foreach (Transform child in c2.transform)
         {
-            Cards card = child.GetComponent<Cards>();
-            cardsBoard.Add(card);
+            Cardview card = child.GetComponent<Cardview>();
+            cardsBoard.Add(card.cardview);
         }
         foreach (Transform child in ar.transform)
         {
-            Cards card = child.GetComponent<Cards>();
-            cardsBoard.Add(card);
+            Cardview card = child.GetComponent<Cardview>();
+            cardsBoard.Add(card.cardview);
         }
         foreach (Transform child in ar2.transform)
         {
-            Cards card = child.GetComponent<Cards>();
-            cardsBoard.Add(card);
+            Cardview card = child.GetComponent<Cardview>();
+            cardsBoard.Add(card.cardview);
         }
         foreach (Transform child in as1.transform)
         {
-            Cards card = child.GetComponent<Cards>();
-            cardsBoard.Add(card);
+            Cardview card = child.GetComponent<Cardview>();
+            cardsBoard.Add(card.cardview);
         }
         foreach (Transform child in as2.transform)
         {
-            Cards card = child.GetComponent<Cards>();
-            cardsBoard.Add(card);
+            Cardview card = child.GetComponent<Cardview>();
+            cardsBoard.Add(card.cardview);
         }
         foreach (Transform child in au.transform)
         {
-            Cards card = child.GetComponent<Cards>();
-            cardsBoard.Add(card);
+            Cardview card = child.GetComponent<Cardview>();
+            cardsBoard.Add(card.cardview);
         }
         foreach (Transform child in au2.transform)
         {
-            Cards card = child.GetComponent<Cards>();
-            cardsBoard.Add(card);
+            Cardview card = child.GetComponent<Cardview>();
+            cardsBoard.Add(card.cardview);
         }
         foreach (Transform child in cl.transform)
         {
-            Cards card = child.GetComponent<Cards>();
-            cardsBoard.Add(card);
+            Cardview card = child.GetComponent<Cardview>();
+            cardsBoard.Add(card.cardview);
         }
         return cardsBoard;
     }
@@ -1208,13 +1319,12 @@ public class GameManager : MonoBehaviour
     public List<Cards> HandOfPlayer(int ID)
     {
         List<Cards> cardsHand = new List<Cards>();
-        if (ID == 0)
+        if (ID == 1)
         {
             foreach (Transform child in playerArea.transform)
             {
-                Cards card = child.GetComponent<Cards>();
-                cardsHand.Add(card);
-                return cardsHand;
+                Cardview card = child.GetComponent<Cardview>();
+                cardsHand.Add(card.cardview);
             }
             return cardsHand;
         }
@@ -1222,45 +1332,58 @@ public class GameManager : MonoBehaviour
         {
             foreach (Transform child in enemyArea.transform)
             {
-                Cards card = child.GetComponent<Cards>();
-                cardsHand.Add(card);
+                Cardview card = child.GetComponent<Cardview>();
+                cardsHand.Add(card.cardview);
             }
             return cardsHand;
         }
 
     }
+
+    // public Hand HandOfPlayer(int ID)
+    // {
+    //     if (ID == 0)
+    //     {
+    //         return playerArea.GetComponent<Hand>();
+    //     }
+    //     else
+    //     {
+    //         return enemyArea.GetComponent<Hand>();
+    //     }
+
+    // }
     public List<Cards> FieldOfPlayer(int ID)
     {
         List<Cards> cardsField = new List<Cards>();
-        if (ID == 0)
+        if (ID == 1)
         {
             foreach (Transform child in c.transform)
             {
-                Cards card = child.GetComponent<Cards>();
-                cardsField.Add(card);
+                Cardview card = child.GetComponent<Cardview>();
+                cardsField.Add(card.cardview);
             }
             foreach (Transform child in ar.transform)
             {
-                Cards card = child.GetComponent<Cards>();
-                cardsField.Add(card);
+                Cardview card = child.GetComponent<Cardview>();
+                cardsField.Add(card.cardview);
             }
             foreach (Transform child in as1.transform)
             {
-                Cards card = child.GetComponent<Cards>();
-                cardsField.Add(card);
+                Cardview card = child.GetComponent<Cardview>();
+                cardsField.Add(card.cardview);
             }
             foreach (Transform child in au.transform)
             {
-                Cards card = child.GetComponent<Cards>();
-                cardsField.Add(card);
+                Cardview card = child.GetComponent<Cardview>();
+                cardsField.Add(card.cardview);
             }
             foreach (Transform child in cl.transform)
             {
                 Cardview cardview = child.GetComponent<Cardview>();
-                if (cardview.cardParent == 1)
+                if (cardview.cardview.Owner == 0)
                 {
-                    Cards card = child.GetComponent<Cards>();
-                    cardsField.Add(card);
+                    Cardview card = child.GetComponent<Cardview>();
+                    cardsField.Add(card.cardview);
                 }
             }
             return cardsField;
@@ -1269,31 +1392,31 @@ public class GameManager : MonoBehaviour
         {
             foreach (Transform child in c2.transform)
             {
-                Cards card = child.GetComponent<Cards>();
-                cardsField.Add(card);
+                Cardview card = child.GetComponent<Cardview>();
+                cardsField.Add(card.cardview);
             }
             foreach (Transform child in ar2.transform)
             {
-                Cards card = child.GetComponent<Cards>();
-                cardsField.Add(card);
+                Cardview card = child.GetComponent<Cardview>();
+                cardsField.Add(card.cardview);
             }
             foreach (Transform child in as2.transform)
             {
-                Cards card = child.GetComponent<Cards>();
-                cardsField.Add(card);
+                Cardview card = child.GetComponent<Cardview>();
+                cardsField.Add(card.cardview);
             }
             foreach (Transform child in au2.transform)
             {
-                Cards card = child.GetComponent<Cards>();
-                cardsField.Add(card);
+                Cardview card = child.GetComponent<Cardview>();
+                cardsField.Add(card.cardview);
             }
             foreach (Transform child in cl.transform)
             {
                 Cardview cardview = child.GetComponent<Cardview>();
-                if (cardview.cardParent == 2)
+                if (cardview.cardview.Owner == 1)
                 {
-                    Cards card = child.GetComponent<Cards>();
-                    cardsField.Add(card);
+                    Cardview card = child.GetComponent<Cardview>();
+                    cardsField.Add(card.cardview);
                 }
             }
             return cardsField;
@@ -1303,12 +1426,16 @@ public class GameManager : MonoBehaviour
     public List<Cards> DeckOfPlayer(int ID)
     {
         List<Cards> cardsDeck = new List<Cards>();
-        if (ID == 0)
+        if (ID == 1)
         {
             for (int i = 0; i < deckButton.gameObjects.Count; i++)
             {
-                Cards card = deckButton.gameObjects[i].GetComponent<Cards>();
-                cardsDeck.Add(card);
+
+                Cardview cardview = deckButton.gameObjects[i].GetComponent<Cardview>();
+                if (cardview != null && cardview.cardview != null)
+                {
+                    cardsDeck.Add(cardview.cardview);
+                }
             }
             return cardsDeck;
         }
@@ -1316,8 +1443,8 @@ public class GameManager : MonoBehaviour
         {
             for (int i = 0; i < deckButton2.gameObjects2.Count; i++)
             {
-                Cards card = deckButton2.gameObjects2[i].GetComponent<Cards>();
-                cardsDeck.Add(card);
+                Cardview card = deckButton2.gameObjects2[i].GetComponent<Cardview>();
+                cardsDeck.Add(card.cardview);
             }
             return cardsDeck;
         }
@@ -1325,12 +1452,12 @@ public class GameManager : MonoBehaviour
     public List<Cards> GraveyardOfPlayer(int ID)
     {
         List<Cards> cardsGraveyard = new List<Cards>();
-        if (ID == 0)
+        if (ID == 1)
         {
             for (int i = 0; i < cementerys.Count; i++)
             {
-                Cards card = cementerys[i].GetComponent<Cards>();
-                cardsGraveyard.Add(card);
+                Cardview card = cementerys[i].GetComponent<Cardview>();
+                cardsGraveyard.Add(card.cardview);
             }
             return cardsGraveyard;
         }
@@ -1338,8 +1465,8 @@ public class GameManager : MonoBehaviour
         {
             for (int i = 0; i < cementerys.Count; i++)
             {
-                Cards card = cementerys[i].GetComponent<Cards>();
-                cardsGraveyard.Add(card);
+                Cardview card = cementerys[i].GetComponent<Cardview>();
+                cardsGraveyard.Add(card.cardview);
             }
             return cardsGraveyard;
         }

@@ -15,7 +15,7 @@ MonoBehaviour:
   cardNumber: 46
   cardName: Chau Chau Pescadu
   cardPower: 6
-  cardParent: 0
+  Owner: 1
   cardKind: 1
   cardHability: Multiplica por n su ataque, siendo n la cantidad de cartas iguales
     a ella en el campo.
@@ -26,3 +26,11 @@ MonoBehaviour:
   cardPlaceboardImage: {fileID: 21300000, guid: e7784b5e4e54cae43a3e92412f41304c, type: 3}
   zone: as2
   zone2: s
+  zone3: 
+  faction: 
+  type: 
+  cardRange:
+  - 
+  - 
+  - 
+  gameObject: {fileID: 1014323960266546193, guid: def9d791c1a0edd4ea39432dfd48d420, type: 3}

@@ -36,6 +36,8 @@ public class Scanner : MonoBehaviour
     {
         this.source = source;
         reserved["while"] = new Token(TokenType.WHILE, "while", "while", 0, 0);
+        //reserved["owner"] = new Token(TokenType.OWNER, "owner", "owner", 0, 0);
+        reserved["Owner"] = new Token(TokenType.OWNER, "Owner", "Owner", 0, 0);
         reserved["for"] = new Token(TokenType.FOR, "for", "for", 0, 0);
         reserved["in"] = new Token(TokenType.IN, "in", "in", 0, 0);
         reserved["true"] = new Token(TokenType.TRUE, "true", "true", 0, 0);
@@ -206,7 +208,8 @@ public class Scanner : MonoBehaviour
         if (isAtEnd())
         {
             string error = $"String incompleto en linea {line}";
-            throw new Error($"{line} : string incomplete", ErrorType.SYNTAX);
+            MostrarError(error)
+;
         }
         Advance();
         string value = source.Substring(start + 1, current - start - 2);

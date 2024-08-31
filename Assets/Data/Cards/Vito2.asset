@@ -15,7 +15,7 @@ MonoBehaviour:
   cardNumber: 41
   cardName: Vito Corgione
   cardPower: 10
-  cardParent: 0
+  Owner: 1
   cardKind: 1
   cardHability: 'Calcula el promedio de poder entre todas las unidades cuerpo a cuerpo
     y lo iguala al poder de las unidades cuerpo a cuerpo del enemigo '
@@ -26,3 +26,11 @@ MonoBehaviour:
   cardPlaceboardImage: {fileID: 21300000, guid: 9c96bd1afe33e02468de4a1c81870d98, type: 3}
   zone: c2
   zone2: s
+  zone3: 
+  faction: 
+  type: 
+  cardRange:
+  - 
+  - 
+  - 
+  gameObject: {fileID: 2656671688361744519, guid: 7f7b7327c075f664eaf8a7f0d440f166, type: 3}

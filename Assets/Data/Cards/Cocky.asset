@@ -15,7 +15,7 @@ MonoBehaviour:
   cardNumber: 23
   cardName: Los quince de Cocky
   cardPower: 15
-  cardParent: 0
+  Owner: 0
   cardKind: 0
   cardHability: "Ma\xF1ana es mi cumplea\xF1os, \xBFqu\xE9 me vas a regalar?"
   cardBackgroundImage: {fileID: 21300000, guid: e9db37abbc530694abf701eb746ee3d2, type: 3}
@@ -25,3 +25,11 @@ MonoBehaviour:
   cardPlaceboardImage: {fileID: 21300000, guid: 9c96bd1afe33e02468de4a1c81870d98, type: 3}
   zone: c
   zone2: n
+  zone3: 
+  faction: 
+  type: 
+  cardRange:
+  - 
+  - 
+  - 
+  gameObject: {fileID: 7655713095348777621, guid: 19097e2b01487214db7dca9eab0819ea, type: 3}

@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System.Linq;
+using System;
 
-public class DeckButton2 : MonoBehaviour
+public class DeckButton2 : Game
 {
     public GameObject Rey;
     public GameObject EnemyArea;
     public GameObject PlayerLider;
     public List<Cards> cards2 = new List<Cards>();
+
     public List<GameObject> gameObjects2 = new List<GameObject>();
-    public TMP_Text text2;
+
     void Awake()
     {
         foreach (var card in gameObjects2)
@@ -35,53 +37,43 @@ public class DeckButton2 : MonoBehaviour
             }
         }
     }
-    public void Push(Cards card)
+    public new List<Cards> Find(Func<Cards, bool> function)
+    {
+        return cards2.Where(function).ToList();
+    }
+    public new void Push(Cards card)
     {
         cards2.Add(card);
-        int number = Number();
-        text2.text = number + 1.ToString();
     }
 
-    public void SendBottom(Cards card)
+    public new void SendBottom(Cards card)
     {
         cards2.Insert(0, card);
-        int number = Number();
-        text2.text = number + 1.ToString();
+
     }
 
-    public Cards Pop()
+    public new Cards Pop()
     {
         Cards card = cards2[cards2.Count - 1];
         cards2.RemoveAt(cards2.Count - 1);
-        int number = Number();
-        text2.text = number--.ToString();
         return card;
     }
 
-    public void Remove(Cards card)
+    public new void Remove(Cards card)
     {
-        int number = Number();
-        text2.text = number--.ToString();
         cards2.Remove(card);
     }
 
-    public void Shuffle()
+    public new void Shuffle()
     {
         cards2 = cards2.OrderBy(x => UnityEngine.Random.value).ToList();
-    }
-
-    public int Number()
-    {
-        string number = text2.text.ToString();
-        int number2 = int.Parse(number);
-        return number2;
     }
 
     void OnClick2()
     {
         if (gameObjects2.Count > 0)
         {
-            int randomIndex2 = Random.Range(0, gameObjects2.Count);
+            int randomIndex2 = UnityEngine.Random.Range(0, gameObjects2.Count);
             GameObject enemyCard = Instantiate(gameObjects2[randomIndex2], new Vector3(0, 0, 0), Quaternion.identity);
             enemyCard.transform.SetParent(EnemyArea.transform, false);
             gameObjects2.RemoveAt(randomIndex2);
@@ -95,9 +87,11 @@ public class DeckButton2 : MonoBehaviour
     {
         for (var i = 0; i < 9; i++)
         {
-            int randomIndex2 = Random.Range(0, gameObjects2.Count);
+            int randomIndex2 = UnityEngine.Random.Range(0, gameObjects2.Count);
             GameObject enemyCard1 = Instantiate(gameObjects2[randomIndex2], new Vector3(0, 0, 0), Quaternion.identity);
             enemyCard1.transform.SetParent(EnemyArea.transform, false);
+            Cardview cardview = enemyCard1.GetComponent<Cardview>();
+
             gameObjects2.RemoveAt(randomIndex2);
             enemyCard1.SetActive(false);
         }
@@ -108,10 +102,12 @@ public class DeckButton2 : MonoBehaviour
         {
             if (gameObjects2.Count > 0)
             {
-                int randomIndex2 = Random.Range(0, gameObjects2.Count);
+                int randomIndex2 = UnityEngine.Random.Range(0, gameObjects2.Count);
                 GameObject card = gameObjects2[randomIndex2];
                 GameObject enemyCard1 = Instantiate(card, new Vector3(0, 0, 0), Quaternion.identity);
                 enemyCard1.transform.SetParent(EnemyArea.transform, false);
+                Cardview cardview = enemyCard1.GetComponent<Cardview>();
+
                 gameObjects2.RemoveAt(randomIndex2);
                 enemyCard1.SetActive(true);
             }
@@ -123,10 +119,12 @@ public class DeckButton2 : MonoBehaviour
         {
             if (gameObjects2.Count > 0)
             {
-                int randomIndex2 = Random.Range(0, gameObjects2.Count);
+                int randomIndex2 = UnityEngine.Random.Range(0, gameObjects2.Count);
                 GameObject card = gameObjects2[randomIndex2];
                 GameObject enemyCard1 = Instantiate(card, new Vector3(0, 0, 0), Quaternion.identity);
                 enemyCard1.transform.SetParent(EnemyArea.transform, false);
+                Cardview cardview = enemyCard1.GetComponent<Cardview>();
+
                 gameObjects2.RemoveAt(randomIndex2);
                 enemyCard1.SetActive(false);
             }

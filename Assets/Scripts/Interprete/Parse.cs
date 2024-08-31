@@ -54,10 +54,7 @@ public class Parser : MonoBehaviour
     {
         Token opera = Advance();
         Expression expression = ParseExpression();
-        // if (!isInsideActionBlock)
-        // {
 
-        // }
         Consume(TokenType.SEMICOLON, "Expected ';'");
         return new Assignment(variable, opera, expression);
     }
@@ -90,6 +87,8 @@ public class Parser : MonoBehaviour
         }
         return program;
     }
+
+
     Card ParseCard()
     {
         Card card = new Card();
@@ -100,7 +99,7 @@ public class Parser : MonoBehaviour
             {
                 counter[0] += 1;
                 Consume(TokenType.COLON, "Expected ':' after Type");
-                card.Type = new Type(ParseExpression());
+                card.Type = new CardType(ParseExpression());
                 Consume(TokenType.COMMA, "Expected ',' after expression");
 
             }
@@ -260,7 +259,7 @@ public class Parser : MonoBehaviour
             else if (Match(TokenType.ACTION))
             {
 
-                counter[2] += 1; //Tenias puesto counter[1]
+                counter[2] += 1;
                 Consume(TokenType.COLON, "Expected ':' after action");
                 effect.Action = ParseAction();
 
@@ -317,6 +316,7 @@ public class Parser : MonoBehaviour
         while (!Check(TokenType.RIGHT_BRACKET) && !isAtEnd())
         {
             onActivation.Elements.Add(ParseOnActivationElements());
+            if (!Check(TokenType.RIGHT_BRACKET) && !isAtEnd()) Consume(TokenType.COMMA, "Expected ',' after OnActivation element");
         }
         Consume(TokenType.RIGHT_BRACKET, "Expected ']'");
         return onActivation;
@@ -347,33 +347,9 @@ public class Parser : MonoBehaviour
 
         }
         Consume(TokenType.RIGHT_BRACE, "Expected '}' after Params declaration");
-        //Consume(TokenType.COMMA, "Expected ',' after '}'"); Despues de params no va coma ****
+        Consume(TokenType.COMMA, "Expected ',' after '}'");
         return param;
-        // Consume(TokenType.LEFT_BRACE, "Expected '{' after Params");
-        // Params param = new Params();
-        // bool firstParam = true;
-        // while (!Check(TokenType.RIGHT_BRACE) && !isAtEnd())
-        // {
-        //     if (!firstParam)
-        //     {
-        //         Consume(TokenType.COMMA, "Expected ',' between parameters");
-        //     }
-        //     Variable variables = ParseVariable();
-        //     Consume(TokenType.COLON, "Expected ':' after parameter name");
-        //     if (Match(TokenType.NUMBERTYPE) || Match(TokenType.STRINGTYPE) || Match(TokenType.BOOLTYPE))
-        //     {
-        //         variables.SetType(Previous().type);
-        //         param.nodes.Add(variables);
-        //     }
-        //     else
-        //     {
-        //         throw new Error($"Expected type but got '{Peek().lexeme}' at line {Peek().line}", ErrorType.SYNTAX);
-        //     }
-        //     firstParam = false;
-        // }
-        // Consume(TokenType.RIGHT_BRACE, "Expected '}' after Params declaration");
-        // Consume(TokenType.COMMA, "Expected ',' after Params");
-        // return param;
+
     }
     Variable ParseVariable()
     {
@@ -394,7 +370,7 @@ public class Parser : MonoBehaviour
 
                     if (Match(TokenType.TYPE))
                     {
-                        Type type = new Type(new StringExpression(Previous().lexeme));
+                        CardType type = new CardType(new StringExpression(Previous().lexeme));
                         variableComp.argument.nodes.Add(type);
                     }
                     else if (Match(TokenType.NAME))
@@ -422,6 +398,17 @@ public class Parser : MonoBehaviour
                     {
                         Pointer pointer = new Pointer(Previous().lexeme);
                         variableComp.argument.nodes.Add(pointer);
+                        if (Match(TokenType.LEFT_BRACKET))
+                        {
+                            Inde inde = new Inde(Convert.ToInt32(Advance().Literal));
+                            Consume(TokenType.RIGHT_BRACKET, "Expected ']' after Pointer");
+                            variableComp.argument.nodes.Add(inde);
+                        }
+                    }
+                    else if (Match(TokenType.OWNER))
+                    {
+                        Owner owner = new Owner(Previous().Literal as string);
+                        variableComp.argument.nodes.Add(owner);
                     }
                     else
                     {
@@ -438,7 +425,7 @@ public class Parser : MonoBehaviour
         Consume(TokenType.LEFT_BRACE, "Expected '{'");
         OnActivationEffect onActivationEffect = null;
         Selector selector = null;
-        PostAction postAction = null;
+        List<PostAction> postAction = new List<PostAction>();
         while (!Check(TokenType.RIGHT_BRACE) && !isAtEnd())
         {
             if (Match(TokenType.ONACTIVATIONEFFECT))
@@ -463,12 +450,11 @@ public class Parser : MonoBehaviour
             }
             else if (Match(TokenType.POSTACTION))
             {
-                if (postAction == null)
-                {
-                    Consume(TokenType.COLON, "Expected ':'");
-                    postAction = ParsePostAction();
-                }
-                else { }
+
+                Consume(TokenType.COLON, "Expected ':'");
+                postAction.Add(ParsePostAction());
+
+
             }
             else
             {
@@ -487,8 +473,8 @@ public class Parser : MonoBehaviour
         if (Check(TokenType.STRING))
         {
             value = Advance().lexeme;
-            Consume(TokenType.COMMA, "Expected ','");
-            while (!Check(TokenType.SELECTOR))
+            if (!Check(TokenType.RIGHT_BRACE)) Consume(TokenType.COMMA, "Expected ','");
+            while (!Check(TokenType.SELECTOR) && !Check(TokenType.RIGHT_BRACE))
             {
                 if (Check(TokenType.IDENTIFIER))
                 {
@@ -555,6 +541,7 @@ public class Parser : MonoBehaviour
                 }
             }
             Consume(TokenType.RIGHT_BRACE, "Expected '}'");
+            Consume(TokenType.COMMA, "Expected ','");
         }
         if (value == null) throw new Error($"'{Peek().lexeme}' in {Peek().line}: No value", ErrorType.SYNTAX);
         return new OnActivationEffect(value, assi);
@@ -628,6 +615,7 @@ public class Parser : MonoBehaviour
             }
         }
         Consume(TokenType.RIGHT_BRACE, "Expected '}' after Selector declaration");
+        Consume(TokenType.COMMA, "Expected ','");
         if (single == null! || predicate == null!) throw new Error($"'{Peek().lexeme}' in {Peek().line}: Missing field", ErrorType.SYNTAX);
         return new Selector(source, single, predicate);
 
@@ -728,13 +716,13 @@ public class Parser : MonoBehaviour
         else if (Check(TokenType.IDENTIFIER))
         {
             Variable variable = ParseVariable();
-            if (variable.GetType() == typeof(VariableCompound) && Check(TokenType.SEMICOLON))
+            if (variable is VariableCompound && Check(TokenType.SEMICOLON))
             {
                 VariableCompound v = variable as VariableCompound;
                 if (v.argument.nodes[v.argument.nodes.Count - 1].GetType() == typeof(Function))
                 {
                     Function function = v.argument.nodes[v.argument.nodes.Count - 1] as Function;
-                    if (function.type != Variable.Type.VOID) throw new Error("", ErrorType.SYNTAX);
+                    //if (function.type != Variable.Type.VOID) throw new Error("", ErrorType.SYNTAX);
                 }
                 else
                 {
@@ -748,7 +736,7 @@ public class Parser : MonoBehaviour
                 return ParseAssignment(variable);
             }
         }
-        else if (Match(TokenType.FUN))
+        else if (Check(TokenType.FUN))
         {
             return ParseFunctionDeclaration(Previous().lexeme);
         }
@@ -791,6 +779,12 @@ public class Parser : MonoBehaviour
             {
                 param.nodes.Add(ParseVariable());
             }
+            else if (Match(TokenType.EQUAL_GREATER))
+            {
+                Predicate predicate = new Predicate(param.nodes[param.nodes.Count - 1] as Variable, ParseExpression());
+                param.nodes.RemoveAt(param.nodes.Count - 1);
+                param.nodes.Add(predicate);
+            }
             else if (Check(TokenType.FUN))
             {
                 param.nodes.Add(ParseFunctionDeclaration(Advance().lexeme));
@@ -812,7 +806,7 @@ public class Parser : MonoBehaviour
         {
             Token ope = Previous();
             Expression right = Comparison();
-            expression = new Binary(expression, ope, right);
+            expression = new BinaryBoolean(expression, ope, right);
         }
         return expression;
     }
@@ -871,7 +865,7 @@ public class Parser : MonoBehaviour
         {
             Token ope = Previous();
             Expression right = Term();
-            expression = new Binary(expression, ope, right);
+            expression = new BinaryBoolean(expression, ope, right);
         }
         return expression;
     }
@@ -886,7 +880,7 @@ public class Parser : MonoBehaviour
         // }
         // return expression;
         Expression expression = Factor();
-        TokenType[] tokenTypes = { TokenType.PLUS, TokenType.MINUS, TokenType.ATSIGN, TokenType.ATSIGN_ATSIGN };
+        TokenType[] tokenTypes = { TokenType.PLUS, TokenType.MINUS };
         if (Check(TokenType.PLUS) || Check(TokenType.MINUS))
         {
             while (Match(tokenTypes))
@@ -898,7 +892,7 @@ public class Parser : MonoBehaviour
         }
         else if (Check(TokenType.ATSIGN) || Check(TokenType.ATSIGN_ATSIGN))
         {
-            while (Match(tokenTypes))
+            while (Match(TokenType.ATSIGN) || Match(TokenType.ATSIGN_ATSIGN))
             {
                 Token operators = Previous();
                 Expression right = Factor();
@@ -915,7 +909,7 @@ public class Parser : MonoBehaviour
         {
             Token oper = Previous();
             Expression right = Unary();
-            expression = new Binary(expression, oper, right);
+            expression = new BinaryInterger(expression, oper, right);
         }
         return expression;
     }

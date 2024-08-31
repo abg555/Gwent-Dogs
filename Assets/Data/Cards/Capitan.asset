@@ -15,7 +15,7 @@ MonoBehaviour:
   cardNumber: 5
   cardName: "Capit\xE1n Rottweiler"
   cardPower: 0
-  cardParent: 0
+  Owner: 0
   cardKind: 0
   cardHability: "Elimina el da\xF1o provocado por los fuertes vientos "
   cardBackgroundImage: {fileID: 21300000, guid: e9db37abbc530694abf701eb746ee3d2, type: 3}
@@ -25,3 +25,11 @@ MonoBehaviour:
   cardPlaceboardImage: {fileID: 21300000, guid: e7784b5e4e54cae43a3e92412f41304c, type: 3}
   zone: as
   zone2: n
+  zone3: 
+  faction: 
+  type: 
+  cardRange:
+  - 
+  - 
+  - 
+  gameObject: {fileID: 7254079275109618828, guid: b17eebd1a677e60448902d0576cbf9d9, type: 3}

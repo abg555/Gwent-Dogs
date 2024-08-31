@@ -11,10 +11,12 @@ public class Cardview : MonoBehaviour
     public Cards cardview;                       /*Estas son las propiedades de vista de las cartas*/
     public string cardZone;
     public string cardZone2;
+    public string cardZone3;
     public int viewCardNumber;
     public int cardNumber;
     public int cardParent;
     public int cardKind;
+    public GameObject gameObject;
 
     public string cardName;
     public int cardPower;
@@ -37,10 +39,11 @@ public class Cardview : MonoBehaviour
 
     void Start()
     {   /*se inicializan las propiedades de Cardview con los valores de la carta correspondiente*/
-        cardParent = cardview.cardParent;
+        cardParent = cardview.Owner;
         cardKind = cardview.cardKind;
         cardZone = cardview.zone;
         cardZone2 = cardview.zone2;
+        cardZone3 = cardview.zone3;
         cardNumber = cardview.cardNumber;
         cardName = cardview.cardName;
         cardPower = cardview.cardPower;
@@ -50,7 +53,7 @@ public class Cardview : MonoBehaviour
         cardPowerImage = cardview.cardPowerImage;
         cardDescriptionImage = cardview.cardDescriptionImage;
         cardPlaceboardImage = cardview.cardPlaceboardImage;
-
+        gameObject = cardview.gameObject;
         nameText.text = cardName;
         habilityText.text = cardHability;
         powerText.text = cardPower.ToString();

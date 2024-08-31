@@ -15,7 +15,7 @@ MonoBehaviour:
   cardNumber: 26
   cardName: Rey Chihuahua Loco
   cardPower: 0
-  cardParent: 0
+  Owner: 1
   cardKind: 0
   cardHability: Destruye una carta de la mano al principio del juego
   cardBackgroundImage: {fileID: 21300000, guid: e9db37abbc530694abf701eb746ee3d2, type: 3}
@@ -25,3 +25,7 @@ MonoBehaviour:
   cardPlaceboardImage: {fileID: 21300000, guid: b0d005cfbbd8ce74a844861a701ba761, type: 3}
   zone: l2
   zone2: 
+  zone3: 
+  faction: 
+  type: 
+  gameObject: {fileID: 0}

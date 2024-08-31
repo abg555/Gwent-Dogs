@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Rastafari3
   m_EditorClassIdentifier: 
   cardNumber: 39
-  cardName: Rastafari
+  cardName: Rastafarizzy
   cardPower: 8
-  cardParent: 0
+  Owner: 1
   cardKind: 0
   cardHability: Invisible, suele pasar desapercibido frente a las habilidades de
     las cartas
@@ -26,3 +26,11 @@ MonoBehaviour:
   cardPlaceboardImage: {fileID: 21300000, guid: 5206876d4e405604a955859bf011caa2, type: 3}
   zone: ar2
   zone2: s
+  zone3: 
+  faction: 
+  type: 
+  cardRange:
+  - 
+  - 
+  - 
+  gameObject: {fileID: 6824031361537424560, guid: f8aa731aeae824640bc7f0be0548821f, type: 3}

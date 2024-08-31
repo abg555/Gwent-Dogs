@@ -68,6 +68,7 @@ public class Drag : MonoBehaviour
             {
                 turnButton = GameObject.Find("Button").GetComponent<TurnButton>();
                 turnButton.ChangeTurn();
+
             }
             transform.SetParent(dropZone.transform, false);
             isPlace = true;
@@ -118,8 +119,9 @@ public class Drag : MonoBehaviour
         string word = conditions.zoneNames;
         string ca = gameObject.GetComponent<Cardview>().cardZone;
         string ca1 = gameObject.GetComponent<Cardview>().cardZone2;
+        string ca2 = gameObject.GetComponent<Cardview>().cardZone3;
 
-        if (word == ca || word == ca1) return true;
+        if (word == ca || word == ca1 || word == ca2) return true;
         else return false;
     }
 

@@ -15,7 +15,7 @@ MonoBehaviour:
   cardNumber: 8
   cardName: Pomerania x Pomerania
   cardPower: 0
-  cardParent: 0
+  Owner: 0
   cardKind: 0
   cardHability: Aumenta en 2 las unidades asedio
   cardBackgroundImage: {fileID: 21300000, guid: e9db37abbc530694abf701eb746ee3d2, type: 3}
@@ -25,3 +25,11 @@ MonoBehaviour:
   cardPlaceboardImage: {fileID: 21300000, guid: 5e4c49d394e135e4a82bd1137407db02, type: 3}
   zone: au
   zone2: n
+  zone3: 
+  faction: 
+  type: 
+  cardRange:
+  - 
+  - 
+  - 
+  gameObject: {fileID: 5362393892656088256, guid: 828273314c5e53544a96eb80864e4e03, type: 3}

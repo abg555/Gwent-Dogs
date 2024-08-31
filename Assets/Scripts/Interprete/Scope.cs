@@ -1,49 +1,78 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using System;
 
-public class Scope<T> : MonoBehaviour
+public class Scope : MonoBehaviour
 {
-    public Dictionary<string, T> variable;
-    public Scope<T> scope;
-    public Scope()
-    {
-        scope = null;
-        variable = new Dictionary<string, T>();
-    }
-    public Scope(Scope<T> Scope)
-    {
-        scope = Scope;
-        variable = new Dictionary<string, T>();
-    }
+    public Dictionary<string, Cards> cards = new Dictionary<string, Cards>();
 
-    public bool IsInScope(string name)
-    {
-        if (scope == null) return variable.ContainsKey(name);
-        else if (variable.ContainsKey(name)) return true;
-        else return scope.IsInScope(name);
+    public GameManager gameManager;
+    public Dictionary<string, Effect> effects = new Dictionary<string, Effect>();
+    public Dictionary<string, object> value = new Dictionary<string, object>();
 
-    }
 
-    public T Get(string name)
+    public void MostrarError(string error)
     {
-        if (scope == null)
+        PlayerPrefs.SetString("ErrorMessage", error);
+        SceneManager.LoadScene("Error");
+        AudioListener[] listeners = UnityEngine.Object.FindObjectsOfType<AudioListener>();
+
+        // Desactiva todos los Audio Listeners excepto el principal
+        foreach (AudioListener listener in listeners)
         {
-            if (variable.ContainsKey(name)) return variable[name];
+            if (listener.gameObject.CompareTag("MainAudioListener"))
+            {
+                listener.enabled = true;
+            }
             else
             {
-                Debug.Log($"'{name}' not found");
-                return default;
+                listener.enabled = false;
             }
         }
-        else if (variable.ContainsKey(name)) return variable[name];
-        else return scope.Get(name);
-
+    }
+    public void PushCard(string value, Cards card)
+    {
+        if (cards.ContainsKey(value))
+        {
+            MostrarError($"Ya existe una carta con este nombre:{value}");
+        }
+        cards[value] = card;
+    }
+    public void PushEffect(string value, Effect effect)
+    {
+        if (effects.ContainsKey(value))
+        {
+            MostrarError($"Ya existe una effecto con este nombre:{value}");
+        }
+        else
+        {
+            effects[value] = effect;
+        }
     }
 
-    public void Set(string name, T value)
+    public Effect isEffect(string value)
     {
-        if (!IsInScope(name) || variable.ContainsKey(name)) variable[name] = value;
-        else scope.Set(name, value);
+        if (effects.ContainsKey(value))
+        {
+            return effects[value];
+        }
+        else
+        {
+            MostrarError($"No existe un efecto con este nombre");
+            throw new Exception("ddkv");
+        }
+    }
+
+    public Cards GetCard(string key)
+    {
+        if (value.TryGetValue(key, out var cardObj) && cardObj is Cards card)
+        {
+            return card;
+        }
+        Debug.LogWarning($"No se encontró una carta válida para la clave: {key}");
+        return null;
     }
 }

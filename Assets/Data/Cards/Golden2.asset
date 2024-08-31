@@ -15,7 +15,7 @@ MonoBehaviour:
   cardNumber: 7
   cardName: Premios Golden Retriever
   cardPower: 0
-  cardParent: 0
+  Owner: 0
   cardKind: 0
   cardHability: Aumenta en 1 las unidades arquero
   cardBackgroundImage: {fileID: 21300000, guid: e9db37abbc530694abf701eb746ee3d2, type: 3}
@@ -25,3 +25,11 @@ MonoBehaviour:
   cardPlaceboardImage: {fileID: 21300000, guid: 5e4c49d394e135e4a82bd1137407db02, type: 3}
   zone: au
   zone2: n
+  zone3: 
+  faction: 
+  type: 
+  cardRange:
+  - 
+  - 
+  - 
+  gameObject: {fileID: 127378865669177025, guid: 8a14da2347e9c4047b519a73388782a5, type: 3}

@@ -15,7 +15,7 @@ MonoBehaviour:
   cardNumber: 20
   cardName: "C-Husky el perro diab\xF3lico"
   cardPower: 7
-  cardParent: 0
+  Owner: 0
   cardKind: 1
   cardHability: Elimina la carta con menos puntos del enemigo
   cardBackgroundImage: {fileID: 21300000, guid: e9db37abbc530694abf701eb746ee3d2, type: 3}
@@ -25,3 +25,11 @@ MonoBehaviour:
   cardPlaceboardImage: {fileID: 21300000, guid: e7784b5e4e54cae43a3e92412f41304c, type: 3}
   zone: as
   zone2: n
+  zone3: 
+  faction: 
+  type: 
+  cardRange:
+  - 
+  - 
+  - 
+  gameObject: {fileID: 4247453230267371445, guid: 66367da7828bf704d9394496bcf47a66, type: 3}

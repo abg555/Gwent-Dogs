@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
 [System.Serializable]
 public abstract class Expression : Node  //revisado
 {
     public abstract void Print(int indent = 0);
-    public abstract object Evaluate();
+    public abstract object Evaluate(Scope scope);
 
 }
 
@@ -15,6 +17,7 @@ public interface Node     //revisado
     public void Print(int indent = 0);
 
 }
+
 [System.Serializable]
 public class Number : Expression        //revisado
 {
@@ -24,7 +27,7 @@ public class Number : Expression        //revisado
         Value = value;
     }
 
-    public override object Evaluate()
+    public override object Evaluate(Scope scope)
     {
         return Value;
     }
@@ -43,7 +46,7 @@ public class StringExpression : Expression       //revisado
         Value = value;
     }
 
-    public override object Evaluate()
+    public override object Evaluate(Scope scope)
     {
         return Value;
     }
@@ -61,7 +64,7 @@ public class Bool : Expression           //revisado
         Value = value;
     }
 
-    public override object Evaluate()
+    public override object Evaluate(Scope scope)
     {
         return Value;
     }
@@ -93,12 +96,15 @@ public class Binary : Expression      //revisado
         Right.Print(indent + 2);
     }
 
-    public override object Evaluate()
+    public override object Evaluate(Scope scope)
     {
-        object left = Left.Evaluate();
-        object right = Right.Evaluate();
+        object left = Left.Evaluate(scope);
+        object right = Right.Evaluate(scope);
+        Debug.Log($"Comparing: {left} (Type: {left?.GetType()}) with {right} (Type: {right?.GetType()})");
+
         if (left is double && right is double)
         {
+            Debug.Log("xc vkzxnvkjndskjngjbsgihbfiudwutifhsejnvkjvfiefje");
             switch (Operator.type)
             {
                 case TokenType.PLUS:
@@ -133,8 +139,75 @@ public class Binary : Expression      //revisado
             {
                 case TokenType.ATSIGN: return left.ToString() + right.ToString();
                 case TokenType.ATSIGN_ATSIGN: return left.ToString() + " " + right.ToString();
+                case TokenType.EQUAL_EQUAL: return left.Equals(right);
                 default:
                     throw new InvalidOperationException("Unsupported operator: " + Operator.lexeme);
+            }
+        }
+        else if (left is Cards card && right is string faction)
+        {
+            switch (Operator.type)
+            {
+                case TokenType.EQUAL_EQUAL: return left.Equals(right);
+                case TokenType.LESS:
+                    return Convert.ToDouble(left) < Convert.ToDouble(right);
+                case TokenType.GREATER:
+                    return Convert.ToDouble(left) > Convert.ToDouble(right);
+                case TokenType.GREATER_EQUAL:
+                    return Convert.ToDouble(left) >= Convert.ToDouble(right);
+                case TokenType.LESS_EQUAL:
+                    return Convert.ToDouble(left) <= Convert.ToDouble(right);
+                case TokenType.BANG_EQUAL: return !left.Equals(right);
+                default:
+                    throw new InvalidOperationException("Unsupported operator for Cards and string: " + Operator.lexeme);
+            }
+        }
+        else if (left is Cards cards && right is int factionas)
+        {
+            switch (Operator.type)
+            {
+                case TokenType.EQUAL_EQUAL: return left.Equals(right);
+                case TokenType.LESS:
+                    return Convert.ToDouble(left) < Convert.ToDouble(right);
+                case TokenType.GREATER:
+                    return Convert.ToDouble(left) > Convert.ToDouble(right);
+
+                case TokenType.GREATER_EQUAL:
+                    return Convert.ToDouble(left) >= Convert.ToDouble(right);
+                case TokenType.LESS_EQUAL:
+                    return Convert.ToDouble(left) <= Convert.ToDouble(right);
+                case TokenType.BANG_EQUAL: return !left.Equals(right);
+                default: throw new InvalidOperationException("Unsupported operator for Cards and string: " + Operator.lexeme);
+            }
+        }
+        else if (left is int leftInt && right is int rightInt)
+        {
+            switch (Operator.type)
+            {
+                case TokenType.EQUAL_EQUAL: return left.Equals(right);
+                case TokenType.LESS:
+                    return Convert.ToDouble(left) < Convert.ToDouble(right);
+                case TokenType.GREATER:
+                    return Convert.ToDouble(left) > Convert.ToDouble(right);
+                case TokenType.PLUS:
+                    return Convert.ToDouble(left) + Convert.ToDouble(right);
+                case TokenType.MINUS:
+                    return Convert.ToDouble(left) - Convert.ToDouble(right);
+                case TokenType.STAR:
+                    return Convert.ToDouble(left) * Convert.ToDouble(right);
+                case TokenType.SLASH:
+                    return Convert.ToDouble(left) / Convert.ToDouble(right);
+                case TokenType.PERCENT:
+                    return Convert.ToDouble(left) % Convert.ToDouble(right);
+                case TokenType.POW:
+                    return Math.Pow(Convert.ToDouble(left), Convert.ToDouble(right));
+                case TokenType.GREATER_EQUAL:
+                    return Convert.ToDouble(left) >= Convert.ToDouble(right);
+                case TokenType.LESS_EQUAL:
+                    return Convert.ToDouble(left) <= Convert.ToDouble(right);
+                case TokenType.BANG_EQUAL: return !left.Equals(right);
+                default:
+                    throw new InvalidOperationException("Unsupported operator for Cards and string: " + Operator.lexeme);
             }
         }
         else throw new InvalidOperationException("Unsupported operator: " + Operator.lexeme);
@@ -174,9 +247,9 @@ public class Unary : Expression     //revisado
         Debug.Log(new string(' ', indent) + "Unary:" + Operator.lexeme);
         Right.Print(indent + 2);
     }
-    public override object Evaluate()
+    public override object Evaluate(Scope scope)
     {
-        object right = Right.Evaluate();
+        object right = Right.Evaluate(scope);
 
         switch (Operator.type)
         {
@@ -184,6 +257,17 @@ public class Unary : Expression     //revisado
                 return -Convert.ToDouble(right);
             case TokenType.BANG:
                 return !(bool)right;
+            case TokenType.PLUS_PLUS:
+                int value = (int)right;
+                int newv = value + 1;
+                scope.value[(Right as Variable).name] = newv;
+                return value;
+            case TokenType.MINUS_MINUS:
+                int value2 = (int)right;
+                int newv2 = value2 + 1;
+                scope.value[(Right as Variable).name] = newv2;
+                return value2;
+
             default:
                 throw new InvalidOperationException("Unsupported operator: " + Operator.lexeme);
         }
@@ -212,9 +296,9 @@ public class Grouping : Expression         //revisado
         Expression.Print(ident + 2);
 
     }
-    public override object Evaluate()
+    public override object Evaluate(Scope scope)
     {
-        return Expression.Evaluate();
+        return Expression.Evaluate(scope);
     }
 }
 public class Variable : Expression      //revisado
@@ -254,9 +338,9 @@ public class Variable : Expression      //revisado
     {
         Debug.Log(new string(' ', indent) + "Variable: " + name + " (" + type.ToString() + ")");
     }
-    public override object Evaluate()
+    public override object Evaluate(Scope scope)
     {
-        throw new NotImplementedException();
+        return scope.value[name];
     }
 }
 public class VariableCompound : Variable, Statement             //revisado
@@ -272,6 +356,144 @@ public class VariableCompound : Variable, Statement             //revisado
     {
         Debug.Log(new string(' ', ident) + "VariableComp: ");
         argument?.Print(ident + 2);
+    }
+    public void Evaluater(Scope scope)
+    {
+        object last = null;
+        foreach (var arg in argument.nodes)
+        {
+            if (arg is Function)
+            {
+                last = (arg as Function).ValueReturn(scope, last);
+            }
+            else if (arg is Pointer)
+            {
+                Pointer pointer = arg as Pointer;
+                switch (pointer.pointer)
+                {
+                    case "Hand": last = scope.gameManager.HandOfPlayer(scope.gameManager.TriggerPlayer()); break;
+                    case "Deck": last = scope.gameManager.DeckOfPlayer(scope.gameManager.TriggerPlayer()); break;
+                    case "Graveyard": last = scope.gameManager.GraveyardOfPlayer(scope.gameManager.TriggerPlayer()); break;
+                    case "Field": last = scope.gameManager.FieldOfPlayer(scope.gameManager.TriggerPlayer()); break;
+                    case "Board": last = scope.gameManager.Board(); break;
+                }
+            }
+        }
+    }
+    public override object Evaluate(Scope context)
+    {
+        object last = null;
+        if (name != "context") last = context.value[name];
+        foreach (var arg in argument.nodes)
+        {
+            if (arg is Function)
+            {
+                last = (arg as Function).ValueReturn(context, last);
+            }
+            else if (arg is Inde)
+            {
+                Debug.Log(last);
+                if (last is List<Cards> porfavor)
+                {
+                    List<Cards> cards = porfavor;
+                    foreach (var card in cards)
+                    {
+                        Debug.Log("hooooooooooooooooooooooooooooooolaZ");
+                    }
+                    Inde indexer = arg as Inde;
+                    last = cards[indexer.index];
+                }
+                else
+                {
+                    string[] range = last as string[];
+                    Inde indexer = arg as Inde;
+                    last = range[indexer.index];
+                }
+            }
+            else if (arg is Pointer)
+            {
+                Pointer pointer = arg as Pointer;
+                switch (pointer.pointer)
+                {
+                    case "Hand": last = context.gameManager.HandOfPlayer(context.gameManager.TriggerPlayer()); break;
+                    case "Deck": last = context.gameManager.DeckOfPlayer(context.gameManager.TriggerPlayer()); break;
+                    case "Graveyard": last = context.gameManager.GraveyardOfPlayer(context.gameManager.TriggerPlayer()); break;
+                    case "Field": last = context.gameManager.FieldOfPlayer(context.gameManager.TriggerPlayer()); break;
+                    case "Board": last = context.gameManager.Board(); break;
+                }
+            }
+            else
+            {
+                Cards cardss = last as Cards;
+                switch (arg)
+                {
+                    case CardType: last = cardss.type; break;
+                    case Name: last = cardss.cardName; break;
+                    case Faction: last = cardss.faction; break;
+                    case Pow: last = cardss.cardPower; break;
+                    case Range: last = cardss.cardRange; break;
+                    case Owner: last = cardss.Owner; break;
+                }
+            }
+        }
+        return last;
+    }
+
+
+    public void GetValue(Scope scope, object value)
+    {
+        object last = scope.value[name]; ;
+        if (name == "target")
+        {
+            last = scope.value[name];
+        }
+        foreach (var arg in argument.nodes)
+        {
+            if (arg is Function)
+            {
+                last = (arg as Function).ValueReturn(scope, last);
+            }
+            else if (arg is Inde)
+            {
+                if (last is List<Cards> cola)
+                {
+                    List<Cards> cards = cola;
+                    Inde Inde = arg as Inde;
+                    last = cards[Inde.index];
+                }
+                else
+                {
+                    string[] range = last as string[];
+                    Inde Inde = arg as Inde;
+                    range[Inde.index] = value as string;
+                }
+            }
+            else if (arg is Pointer)
+            {
+                Pointer pointer = arg as Pointer;
+                switch (pointer.pointer)
+                {
+                    case "Hand": last = scope.gameManager.HandOfPlayer(scope.gameManager.TriggerPlayer()); break;
+                    case "Deck": last = scope.gameManager.DeckOfPlayer(scope.gameManager.TriggerPlayer()); break;
+                    case "Graveyard": last = scope.gameManager.GraveyardOfPlayer(scope.gameManager.TriggerPlayer()); break;
+                    case "Field": last = scope.gameManager.FieldOfPlayer(scope.gameManager.TriggerPlayer()); break;
+                    case "Board": last = scope.gameManager.Board(); break;
+                }
+            }
+            else
+            {
+                Cards card = last as Cards;
+                switch (arg)
+                {
+                    case CardType: last = card.type; break;
+                    case Name: last = card.cardName; break;
+                    case Faction: last = card.faction; break;
+                    case Pow: last = card.cardPower; break;
+                    case Range: last = card.cardRange; break;
+                    case Owner: last = card.Owner; break;
+                }
+            }
+        }
     }
 }
 public class Params : Node              //revisado
@@ -308,11 +530,11 @@ public class Name : Node      // revisado
     }
 
 }
-public class Type : Node       //revisado
+public class CardType : Node       //revisado
 {
     public Expression type;
 
-    public Type(Expression type)
+    public CardType(Expression type)
     {
         this.type = type;
     }
@@ -465,13 +687,42 @@ public class Single : Node         //revisado
     public bool Value;
     public Single(Token token)
     {
-        if (token.type == TokenType.BOOL)
+        Debug.Log($"cksjdbckajsgBZXCJsbkshfyugeasdibvkjasbxzncb dsrkhj, {token.type}");
+        if (token.type == TokenType.TRUE)
         {
-            if (token.lexeme == "true") Value = true;
-            else Value = false;
+            Value = true;
+
 
         }
+        else if (token.type == TokenType.FALSE)
+        {
+            Value = false;
+        }
+        else
+        {
+            MostrarError("la asignacion de single es incorrecta, se esperaba un bool");
+        }
     }
+    private void MostrarError(string errorMessage)
+    {
+        PlayerPrefs.SetString("ErrorMessage", errorMessage);
+        SceneManager.LoadScene("Error", LoadSceneMode.Additive);
+        AudioListener[] listeners = UnityEngine.Object.FindObjectsOfType<AudioListener>();
+
+        // Desactiva todos los Audio Listeners excepto el principal
+        foreach (AudioListener listener in listeners)
+        {
+            if (listener.gameObject.CompareTag("MainAudioListener"))
+            {
+                listener.enabled = true;
+            }
+            else
+            {
+                listener.enabled = false;
+            }
+        }
+    }
+
 
     public void Print(int ident = 0)
     {
@@ -542,7 +793,7 @@ public class Action : Node     //revisado
 }
 public interface Statement : Node //revisado
 {
-
+    public void Evaluater(Scope scope);
 }
 public class StatementBlock : Node        //revisado
 {
@@ -581,6 +832,94 @@ public class Assignment : Statement  //revisado
         Debug.Log(new string(' ', ident + 2) + "Op: " + Operator.lexeme);
         Right?.Print(ident + 2);
     }
+    public void Evaluater(Scope scope)
+    {
+        object rightValue = Right.Evaluate(scope);
+
+        if (Operator.type == TokenType.EQUAL)
+        {
+            if (Left is VariableCompound)
+            {
+                (Left as VariableCompound).GetValue(scope, rightValue);
+            }
+            else
+            {
+                scope.value[Left.name] = rightValue;
+            }
+        }
+        else if (Operator.type == TokenType.PLUS_EQUAL || Operator.type == TokenType.MINUS_EQUAL)
+        {
+            object leftValue = scope.value[Left.name];
+            if (leftValue is int leftInt && rightValue is int rightInt)
+            {
+                int result = (Operator.type == TokenType.PLUS_EQUAL) ? leftInt + rightInt : leftInt - rightInt;
+                scope.value[Left.name] = result;
+            }
+            else if (leftValue is double leftDouble && rightValue is double rightDouble)
+            {
+                double result = (Operator.type == TokenType.PLUS_EQUAL) ? leftDouble + rightDouble : leftDouble - rightDouble;
+                scope.value[Left.name] = result;
+            }
+            else if (leftValue is Cards card && rightValue is int value)
+            {
+                if (Operator.type == TokenType.PLUS_EQUAL)
+                {
+                    card.cardPower += value;
+                }
+                else if (Operator.type == TokenType.MINUS_EQUAL)
+                {
+                    card.cardPower -= value;
+                }
+                scope.value[Left.name] = card;
+            }
+            else
+            {
+                throw new InvalidOperationException($"Operación no soportada para los tipos {leftValue?.GetType()} y {rightValue?.GetType()}");
+            }
+        }
+
+
+
+
+        //     if (Operator.type == TokenType.EQUAL)
+        //     {
+        //         if (Left is VariableCompound)
+        //         {
+        //             (Left as VariableCompound).GetValue(scope, Right.Evaluate(scope));
+        //         }
+        //         else
+        //         {
+        //             scope.value[Left.name] = Right.Evaluate(scope);
+        //         }
+        //     }
+        //     else if (Operator.type == TokenType.PLUS_EQUAL)
+        //     {
+        //         if (Left is VariableCompound)
+        //         {
+        //             (Left as VariableCompound).GetValue(scope, Convert.ToInt32(Left.Evaluate(scope)) + Convert.ToInt32(Right.Evaluate(scope)));
+        //         }
+        //         else
+        //         {
+        //             int result = Convert.ToInt32(scope.value[Left.name]);
+        //             result += Convert.ToInt32(Right.Evaluate(scope));
+        //             scope.value[Left.name] = result;
+        //         }
+        //     }
+        //     else if (Operator.type == TokenType.MINUS_EQUAL)
+        //     {
+        //         if (Left is VariableCompound)
+        //         {
+        //             (Left as VariableCompound).GetValue(scope, Convert.ToInt32(Left.Evaluate(scope)) - Convert.ToInt32(Right.Evaluate(scope)));
+        //         }
+        //         else
+        //         {
+        //             int result = Convert.ToInt32(scope.value[Left.name]);
+        //             result -= Convert.ToInt32(Right.Evaluate(scope));
+        //             scope.value[Left.name] = result;
+        //         }
+        //     }
+        // }
+    }
 }
 public class WhileStatement : Statement      //revisado
 {
@@ -598,6 +937,16 @@ public class WhileStatement : Statement      //revisado
         condition?.Print(ident + 2);
         Debug.Log(new string(' ', ident + 2) + "Body:");
         body?.Print(ident + 2);
+    }
+    public void Evaluater(Scope scope)
+    {
+        while ((bool)condition.Evaluate(scope))
+        {
+            foreach (var stmt in body.statements)
+            {
+                stmt.Evaluater(scope);
+            }
+        }
     }
 }
 public class ForStatement : Statement     //revisado
@@ -621,6 +970,18 @@ public class ForStatement : Statement     //revisado
         Target?.Print(ident + 2);
         Debug.Log(new string(' ', ident + 2) + "Body:");
         Body?.Print(ident + 2);
+    }
+    public void Evaluater(Scope scope)
+    {
+        foreach (Cards target in scope.value["targets"] as List<Cards>)
+        {
+            scope.value["target"] = target;
+            foreach (var stmt in Body.statements)
+            {
+                stmt.Evaluater(scope);
+            }
+            scope.value.Remove("target");
+        }
     }
 
 }
@@ -684,6 +1045,123 @@ public class Function : Statement  //revisado
         Params?.Print(indent + 2);
         Debug.Log(new string(' ', indent + 2) + "Return Type: " + type.ToString());
     }
+    public object ValueReturn(Scope scope, object value)
+    {
+        switch (Name)
+        {
+            case "TriggerPlayer": return scope.gameManager.TriggerPlayer();
+            case "HandOfPlayer":
+                if (Params.nodes[0] is Function) return scope.gameManager.HandOfPlayer(Convert.ToInt32((Params.nodes[0] as Function).ValueReturn(scope, value)));
+                else return scope.gameManager.HandOfPlayer(Convert.ToInt32((Params.nodes[0] as Expression).Evaluate(scope)));
+            case "DeckOfPlayer":
+                if (Params.nodes[0] is Function) return scope.gameManager.DeckOfPlayer(Convert.ToInt32((Params.nodes[0] as Function).ValueReturn(scope, value)));
+                else return scope.gameManager.DeckOfPlayer(Convert.ToInt32((Params.nodes[0] as Expression).Evaluate(scope)));
+            case "GraveyardOfPlayer":
+                if (Params.nodes[0] is Function) return scope.gameManager.GraveyardOfPlayer(Convert.ToInt32((Params.nodes[0] as Function).ValueReturn(scope, value)));
+                else return scope.gameManager.GraveyardOfPlayer(Convert.ToInt32((Params.nodes[0] as Expression).Evaluate(scope)));
+            case "FieldOfPlayer":
+                if (Params.nodes[0] is Function) return scope.gameManager.FieldOfPlayer(Convert.ToInt32((Params.nodes[0] as Function).ValueReturn(scope, value)));
+                else return scope.gameManager.FieldOfPlayer(Convert.ToInt32((Params.nodes[0] as Expression).Evaluate(scope)));
+            case "Find":
+                List<Cards> cardLists = value as List<Cards>;
+                Predicate predicate = Params.nodes[0] as Predicate;
+                if (cardLists != null && predicate != null)
+                {
+                    return Find(predicate, cardLists);
+                }
+                return null;
+
+
+            case "Push":
+                Cards cardToPush = (Params.nodes[0] as Expression).Evaluate(scope) as Cards;
+                if (cardToPush != null)
+                {
+                    (value as List<Cards>).Insert(0, cardToPush);
+                    Debug.Log($"Carta {cardToPush.cardName} agregada al tope de la lista");
+                }
+                else
+                {
+                    Debug.LogWarning("La carta a agregar es nula");
+                }
+                return null;
+            case "SendBottom":
+                Cards cardToSendBottom = (Params.nodes[0] as Expression).Evaluate(scope) as Cards;
+                if (cardToSendBottom != null)
+                {
+                    (value as List<Cards>).Add(cardToSendBottom);
+                    Debug.Log($"Card {cardToSendBottom.cardName} added to the bottom of the list");
+                }
+                else
+                {
+                    Debug.LogWarning("The card to add is null");
+                }
+                return null;
+            case "Pop":
+                List<Cards> cardList = value as List<Cards>;
+                if (cardList != null && cardList.Count > 0)
+                {
+                    Cards topCard = cardList[0];
+                    cardList.RemoveAt(0);
+                    Debug.Log($"Carta {topCard.cardName} removida del tope de la lista");
+                    return topCard;
+                }
+                else
+                {
+                    Debug.LogWarning("La lista está vacía o es nula");
+                    return null;
+                }
+            case "Remove":
+                Cards cardToRemove = (Params.nodes[0] as Expression).Evaluate(scope) as Cards;
+                Debug.Log($"Card to remove: {cardToRemove}");
+                (value as List<Cards>).Remove(cardToRemove);
+                Debug.Log($"Card gameObject: {cardToRemove?.gameObject}");
+                if (cardToRemove.gameObject != null)
+                {
+                    cardToRemove.cardPower = 999;
+                    Debug.LogError("Card Destroyed");
+                }
+                return null;
+            case "Shuffle":
+                List<Cards> deckToShuffle = value as List<Cards>;
+                if (deckToShuffle != null && deckToShuffle.Count > 0)
+                {
+                    int n = deckToShuffle.Count;
+                    System.Random rng = new System.Random();
+                    while (n > 1)
+                    {
+                        n--;
+                        int k = rng.Next(n + 1);
+                        Cards temp = deckToShuffle[k];
+                        deckToShuffle[k] = deckToShuffle[n];
+                        deckToShuffle[n] = temp;
+                    }
+                    Debug.Log("La lista de cartas ha sido mezclada");
+                }
+                else
+                {
+                    Debug.LogWarning("La lista está vacía o es nula");
+                }
+                return null;
+            default: return null;
+        }
+    }
+    public void Evaluater(Scope scope)
+    {
+        throw new NotImplementedException();
+    }
+    public List<Cards> Find(Predicate predicate, List<Cards> cards)
+    {
+        List<Cards> cardsResult = new List<Cards>();
+        foreach (var card in cards)
+        {
+            new Scope().value[predicate.Variable.name] = card;
+            if ((bool)predicate.Condition.Evaluate(new Scope())) cardsResult.Add(card);
+            new Scope().value.Remove(predicate.Variable.name);
+        }
+        return cardsResult;
+    }
+
+
 }
 public class Pointer : Node    //revisado
 {
@@ -720,9 +1198,9 @@ public class OnActivationElements : Node //revisado
 {
     public OnActivationEffect oae;
     public Selector selector;
-    public PostAction postAction;
+    public List<PostAction> postAction;
 
-    public OnActivationElements(OnActivationEffect oae, Selector selector, PostAction postAction)
+    public OnActivationElements(OnActivationEffect oae, Selector selector, List<PostAction> postAction)
     {
         this.oae = oae;
         this.selector = selector;
@@ -731,15 +1209,30 @@ public class OnActivationElements : Node //revisado
     public void Print(int ident = 0)
     {
         Debug.Log(new string(' ', ident) + "OnActivationElements:");
-        oae?.Print(ident + 2);
-        selector?.Print(ident + 2);
-        postAction?.Print(ident + 2);
+        if (oae != null)
+        {
+            oae.Print(ident + 2);
+        }
+        if (selector != null)
+        {
+            selector.Print(ident + 2);
+        }
+        if (postAction != null)
+        {
+            foreach (var action in postAction)
+            {
+                if (action != null)
+                {
+                    action.Print(ident + 2);
+                }
+            }
+        }
     }
 }
 [System.Serializable]
 public class Card : Node   //revisado
 {
-    public Type Type;
+    public CardType Type;
     public Name Name;
     public Faction Faction;
     public Power Power;
@@ -762,5 +1255,29 @@ public class Card : Node   //revisado
     }
 
 }
+public class Owner : Node
+{
+    public string owner;
+    public Owner(string owner)
+    {
+        this.owner = owner;
+    }
 
+    public void Print(int indent = 0)
+    {
+        Debug.Log(new string(' ', indent) + "Owner: " + owner);
+    }
+}
+public class Inde : Node
+{
+    public int index;
+    public Inde(int index)
+    {
+        this.index = index;
+    }
 
+    public void Print(int indent = 0)
+    {
+        Debug.Log(new string(' ', indent) + "Indexer: " + index);
+    }
+}

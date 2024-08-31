@@ -15,7 +15,7 @@ MonoBehaviour:
   cardNumber: 42
   cardName: Poodler Coquette
   cardPower: 5
-  cardParent: 0
+  Owner: 1
   cardKind: 1
   cardHability: "Quien diga que no soy bella, \xA1MIENTE!"
   cardBackgroundImage: {fileID: 21300000, guid: e9db37abbc530694abf701eb746ee3d2, type: 3}
@@ -25,3 +25,11 @@ MonoBehaviour:
   cardPlaceboardImage: {fileID: 21300000, guid: 5206876d4e405604a955859bf011caa2, type: 3}
   zone: ar2
   zone2: s
+  zone3: 
+  faction: 
+  type: 
+  cardRange:
+  - 
+  - 
+  - 
+  gameObject: {fileID: 2103589676667851051, guid: 9fd642260023a584886c9a6069a56dd7, type: 3}

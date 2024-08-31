@@ -15,7 +15,7 @@ MonoBehaviour:
   cardNumber: 4
   cardName: AquaDogO
   cardPower: 0
-  cardParent: 0
+  Owner: 0
   cardKind: 0
   cardHability: "Elimina el da\xF1o provocado por la temporada de sequia"
   cardBackgroundImage: {fileID: 21300000, guid: e9db37abbc530694abf701eb746ee3d2, type: 3}
@@ -25,3 +25,11 @@ MonoBehaviour:
   cardPlaceboardImage: {fileID: 21300000, guid: 5206876d4e405604a955859bf011caa2, type: 3}
   zone: ar
   zone2: n
+  zone3: 
+  faction: 
+  type: 
+  cardRange:
+  - 
+  - 
+  - 
+  gameObject: {fileID: 4562206430452499503, guid: 2b6c5934a88e4e84ba676b3f3f1def17, type: 3}

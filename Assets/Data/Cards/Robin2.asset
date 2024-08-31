@@ -15,7 +15,7 @@ MonoBehaviour:
   cardNumber: 37
   cardName: Robin Pug
   cardPower: 4
-  cardParent: 0
+  Owner: 1
   cardKind: 1
   cardHability: Roba una carta del enemigo
   cardBackgroundImage: {fileID: 21300000, guid: e9db37abbc530694abf701eb746ee3d2, type: 3}
@@ -25,3 +25,11 @@ MonoBehaviour:
   cardPlaceboardImage: {fileID: 21300000, guid: 9c96bd1afe33e02468de4a1c81870d98, type: 3}
   zone: c2
   zone2: s
+  zone3: 
+  faction: 
+  type: 
+  cardRange:
+  - 
+  - 
+  - 
+  gameObject: {fileID: 2027641698962128928, guid: 30ed3385bbe31c444bf4cacba26e152f, type: 3}

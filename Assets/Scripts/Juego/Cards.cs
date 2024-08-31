@@ -10,7 +10,7 @@ public class Cards : ScriptableObject      /*ScriptableObject es una clase base 
     public int cardNumber;                      /*Estas son los atributos de las cartas*/
     public string cardName;
     public int cardPower;
-    public int cardParent;
+    public int Owner;
     public int cardKind;
     public string cardHability;
     public Sprite cardBackgroundImage;
@@ -20,7 +20,12 @@ public class Cards : ScriptableObject      /*ScriptableObject es una clase base 
     public Sprite cardPlaceboardImage;
     public string zone;
     public string zone2;
+    public string zone3;
+    public string faction;
+    public string type;
+    public string[] cardRange = new string[3];
     public GameObject gameObject;
+    public OnActivation onActivation;
 
 
     public Cards()

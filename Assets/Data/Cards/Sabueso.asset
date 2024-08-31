@@ -15,7 +15,7 @@ MonoBehaviour:
   cardNumber: 25
   cardName: Sabueso al cubo
   cardPower: 12
-  cardParent: 0
+  Owner: 0
   cardKind: 1
   cardHability: Unidad de oro que puede ser afectada por las habilidades de otras
     cartas
@@ -26,3 +26,11 @@ MonoBehaviour:
   cardPlaceboardImage: {fileID: 21300000, guid: 9c96bd1afe33e02468de4a1c81870d98, type: 3}
   zone: c
   zone2: n
+  zone3: 
+  faction: 
+  type: 
+  cardRange:
+  - 
+  - 
+  - 
+  gameObject: {fileID: 6391805098806285161, guid: dd4c49f78d62c0248a5a8f0647d8db6e, type: 3}

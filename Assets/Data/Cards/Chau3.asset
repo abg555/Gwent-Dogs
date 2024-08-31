@@ -15,7 +15,7 @@ MonoBehaviour:
   cardNumber: 52
   cardName: Chau Chau Pescadu
   cardPower: 6
-  cardParent: 0
+  Owner: 0
   cardKind: 1
   cardHability: Multiplica por n su ataque, siendo n la cantidad de cartas iguales
     a ella en el campo.
@@ -23,6 +23,14 @@ MonoBehaviour:
   cardDogImage: {fileID: 21300000, guid: 81f9d05dec4fe0e42a29256a1c6bc374, type: 3}
   cardPowerImage: {fileID: 21300000, guid: 43380dab59c8ec54fa2abc47f17083e2, type: 3}
   cardDescriptionImage: {fileID: 21300000, guid: 796eee6704fb4d64cb0798d71c399ddb, type: 3}
-  cardPlaceboardImage: {fileID: 21300000, guid: 9c96bd1afe33e02468de4a1c81870d98, type: 3}
+  cardPlaceboardImage: {fileID: 21300000, guid: e7784b5e4e54cae43a3e92412f41304c, type: 3}
   zone: as
   zone2: n
+  zone3: 
+  faction: 
+  type: 
+  cardRange:
+  - 
+  - 
+  - 
+  gameObject: {fileID: 7134847115094478364, guid: 55e77d2e374df024c8b6011d1591f612, type: 3}

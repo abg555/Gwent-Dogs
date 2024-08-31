@@ -13,16 +13,17 @@ MonoBehaviour:
   m_Name: Card
   m_EditorClassIdentifier: 
   cardNumber: 0
-  cardName: 
-  cardPower: 0
+  cardName: '"Geralt"'
+  cardPower: 15
   cardParent: 0
   cardKind: 0
-  cardHability: 
-  cardBackgroundImage: {fileID: 0}
-  cardDogImage: {fileID: 0}
-  cardPowerImage: {fileID: 0}
-  cardDescriptionImage: {fileID: 0}
-  cardPlaceboardImage: {fileID: 0}
-  zone: 
+  cardHability: '"Damage"'
+  cardBackgroundImage: {fileID: 21300000, guid: e9db37abbc530694abf701eb746ee3d2, type: 3}
+  cardDogImage: {fileID: 21300000, guid: e9db37abbc530694abf701eb746ee3d2, type: 3}
+  cardPowerImage: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+  cardDescriptionImage: {fileID: 21300000, guid: 796eee6704fb4d64cb0798d71c399ddb, type: 3}
+  cardPlaceboardImage: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+  zone: c
   zone2: 
+  zone3: 
   gameObject: {fileID: 0}

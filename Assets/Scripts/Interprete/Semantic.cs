@@ -97,63 +97,94 @@ public class Semantic : MonoBehaviour
     }
     public void CheckCard(Card card)
     {
-        string cardName = ((StringExpression)card.Name.name).Value;
-        if (card.OnActivation != null)
+        try
         {
-            foreach (var element in card.OnActivation.Elements)
+            string cardName = ((StringExpression)card.Name.name).Value;
+            if (card.OnActivation != null)
             {
-                if (element.oae != null)
+                foreach (var element in card.OnActivation.Elements)
                 {
-                    string effectName = element.oae.name;
-                    if (!effectNames.ContainsKey(effectName))
+                    if (element.oae != null)
                     {
-                        string errorMessage = $"El efecto '{effectName}' mencionado en la carta '{cardName}' no está definido.";
-                        MostrarError(errorMessage);
-                        throw new SemanticError(errorMessage);
-                    }
-                    Effect declaredEffect = effectNames[effectName];
-                    foreach (var param in element.oae.Params)
-                    {
-                        var declaredParam = declaredEffect.Params.nodes.FirstOrDefault(p => (p as Variable)?.name == param.Left.name) as Variable;
-                        if (declaredParam == null)
+                        string effectName = element.oae.name;
+                        if (!effectNames.ContainsKey(effectName))
                         {
-                            string errorMessage = $"El parámetro '{param.Left.name}' no está definido en el efecto '{effectName}'.";
+                            string errorMessage = $"El efecto '{effectName}' mencionado en la carta '{cardName}' no está definido.";
                             MostrarError(errorMessage);
                             throw new SemanticError(errorMessage);
                         }
+                        Effect declaredEffect = effectNames[effectName];
+                        foreach (var param in element.oae.Params)
+                        {
+                            var declaredParam = declaredEffect.Params.nodes.FirstOrDefault(p => (p as Variable)?.name == param.Left.name) as Variable;
+                            if (declaredParam == null)
+                            {
+                                string errorMessage = $"El parámetro '{param.Left.name}' no está definido en el efecto '{effectName}'.";
+                                MostrarError(errorMessage);
+                                throw new SemanticError(errorMessage);
+                            }
 
-                        // Verificar el tipo del parámetro
-                        if (param.Right is Bool && declaredParam.type != Variable.Type.BOOL)
-                        {
-                            string errorMessage = $"El parámetro '{param.Left.name}' se le asignó el tipo incorrecto.";
-                            MostrarError(errorMessage);
-                            throw new SemanticError(errorMessage);
-                        }
-                        else if (param.Right is Number && declaredParam.type != Variable.Type.INT)
-                        {
-                            string errorMessage = $"El parámetro '{param.Left.name}' se le asignó el tipo incorrecto.";
-                            MostrarError(errorMessage);
-                            throw new SemanticError(errorMessage);
-                        }
-                        else if (param.Right is StringExpression && declaredParam.type != Variable.Type.STRING)
-                        {
-                            string errorMessage = $"El parámetro '{param.Left.name}' se le asignó el tipo incorrecto.";
-                            MostrarError(errorMessage);
-                            throw new SemanticError(errorMessage);
+                            // Verificar el tipo del parámetro
+                            if (param.Right is Bool && declaredParam.type != Variable.Type.BOOL)
+                            {
+                                string errorMessage = $"El parámetro '{param.Left.name}' se le asignó el tipo incorrecto.";
+                                MostrarError(errorMessage);
+                                throw new SemanticError(errorMessage);
+                            }
+                            else if (param.Right is Number && declaredParam.type != Variable.Type.INT)
+                            {
+                                string errorMessage = $"El parámetro '{param.Left.name}' se le asignó el tipo incorrecto.";
+                                MostrarError(errorMessage);
+                                throw new SemanticError(errorMessage);
+                            }
+                            else if (param.Right is StringExpression && declaredParam.type != Variable.Type.STRING)
+                            {
+                                string errorMessage = $"El parámetro '{param.Left.name}' se le asignó el tipo incorrecto.";
+                                MostrarError(errorMessage);
+                                throw new SemanticError(errorMessage);
+                            }
                         }
                     }
-                }
-                if (element.postAction != null)
-                {
-                    string postActionEffectName = ((StringExpression)element.postAction.Type).Value;
-                    if (!effectNames.ContainsKey(postActionEffectName))
+                    else if (element.postAction != null)
                     {
-                        string errorMessage = $"El efecto '{postActionEffectName}' mencionado en el PostAction de la carta '{cardName}' no está definido.";
-                        MostrarError(errorMessage);
-                        throw new SemanticError(errorMessage);
+                        foreach (var postAction in element.postAction)
+                        {
+                            string postActionEffectName;
+                            Debug.Log(postAction.Type);
+
+                            if (postAction.Type is Expression stringExpr)
+                            {
+                                postActionEffectName = stringExpr.ToString();
+                            }
+                            else if (postAction.Type is StringExpression stringExr)
+                            {
+                                postActionEffectName = stringExr.Evaluate(new Scope()).ToString();
+                                Debug.Log(postActionEffectName);
+                            }
+                            else if (postAction.Type is Variable varExpr)
+                            {
+                                postActionEffectName = varExpr.name;
+                            }
+                            else
+                            {
+                                throw new SemanticError($"Tipo de PostAction inválido en la carta '{cardName}'. Se esperaba una expresión de cadena o una variable.");
+                            }
+
+                            if (!effectNames.ContainsKey(postActionEffectName))
+                            {
+                                string errorMessage = $"El efecto '{postActionEffectName}' mencionado en el PostAction de la carta '{cardName}' no está definido.";
+                                MostrarError(errorMessage);
+                                throw new SemanticError(errorMessage);
+                            }
+                        }
                     }
                 }
             }
+        }
+        catch (Exception ex)
+        {
+            MostrarError($"Error al verificar la carta: {ex.Message}");
+
         }
     }
     public void CheckAction(Action action)
@@ -277,6 +308,7 @@ public class Semantic : MonoBehaviour
                 }
                 effectNames[effectName] = effect;
                 CheckEffect(effect);
+                effect.Print();
                 Debug.Log("Análisis semántico del efecto completado con éxito.");
             }
 
@@ -284,12 +316,6 @@ public class Semantic : MonoBehaviour
             foreach (Card card in program.card)
             {
                 string cardName = ((StringExpression)card.Name.name).Value;
-                if (cardNames.ContainsKey(cardName))
-                {
-                    string errorMessage = $"La carta '{cardName}' ya está definida.";
-                    MostrarError(errorMessage);
-                    throw new SemanticError(errorMessage);
-                }
                 cardNames[cardName] = card;
                 CheckCard(card);
                 card.Print();

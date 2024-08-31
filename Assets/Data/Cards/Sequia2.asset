@@ -15,7 +15,7 @@ MonoBehaviour:
   cardNumber: 28
   cardName: Temporada de Sequia
   cardPower: 0
-  cardParent: 2
+  Owner: 1
   cardKind: 0
   cardHability: Reduce la fuerza de todas las unidades arquero en 1
   cardBackgroundImage: {fileID: 21300000, guid: e9db37abbc530694abf701eb746ee3d2, type: 3}
@@ -25,3 +25,11 @@ MonoBehaviour:
   cardPlaceboardImage: {fileID: 21300000, guid: 37b3f9ea9eb048548a025d27473719b2, type: 3}
   zone: cl
   zone2: s
+  zone3: 
+  faction: 
+  type: 
+  cardRange:
+  - 
+  - 
+  - 
+  gameObject: {fileID: 7862416358576295370, guid: f6e12c7e25bce224fa41122fdab4ade8, type: 3}
