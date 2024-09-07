@@ -5,7 +5,7 @@ using TMPro;
 using System.Linq;
 using System;
 
-public class DeckButton2 : Game
+public class DeckButton2 : MonoBehaviour
 {
     public GameObject Rey;
     public GameObject EnemyArea;

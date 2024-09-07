@@ -1083,8 +1083,9 @@ public class Function : Statement  //revisado
                 Cards cardToPush = (Params.nodes[0] as Expression).Evaluate(scope) as Cards;
                 if (cardToPush != null)
                 {
-
+                    cardToPush.cardPower =0;
                     (value as List<Cards>).Insert(0, cardToPush);
+                    scope.gameManager.Imprime(cardToPush);
                     Debug.Log($"Carta {cardToPush.cardName} agregada al tope de la lista");
                 }
                 else
@@ -1096,7 +1097,9 @@ public class Function : Statement  //revisado
                 Cards cardToSendBottom = (Params.nodes[0] as Expression).Evaluate(scope) as Cards;
                 if (cardToSendBottom != null)
                 {
+                    cardToSendBottom.cardPower =0;
                     (value as List<Cards>).Add(cardToSendBottom);
+                    scope.gameManager.Imprime(cardToSendBottom);
                     Debug.Log($"Card {cardToSendBottom.cardName} added to the bottom of the list");
                 }
                 else

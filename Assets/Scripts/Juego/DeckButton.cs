@@ -8,7 +8,7 @@ using System.Linq;
 using System;
 using Unity.VisualScripting;
 
-public class DeckButton : Game
+public class DeckButton : MonoBehaviour
 {
     /*son las referencias de cada carta*/
     public GameObject Rey;
@@ -16,7 +16,7 @@ public class DeckButton : Game
     public GameObject PlayerLider;
     public GameObject specificDropZone;
     public List<GameObject> gameObjects = new List<GameObject>();
-    public new List<Cards> cards = new List<Cards>();
+    public List<Cards> cards = new List<Cards>();
 
 
 

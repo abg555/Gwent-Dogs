@@ -132,6 +132,11 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+       
+              
+            
+        
+        
         G();
         foreach (Transform fro in enemyArea.transform)
         {
@@ -1188,8 +1193,20 @@ public class GameManager : MonoBehaviour
     {
         deckButton2.Hand4();
 
-    }
-
+    }  
+    
+    public void Imprime(Cards cards){
+       
+       if(TriggerPlayer()== 1){
+        GameObject card = Instantiate(cards.gameObject, new Vector3(0,0,0), Quaternion.identity);
+        card.transform.SetParent(playerArea.transform);
+       }
+       else {                  
+     GameObject card = Instantiate(cards.gameObject, new Vector3(0,0,0), Quaternion.identity);
+                 card.transform.SetParent(enemyArea.transform);
+                
+}
+}
     void CheckAndDestroyExtraCards()
     {
 
@@ -1340,18 +1357,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    // public Hand HandOfPlayer(int ID)
-    // {
-    //     if (ID == 0)
-    //     {
-    //         return playerArea.GetComponent<Hand>();
-    //     }
-    //     else
-    //     {
-    //         return enemyArea.GetComponent<Hand>();
-    //     }
-
-    // }
+    
     public List<Cards> FieldOfPlayer(int ID)
     {
         List<Cards> cardsField = new List<Cards>();

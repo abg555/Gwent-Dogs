@@ -94,7 +94,15 @@ public class OK : MonoBehaviour
                         allTexts[3].text = cardRange;
 
                     }
-                    if (allTexts[3].text == @"""Melee""")
+                    if(cardType == @"""Clima"""){
+cardview.cardview.zone = "cl";
+                    }
+                    else if(cardType == @"""Aumento"""){
+                    cardview.cardview.zone = "au";
+                    
+                    }
+
+                    else if (allTexts[3].text == @"""Melee""")
                     {
                         cardview.cardview.zone = "c";
                     }
@@ -171,7 +179,15 @@ public class OK : MonoBehaviour
                         allTexts[3].text = cardRange;
 
                     }
-                    if (allTexts[3].text == @"""Melee""")
+                    if(cardType == @"""Clima"""){
+cardview.cardview.zone = "cl";
+                    }
+                    else if(cardType == @"""Aumento"""){
+                    cardview.cardview.zone = "au2";
+                    
+                    }
+
+                    else if (allTexts[3].text == @"""Melee""")
                     {
                         cardview.cardview.zone = "c2";
                     }

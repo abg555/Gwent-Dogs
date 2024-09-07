@@ -9,11 +9,11 @@ public class Evaluator : MonoBehaviour
 {
     private Cards cards;
     private Scope scope;
+    
+    
+    void Start(){}
 
-    void Start()
-    {
 
-    }
     public void eEffect()
     {
         foreach (var oAElement in cards.onActivation.Elements)
@@ -130,23 +130,23 @@ public class Evaluator : MonoBehaviour
         {
             case @"""hand""": return scope.gameManager.HandOfPlayer(scope.gameManager.TriggerPlayer());
 
-
-            case @"""otherHand""":
-                if (scope.gameManager.TriggerPlayer() == 1) return scope.gameManager.HandOfPlayer(0);
-                else return scope.gameManager.HandOfPlayer(1);
+case @"""otherHand""":
+                if (scope.gameManager.TriggerPlayer() == 1) {
+                    return scope.gameManager.HandOfPlayer(0);}
+                else {return scope.gameManager.HandOfPlayer(1);}
 
             case @"""deck""": return scope.gameManager.DeckOfPlayer(scope.gameManager.TriggerPlayer());
 
 
             case @"""otherDeck""":
-                if (scope.gameManager.TriggerPlayer() == 1) return scope.gameManager.DeckOfPlayer(0);
-                else return scope.gameManager.DeckOfPlayer(1);
+                if (scope.gameManager.TriggerPlayer() == 1) {return scope.gameManager.DeckOfPlayer(0);}
+                else {return scope.gameManager.DeckOfPlayer(1);}
 
             case @"""field""": return scope.gameManager.FieldOfPlayer(scope.gameManager.TriggerPlayer());
 
             case @"""otherField""":
-                if (scope.gameManager.TriggerPlayer() == 1) return scope.gameManager.FieldOfPlayer(0);
-                else return scope.gameManager.FieldOfPlayer(1);
+                if (scope.gameManager.TriggerPlayer() == 1) {return scope.gameManager.FieldOfPlayer(0);}
+                else {return scope.gameManager.FieldOfPlayer(1);}
             case @"""board""":
                 return scope.gameManager.Board();
 
@@ -156,14 +156,14 @@ public class Evaluator : MonoBehaviour
 
 
 
-    private Func<Cards, bool> ePredicate(Predicate predicateNode)
-    {
-        return card =>
-            {
-                scope.value[predicateNode.Variable.name] = card;
-                return (bool)predicateNode.Condition.Evaluate(scope);
-            };
-    }
+    // private Func<Cards, bool> ePredicate(Predicate predicateNode)
+    // {
+    //     return card =>
+    //         {
+    //             scope.value[predicateNode.Variable.name] = card;
+    //             return (bool)predicateNode.Condition.Evaluate(scope);
+    //         };
+    // }
 
     public Evaluator(Scope scope, Cards cards)
     {

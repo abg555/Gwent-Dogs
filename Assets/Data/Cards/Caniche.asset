@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardNumber: 9
   cardName: Caniche Maliche
-  cardPower: 2
+  cardPower: 0
   Owner: 0
   cardKind: 1
   cardHability: Elimina la carta con mas puntos del enemigo
